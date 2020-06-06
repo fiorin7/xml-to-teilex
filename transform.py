@@ -1,11 +1,18 @@
 from copy import deepcopy
 from lxml import etree as et
+import re
+from unidecode import unidecode
 
 def get_ns(string):
     return r'{http://www.tei-c.org/ns/1.0}' + string
 
-def get_title_lemma(tree):
-    pass
+def get_title_lemma(p):
+    his = [x for x in p if x.tag == get_ns('hi')]
+    first_line = re.split(', | ', his[0].text)
+    lemma = unidecode(first_line[0])
+    lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
+    # words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one
+    return lemma_stripped
 
 def invalid_para(p):
     his = [hi for hi in p]
@@ -34,6 +41,7 @@ for p in body.iter(f'{get_ns("p")}'):
         continue
     
     counter += 1
+    print(get_title_lemma(p))
     
     new_tree = merge_para_and_template(template, p)
 

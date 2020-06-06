@@ -18,12 +18,25 @@ def invalid_para(p):
     his = [hi for hi in p]
     return len(his) == 1 and len(his[0].text) == 1
 
-def merge_para_and_template(template, p):
-    new_tree = deepcopy(template)
+def get_new_tree(template):
+    return deepcopy(template)
+
+def get_new_body(new_tree):
     new_root = new_tree.getroot()
     new_body = new_root.find(f'.//{get_ns("body")}')
-    new_body.append(p)
-    return new_tree
+    return new_body
+
+def get_entry(lemma):
+    entry = et.Element("entry")
+    entry.set('sortKey', f"{lemma}")
+    entry.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{lemma}")
+    entry.set('{http://www.w3.org/XML/1998/namespace}lang', "la")
+    return entry
+
+
+def merge_para_and_template(entry, p):
+    entry.append(p)
+
 
 parser = et.XMLParser(remove_blank_text=True)
 
@@ -41,9 +54,15 @@ for p in body.iter(f'{get_ns("p")}'):
         continue
     
     counter += 1
-    print(get_title_lemma(p))
+    new_tree = get_new_tree(template)
+    new_body = get_new_body(new_tree)
+    title_lemma = get_title_lemma(p)
     
-    new_tree = merge_para_and_template(template, p)
+    entry = get_entry(title_lemma)
+    new_body.append(entry)
+
+    merge_para_and_template(entry, p)
+
 
     new_tree.write(open(f'example/example-output/{counter}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
     # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))

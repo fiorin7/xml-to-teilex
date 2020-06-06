@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../TEI_Lex-0/TEILex0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Title</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>bla</publisher>
+            <date>1888</date>
+            <pubPlace>Sofia</pubPlace>
+         </publicationStmt>
+         <sourceDesc>
+            <biblStruct>
+               <analytic>
+                  <author>a</author>
+               </analytic>
+            </biblStruct>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <entry sortKey="auctor" xml:id="LBR.auctor" xml:lang="la"> 
+            <form type="lemma">auctor</form><pc>,</pc> 
+            <form type="inflected">auctoris</form> 
+           <gramGrp> <gram type="pos">mf </gram></gramGrp>
+            <sense n="1" xml:id="LBR.auctor.1">
+              <lbl>1.</lbl> 
+               <sense n="1a" xml:id="LBR.auctor.1a">
+                  <lbl>а) </lbl>
+                  <def xml:lang="bg">поръчител</def><pc>;</pc>
+                  <def xml:lang="bg">свидетел</def> 
+                  <cit type="example"><quote>aliquem auctorem habere</quote></cit></sense>
+               <pc>,</pc> </sense>
+               <sense n="1b" xml:id="LBR.auctor.1b">
+                 <lbl> b)</lbl> 
+                  <def xml:lang="bg">образец</def> <pc>,</pc> 
+                  <def xml:lang="bg">пример</def>  
+                  <cit type="example"><quote>divinus auctor Plato </quote></cit><pc>.</pc>
+               </sense><pc> —</pc> 
+          <sense n="2" xml:id="LBR.auctor.2">  
+           <lbl>  2.</lbl> 
+            <sense n="2a" xml:id="LRB.auctor.2a">
+               <lbl>а)</lbl>
+            <def xml:lang="bg">виновник</def><pc>,</pc> <def xml:lang="bg">инициатор</def><pc>,</pc> <def xml:lang="bg">подбудител</def><pc>,</pc><def xml:lang="bg"> съветник</def><pc>,</pc> <def xml:lang="bg">създател</def><pc>,</pc><def xml:lang="bg"> творец</def><pc>,</pc> <def xml:lang="bg">автор</def><pc>,</pc> <def xml:lang="bg">основател</def><pc>,</pc>
+            <def xml:lang="bg">родоначалник</def> <cit type="example"><quote>auctor incendii</quote></cit><pc>,</pc> <cit type="example"><quote>auctor legis</quote></cit><pc>,</pc> <cit type="example"><quote>auctor carminis</quote></cit><pc>, </pc><cit type="example"><quote>auctor generis</quote></cit></sense> 
+           <sense n="2b" xml:id="LBR.auctor.2b"> 
+             <lbl> b)</lbl>
+              <def xml:lang="bg">който потвърждава</def><pc>,</pc> 
+              <def xml:lang="bg">който одобрява</def><pc>;</pc>
+           <cit type="example"><quote> auctores fiunt patres</quote></cit> <cit type="translation" xml:lang="bg"><quote>сенаторите одобряват</quote></cit><pc>.</pc></sense> 
+        <pc> — </pc>
+             <sense n="3" xml:id="LBR.auctor.3">
+                <lbl>3. </lbl>
+                <sense n="3a" xml:id="LBR.auctor.3a">
+                   <lbl>а) </lbl><def xml:lang="bg">притежател</def><pc>;</pc>
+                   <def xml:lang="bg">продавач</def> 
+                   <cit type="example"><quote>а malo auctore emere</quote></cit></sense>
+           <pc> , </pc>
+                <sense n="3b" xml:id="LBR.auctor.3b">
+                   <lbl>b) </lbl>
+                   <def xml:lang="bg">опекун</def><pc>,</pc> <def xml:lang="bg">поръчител</def><pc>;</pc> <def xml:lang="bg">защитник</def></sense>
+             </sense>
+          </sense><pc>, </pc></entry>
+      </body>
+   </text>
+</TEI>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title/>
+            <author>Диана</author>
+         </titleStmt>
+         <editionStmt>
+            <edition>
+               <date>2020-05-31</date>
+            </edition>
+         </editionStmt>
+         <publicationStmt>
+            <p>unknown</p>
+         </publicationStmt>
+         <sourceDesc>
+            <p>Converted from a Word document</p>
+         </sourceDesc>
+      </fileDesc>
+      <encodingDesc>
+         <appInfo>
+            <application ident="TEI_fromDOCX" version="2.15.0" xml:id="docxtotei">
+               <label>DOCX to TEI</label>
+            </application>
+         </appInfo>
+      </encodingDesc>
+      <revisionDesc>
+         <listChange>
+            <change>
+               <date>2020-05-31T10:04:35Z</date>
+               <name>Диана</name>
+            </change>
+         </listChange>
+      </revisionDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <p style="text-align:center;">
+            <hi rend="bold" style="font-size:14pt">A</hi>
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">a, ab, abs</hi> 
+            <hi rend="italic" style="font-size:14pt">praep. с abl.</hi> 
+            <hi rend="bold" style="font-size:14pt">I.</hi> 
+            <hi rend="italic" style="font-size:14pt">за място</hi>
+            <hi style="font-size:14pt" xml:space="preserve">: </hi>
+            <hi rend="bold" style="font-size:14pt">1. a)</hi> 
+            <hi rend="italic" style="font-size:14pt">при abl. separ., orig.</hi> 
+            <hi rend="bold" style="font-size:14pt">от</hi> 
+            <hi style="font-size:14pt">secerne te a bonis раздели се от добрите хора (Lucret. De rerum natura); Belgas esse ortos ab Germanis че белгите произлизат от германите; ab milibus passuum duobus castra posuerunt разположиха лагера на разстояние 2000 крачки.</hi>                           
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">b) </hi>
+            <hi rend="italic" style="font-size:14pt">при abl. auct.</hi>
+            <hi style="font-size:14pt" xml:space="preserve">, </hi>
+            <hi rend="italic" style="font-size:14pt">causae</hi> 
+            <hi rend="bold" style="font-size:14pt">от, поради</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> se ita a patribus didicisse че така съм се научил от предците, niger a radiis solis черен поради лъчите на слънцето, tempus a nostris triste malis тъжно поради нашите беди време, ab odio поради омраза. – </hi>                         
+            <hi rend="bold" style="font-size:14pt">2. a)</hi> 
+            <hi rend="italic" style="font-size:14pt">за означаване страната, посоката</hi>
+            <hi style="font-size:14pt" xml:space="preserve">: </hi>
+            <hi rend="bold" style="font-size:14pt">от, откъм, при, у, на</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">castra munita а porta dеcumana лагер укрепен откъм портата (Caes. B. G. 3.25); a fronte отпред; a tergo отзад; a latere отстрани; a dextro cornu на дясното крило; a dextra отдясно, вдясно; а sinistra отляво, вляво; а medio colle посред хълма; </hi>                  
+            <hi rend="italic" style="font-size:14pt">прен.</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">а reo dicere говоря в полза на обвиняемия; esse ab aliquo на нечия страна съм; stare ab aliquo на нечия страна съм. </hi>              
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi rend="italic" style="font-size:14pt">при отношение:</hi> 
+            <hi rend="bold" style="font-size:14pt">откъм, относително</hi> 
+            <hi style="font-size:14pt">inops ab amicis беден на приятели.</hi>     
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> c)</hi> 
+            <hi rend="italic" style="font-size:14pt">за означаване особен вид дейност</hi>
+            <hi style="font-size:14pt">: servus а pedibus бързоходец; servus а manu писар; servus ab epistulis секретар; servus а rationibus сметководител. –</hi>      
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> II.</hi> 
+            <hi rend="italic" style="font-size:14pt">за време</hi>
+            <hi style="font-size:14pt" xml:space="preserve">: </hi>
+            <hi rend="bold" style="font-size:14pt">1. от</hi> 
+            <hi style="font-size:14pt">ab hora tertia от третия час; а puero от детство. –</hi>        
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. след</hi> 
+            <hi style="font-size:14pt">ab his tacuit след това млъкна; ab urbe condita след основаването на града; missio а sedecim annis уволняване след 10 години.</hi>          
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">aveo 2 </hi>
+            <hi rend="italic" style="font-size:14pt">само imperat.</hi> 
+            <hi rend="bold" style="font-size:14pt">avē, avētō, avēte</hi> 
+            <hi rend="italic" style="font-size:14pt">при среща:</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">здравей! </hi>
+            <hi rend="italic" style="font-size:14pt">при раздяла:</hi> 
+            <hi style="font-size:14pt">прощавай! сбогом!</hi>
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">abacus, ī </hi>
+            <hi rend="italic" style="font-size:14pt">m (гр.)</hi> 
+            <hi style="font-size:14pt">луксозна масичка; дъска; масичка за игра.</hi>   
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ab-do, didī, ditus</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 3 </hi>
+            <hi rend="bold" style="font-size:14pt">1.</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">отдалечавам; in insulam заточвам на остров; </hi>   
+            <hi rend="italic" style="font-size:14pt">refl.</hi> 
+            <hi style="font-size:14pt">оттеглям ce se abdere in Macedoniam оттеглям се в Македония. –</hi>   
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. </hi>
+            <hi style="font-size:14pt">скривам sub terram abditus скрит под земята; se abdere in silvas скривам се в гората; caput casside покривам главата си с шлем. –</hi>          
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 3.</hi> 
+            <hi rend="italic" style="font-size:14pt">поет. с dat.</hi> 
+            <hi style="font-size:14pt">забивам lateri ensem забивам меч в гърдите (Verg. Aen. 2.554)</hi>    
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ab-eo, iī, itum, īre 1.</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">отивам си, заминавам; ех conspectu загубвам се от погледа, изчезвам от погледа; ab oculis загубвам се от погледа, изчезвам от погледа; е vita abire прощавам се с живота, умирам; magistratu abire напускам длъжността, подавам оставка. – </hi>                     
+            <hi rend="bold" style="font-size:14pt">2. a)</hi> 
+            <hi style="font-size:14pt">отклонявам се; отдалечавам се, отивам далеч.</hi>   
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> b)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">изчезвам somnus сънят изчезва; timor страхът изчезва. </hi>     
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">c) </hi>
+            <hi style="font-size:14pt">преминавам в нещо, обръщам се в нещо in villos превръщат се в козина, in silvas превръщат се в гори (Ov. Met. 4.657).</hi>     
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ab-erro</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 1 заблуждавам се, отдалечавам се, отклонявам се а sententia отклонявам се от мнението, на различно мнение съм.</hi>          
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ab-icio, iēcī, iectus</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 3</hi>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 1. </hi>
+            <hi style="font-size:14pt">отхвърлям, захвърлям, хвърлям tu arma abicienda censes? ти смяташ ли, че оръжията трябва да бъдат хвърлени? –</hi>          
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">захвърлям, отказвам се от нещо, напускам, пренебрегвам vitam напускам живота, умирам salutem …….. </hi>       
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi style="font-size:14pt">прахосвам pecuniam прахосвам пари. –</hi>   
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 3.</hi> 
+            <hi style="font-size:14pt">свалям, събарям, хвърлям se in herba хвърлям се в тревата, se е muro in mare хвърлям се от стената в морето. –</hi>     
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 4. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">обезсилвам; обезсърчавам, отчайвам. </hi>
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi style="font-size:14pt">принизявам, понижавам animantes ad pastum снизявам живите същества до паша (Cic. De Amic. 1.9.26); senatus auctoritatem понижавам авторитета на сената.</hi>              
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ab-rumpo, rūpī, ruptus</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">3 </hi>
+            <hi rend="bold" style="font-size:14pt">1. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">откъсвам, разкъсвам ramos откършвам клони; vincula разкъсвам окови. </hi>    
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi rend="italic" style="font-size:14pt">pass.</hi> 
+            <hi style="font-size:14pt">избухвам abruptis procellis посред разразили се бури (Verg. Georg. 3.259) –</hi>      
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a) </hi>
+            <hi style="font-size:14pt">разкъсвам abruptis nubibus сред разкъсани облаци (Verg. Aen. 3.199.); разрушавам pontem разрушавам мост; отварям venas отварям вените.</hi>             
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">b) </hi>
+            <hi style="font-size:14pt" xml:space="preserve">прекъсвам, прекратявам, преждевременно свършвам vitam умирам. </hi>   
+            <hi rend="bold" style="font-size:14pt">c)</hi> 
+            <hi style="font-size:14pt">нарушавам.</hi>
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ab-solvo, solvī, solūtus</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 3 </hi>
+            <hi rend="bold" style="font-size:14pt">1.</hi> 
+            <hi style="font-size:14pt">отвързвам, отделям; освобождавам; оправдавам; absolutus improbitatis освободен от обвинение в безчестие; crimine оправдан за престъпление; culpa свободен от вина. –</hi>         
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">изпращам. </hi>
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi style="font-size:14pt">довършвам opera довършвам дела.</hi>  
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">ab-sum, a-fuī, a-futūrus, ab-esse 1. </hi>
+            <hi style="font-size:14pt">отсъствам, намирам се далеч; а bello стоя настрана от войната, не вземам участие във войната; а periculis стоя настрана от опасности; toto bello стоя настрана от цялата война, не вземам участие в цялата война. –</hi>                     
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2.</hi> 
+            <hi style="font-size:14pt">не подкрепям, не помагам alicui не помагам някому, не подкрепям някого. –</hi>        
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 3.</hi> 
+            <hi style="font-size:14pt">липсвам, изчезвам. –</hi>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 4.</hi> 
+            <hi style="font-size:14pt">отделен съм, отстоя, отдалечен съм longe остоя надалеч, multum много съм далеч; paulum abest, quin малко остава да. –</hi>            
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 5. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">далеч съм, чужд съм а scelere престъплението ми е чуждо, abest а me regni suspicio далеч съм от подозрение в стремеж към царска власт. </hi>            
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi style="font-size:14pt">свободен съм, чист а culpa свободен съм от вина.</hi>    
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> c)</hi> 
+            <hi style="font-size:14pt">не подхождам.</hi> 
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ab-undo</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 1 </hi>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">1. </hi>
+            <hi style="font-size:14pt">преливам, разливам се Nilus Нил прелива, Нил се разлива. –</hi>      
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a)</hi> 
+            <hi style="font-size:14pt">богат съм, изобилствам с amore преливам от любов, copia omnium rerum</hi>     
+            <seg xml:space="preserve">  </seg>
+            <hi style="font-size:14pt">преливам от изобилие на всевъзможни неща (Caes. Civ. 1.49), equitatu разполагам с многочислена конница.</hi>         
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi style="font-size:14pt">в изобилие съм, изобилствам pecunia парите са в изобилие.</hi>     
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">atque</hi> 
+            <hi rend="italic" style="font-size:14pt">и</hi> 
+            <hi rend="bold" style="font-size:14pt">ас</hi> 
+            <hi rend="italic" style="font-size:14pt">coniunct.</hi> 
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">1. </hi>
+            <hi style="font-size:14pt" xml:space="preserve">и, и дори. – </hi>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">2. </hi>
+            <hi rend="italic" style="font-size:14pt">при сходство и сравнение:</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">както, отколкото aeque doctus atque ille толкова учен колкото онзи; illi sunt alio ingenio ac tu онези са с различен нрав от теб (Plaut. Ps. 4. 7. 35). – </hi>                 
+            <hi rend="bold" style="font-size:14pt">3.</hi> 
+            <hi style="font-size:14pt">simul ac (atque) щом като.</hi> 
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ac-cēdo, cēssī, cēssum</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 3 </hi>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">1. </hi>
+            <hi style="font-size:14pt">пристъпвам, идвам, приближавам се до ad Caesarem пристъпвам към Цезар; in Macedoniam идвам в Македония; Iugurtham приближавам се до Югурта. –</hi>            
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">приближавам, настъпвам febris настъпва треска; ad amicitiam спечелвам приятелство. </hi>      
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">пристъпвам към, подемам, почвам ad negotium пристъпвам към работа; посвещавам се ad magistratus встъпвам в магистратска длъжност; ad rem publicam посвещавам се на държавата. </hi>               
+            <hi rend="bold" style="font-size:14pt">c)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">съгласявам се, одобрявам ad meam sententiam присъединява се към мнението ми, одобрявам съюза. </hi>           
+            <hi rend="bold" style="font-size:14pt">d)</hi> 
+            <hi style="font-size:14pt">приближавам се, сходен съм homines ad deos хората се приближават до боговете. –</hi>          
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 3</hi>
+            <hi style="font-size:14pt" xml:space="preserve">. приближавам се, прибавям се ad causam novum crimen ново обвинение се прибавя към процеса (Cic. Pro Quint. 2.1. 167). – </hi>             
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">4. </hi>
+            <hi rend="italic" style="font-size:14pt">impers.</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">accedit прибавя се, добавя се още и това. </hi>    
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ac-cendo, cendī, cēnsus</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 3 </hi>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">1. </hi>
+            <hi style="font-size:14pt">запалвам, подпалвам rogum запалвам клада, ignem запалвам огън. –</hi>     
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">подбуждам, възбуждам, подстрекавам animum ad virtutem подбуждам душата към добродетел, seditionem подстрекавам бунт. </hi>         
+            <hi rend="bold" style="font-size:14pt">b.</hi> 
+            <hi style="font-size:14pt">раздухвам, разпалвам; увеличавам proelium разпалвам сражението; spem увеличавам надеждата.</hi>     
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ac-cido, cidī</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">3 </hi>
+            <hi rend="bold" style="font-size:14pt">1.</hi> 
+            <hi style="font-size:14pt">падам tela падат копия. –</hi>   
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">достигам, достигам до, прониквам vox ad hostes викът стигна до враговете. </hi>        
+            <hi rend="bold" style="font-size:14pt">b)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">настъпвам, случвам се, ставам detrimentum accidit настава несполука; </hi>     
+            <hi rend="italic" style="font-size:14pt">impers.</hi> 
+            <hi style="font-size:14pt">accidit ut</hi>  
+            <hi rend="italic" style="font-size:14pt">или с acc. c. inf.</hi> 
+            <hi style="font-size:14pt">случва се, че…</hi> 
+         </p>
+         <p>
+            <hi rend="bold" style="font-size:14pt">ac-cingo, cīnxī, cīnctus</hi>
+            <hi style="font-size:14pt" xml:space="preserve"> 3 </hi>
+            <hi rend="bold" style="font-size:14pt">1.</hi> 
+            <hi style="font-size:14pt">опасвам, препасвам. –</hi>
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve"> 2. a)</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">въоръжавам miles accinctus въоръжен войник; accingor armis въоръжавам се. </hi>     
+            <hi rend="bold" style="font-size:14pt" xml:space="preserve">b) </hi>
+            <hi style="font-size:14pt">se accingere</hi>  
+            <hi rend="italic" style="font-size:14pt">и</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">accingi въоръжавам ce, приготвям се, залавям ce ad consulatum приготвям се за консулство; in proelium приготвям се за битката; </hi>            
+            <hi rend="italic" style="font-size:14pt">с dat.</hi> 
+            <hi style="font-size:14pt" xml:space="preserve">pugnae въоръжавам се за битката; </hi>    
+            <hi rend="italic" style="font-size:14pt" xml:space="preserve">с inf. </hi>
+            <hi style="font-size:14pt">accingor dicere pugnas залавям се да възпея сражения (Verg. Georg. 3.46).</hi>       
+         </p>
+      </body>
+   </text>
+</TEI>

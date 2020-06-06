@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../TEI_Lex-0/TEILex0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-stylesheet type="text/css" href="johnson.css"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Title</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>bla</publisher>
+            <date>1888</date>
+            <pubPlace>Sofia</pubPlace>
+         </publicationStmt>
+         <sourceDesc>
+            <biblStruct>
+               <analytic>
+                  <author>a</author>
+               </analytic>
+            </biblStruct>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <entry xml:id="LBR.obduco" xml:lang="la" sortKey="obduco"> 
+            <form type="lemma"><orth>ob-duco</orth></form><pc>,</pc>
+            <form type="inflected">duxi</form><pc>, </pc><form type="inflected">ductus</form> <gramGrp><gram type="iType">3</gram></gramGrp> 
+            <sense n="1" xml:id="LBR.obduco.1">
+               <lbl>1.</lbl> 
+               <def xml:lang="bg">водя срещу</def><pc>,</pc> <def xml:lang="bg">довеждам пред</def> 
+               <cit type="example"><quote>exercitum ad oppidum</quote></cit> <pc>;</pc> <cit type="example"><quote>posterum diem obducere</quote> <cit type="translation" xml:lang="bg"><quote>прибавям (ден)</quote></cit></cit><pc>.</pc></sense> <pc>— </pc> <!-- ORIG posterum diem obducere прибавям -->
+            <sense n="2"  xml:id="LBR.obduco.2">
+               <lbl>2.</lbl> 
+               <def xml:lang="bg">прокарвам (пред, около нщ.)</def>  <!-- това в скобите? -->
+               <cit type="example"><quote>fossam</quote></cit><pc>,</pc>
+            <cit type="example"><quote>vallum viis</quote></cit><pc>.</pc> </sense><pc>— </pc>
+            <sense n="3" xml:id="LBR.obduco.3">
+               <lbl>3. </lbl>
+               <sense n="3a" xml:id="LBR.obduco.3a">
+                  <lbl>а) </lbl>
+                  <def xml:lang="bg">навличам </def>
+                  <gramGrp><gram type="colloc">aliquid alicui rei</gram></gramGrp><pc>;</pc> 
+                  <cit type="example"><quote>tenebras clarissimis rebus obducere</quote></cit>  <!-- ORIG tenebras clarissimis rebus, преводи: без „ясни неща“ -->
+                  <cit type="translation" xml:lang="bg"><quote>замъглявам ясни неща</quote></cit><pc>,</pc><cit type="translation" xml:lang="bg"><quote>навличам мрак върху ясни неща</quote></cit><pc>, </pc><cit type="translation" xml:lang="bg"><quote>покривам с мрак ясни неща</quote></cit><pc>,</pc> <cit type="translation" xml:lang="bg"><quote>затъмнявам ясни неща</quote></cit> <pc>;</pc> 
+                  <usg type="meaningType">прен.</usg> <!-- additional @norm needs to be defined -->
+                  <cit type="example"><quote>callum dolori obducere</quote></cit> <!-- ORIG tenebras clarissimis rebus -->
+                  <cit type="translation" xml:lang="bg"><quote>притъпявам чувствителността</quote></cit> <pc>,</pc><cit type="translation" xml:lang="bg"><quote>ставам нечувствителен</quote></cit> <pc>;</pc> <!--ORIG nох или nubes caelo obducitur разстила се по небето, небето се покрива с.-->
+            </sense> 
+               <sense n="3b" xml:id="LBR.obduco.3b">
+                  <lbl>b) </lbl>
+                  <def xml:lang="bg">покривам</def> 
+                  <cit type="example"><quote>arbores obducuntur cortice</quote></cit><pc>;</pc> <cit type="example"><quote>frontem obducere</quote></cit> <cit type="translation" xml:lang="bg"><quote>намръщвам чело</quote></cit> <!--ORIG frontem
+            намръщвам--><pc>; </pc>
+                  <cit type="example"><quote>quae vеtustas obduxit </quote></cit>
+                  <cit type="translation" xml:lang="bg"><quote>което времето покри със забрава</quote></cit>
+                  <pc>;</pc> 
+                  <cit type="example"><quote>frons obductus</quote></cit> <cit type="example"><quote>мрачно,
+            намусено чело</quote></cit><pc>;</pc>  <!-- ORIG frons obductus мрачно намусено -->
+                  <cit type="example"><quote>nox obducta </quote></cit> <cit type="translation" xml:lang="bg"><quote>тъмна, мрачна нощ</quote></cit><!--ORIG nox obducta тъмна, мрачна--><pc>;</pc> 
+                  <cit type="example"><quote>luctus obductus</quote></cit>
+                  <cit type="translation" xml:lang="bg"><quote>успокоила се скръб</quote></cit>
+                  <cit type="example"><quote>dolor obductus</quote></cit>
+                  <cit type="translation" xml:lang="bg"><quote>успокоила се болка</quote></cit>
+                  <!--ORIG luctus, dolor obductus успокоила се болка.-->
+               </sense>
+            </sense> 
+            <pc>—</pc> 
+            <sense n="4" xml:id="LBR.obduco.4"><lbl>4.</lbl>
+            <def xml:lang="bg">поглъщам</def><pc>,</pc><def xml:lang="bg">пия</def> <cit type="example"><quote>venenum obducere</quote></cit></sense> 
+         </entry>
+      </body>
+
+   </text>
+</TEI>

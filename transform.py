@@ -7,6 +7,8 @@ def get_ns(string):
     return r'{http://www.tei-c.org/ns/1.0}' + string
 
 def remove_ref_parent(body):
+    # this is for cases when one of the people working on the docx copied something
+    # from an external source (like Perseus) and retained its hyperlink
     for p in body:
         for idx in range(len(p)):
             x = p[idx]
@@ -16,6 +18,13 @@ def remove_ref_parent(body):
                 for i in range(len(children)):
                     p.insert(i+idx, children[i])
 
+def remove_style_attrib(body):
+    # this is for cases when one of the people working on the docx copied something
+    # from an external source (like Perseus) and retained its original font size and family
+    for p in body:
+        for el in p:
+            if 'style' in el.attrib.keys():
+                el.attrib.pop('style')
 
 def get_title_lemma(p):
     his = [x for x in p if x.tag == get_ns('hi')]
@@ -61,6 +70,7 @@ tree = et.parse('example/raw_input.xml', parser)
 root = tree.getroot()
 body = root.find(f'.//{get_ns("body")}')
 remove_ref_parent(body)
+remove_style_attrib(body)
 
 
 
@@ -82,7 +92,7 @@ for p in body.iter(f'{get_ns("p")}'):
     merge_para_and_template(entry, contents)
 
 
-    new_tree.write(open(f'example/example-output/{counter}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+    new_tree.write(open(f'example/example-output/{title_lemma}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
     # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
 
 

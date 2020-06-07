@@ -2,6 +2,7 @@ from copy import deepcopy
 from lxml import etree as et
 import re
 from unidecode import unidecode
+import string 
 
 def get_ns(string):
     return r'{http://www.tei-c.org/ns/1.0}' + string
@@ -25,6 +26,26 @@ def remove_style_attrib(body):
         for el in p:
             if 'style' in el.attrib.keys():
                 el.attrib.pop('style')
+
+def merge_elements_with_same_attribs(body):
+    for p in body:
+        for idx in range(len(p)-1,-1,-1):
+            curr_node = p[idx]
+            if idx == len(p)-1:
+                old_node = curr_node
+                continue
+            if curr_node.get('rend') == old_node.get('rend'):
+                if curr_node.text[-1] != ' ' and old_node.text[0] not in string.punctuation:
+                    curr_node.text += ' '
+                curr_node.text += old_node.text
+                if old_node.get('{http://www.w3.org/XML/1998/namespace}space') == 'preserve':
+                    curr_node.attrib['{http://www.w3.org/XML/1998/namespace}space'] = 'preserve'
+                p[idx] = curr_node
+                p.remove(old_node)
+            old_node = curr_node
+
+
+
 
 def get_title_lemma(p):
     his = [x for x in p if x.tag == get_ns('hi')]
@@ -71,6 +92,7 @@ root = tree.getroot()
 body = root.find(f'.//{get_ns("body")}')
 remove_ref_parent(body)
 remove_style_attrib(body)
+merge_elements_with_same_attribs(body)
 
 
 

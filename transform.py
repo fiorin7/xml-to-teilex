@@ -6,6 +6,17 @@ from unidecode import unidecode
 def get_ns(string):
     return r'{http://www.tei-c.org/ns/1.0}' + string
 
+def remove_ref_parent(body):
+    for p in body:
+        for idx in range(len(p)):
+            x = p[idx]
+            if x.tag == get_ns('ref'):
+                children = x.getchildren()
+                p.remove(x)
+                for i in range(len(children)):
+                    p.insert(i+idx, children[i])
+
+
 def get_title_lemma(p):
     his = [x for x in p if x.tag == get_ns('hi')]
     first_line = re.split(', | ', his[0].text)
@@ -17,6 +28,11 @@ def get_title_lemma(p):
 def invalid_para(p):
     his = [hi for hi in p]
     return len(his) == 1 and len(his[0].text) == 1
+    # needs more checks
+
+def get_p_contents(p):
+    return [x for x in p if x.tag == get_ns('hi')]
+    # what do with nested hi in ref
 
 def get_new_tree(template):
     return deepcopy(template)
@@ -34,8 +50,8 @@ def get_entry(lemma):
     return entry
 
 
-def merge_para_and_template(entry, p):
-    entry.append(p)
+def merge_para_and_template(entry, contents):
+    [entry.append(hi) for hi in contents]
 
 
 parser = et.XMLParser(remove_blank_text=True)
@@ -44,6 +60,7 @@ template = et.parse('template.xml', parser)
 tree = et.parse('example/raw_input.xml', parser)
 root = tree.getroot()
 body = root.find(f'.//{get_ns("body")}')
+remove_ref_parent(body)
 
 
 
@@ -60,8 +77,9 @@ for p in body.iter(f'{get_ns("p")}'):
     
     entry = get_entry(title_lemma)
     new_body.append(entry)
+    contents = get_p_contents(p)
 
-    merge_para_and_template(entry, p)
+    merge_para_and_template(entry, contents)
 
 
     new_tree.write(open(f'example/example-output/{counter}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)

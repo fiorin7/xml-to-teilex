@@ -44,6 +44,10 @@ def merge_elements_with_same_attribs(body):
                 p.remove(old_node)
             old_node = curr_node
 
+def general_fix_up_input(body):
+    remove_ref_parent(body)
+    remove_style_attrib(body)
+    merge_elements_with_same_attribs(body)
 
 
 
@@ -90,9 +94,7 @@ template = et.parse('template.xml', parser)
 tree = et.parse('example/raw_input.xml', parser)
 root = tree.getroot()
 body = root.find(f'.//{get_ns("body")}')
-remove_ref_parent(body)
-remove_style_attrib(body)
-merge_elements_with_same_attribs(body)
+general_fix_up_input(body)
 
 
 

@@ -4,12 +4,12 @@ import re
 from unidecode import unidecode
 import string 
 
-def get_ns(string):
-    return r'{http://www.tei-c.org/ns/1.0}' + string
+def get_ns(tag):
+    '''Prefixes tag with TEI namespace.'''
+    return r'{http://www.tei-c.org/ns/1.0}' + tag
 
 def remove_ref_parent(body):
-    # this is for cases when one of the people working on the docx copied something
-    # from an external source (like Perseus) and retained its hyperlink
+    '''Removes ref parent tag (which contains hyperlink).'''
     for p in body:
         for idx in range(len(p)):
             x = p[idx]
@@ -20,14 +20,18 @@ def remove_ref_parent(body):
                     p.insert(i+idx, children[i])
 
 def remove_style_attrib(body):
-    # this is for cases when one of the people working on the docx copied something
-    # from an external source (like Perseus) and retained its original font size and family
+    '''Removes the style attribute with it's values (font size and font family).'''
     for p in body:
         for el in p:
             if 'style' in el.attrib.keys():
                 el.attrib.pop('style')
 
 def merge_elements_with_same_attribs(body):
+    '''
+    Merges two xml nodes (the tags with their attributes and content)
+    if the have matching attributes and values.
+    xml:space attribute isn't taken into account during the comparison and is retained after the merging
+    '''
     for p in body:
         for idx in range(len(p)-1,-1,-1):
             curr_node = p[idx]
@@ -45,38 +49,46 @@ def merge_elements_with_same_attribs(body):
             old_node = curr_node
 
 def general_fix_up_input(body):
+    '''This function calls all functions which do the initial manipulation of the input xml'''
     remove_ref_parent(body)
     remove_style_attrib(body)
     merge_elements_with_same_attribs(body)
 
 
-
 def get_title_lemma(p):
+    '''
+    Returns the "dictionary form" of the lemma e.g. ago, homo, ego.
+    Words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one.
+    '''
     his = [x for x in p if x.tag == get_ns('hi')]
     first_line = re.split(', | ', his[0].text)
     lemma = unidecode(first_line[0])
     lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
-    # words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one
     return lemma_stripped
 
 def invalid_para(p):
+    '''Dismisses the p's which contain the one letter title of a section like A, B etc.'''
     his = [hi for hi in p]
     return len(his) == 1 and len(his[0].text) == 1
     # needs more checks
 
 def get_p_contents(p):
+    '''Returns the children of p of interest (in 'hi' tags).'''
     return [x for x in p if x.tag == get_ns('hi')]
     # what do with nested hi in ref
 
 def get_new_tree(template):
+    '''Returns deepcopy of template to insert new entry in.'''
     return deepcopy(template)
 
 def get_new_body(new_tree):
+    '''Returns variable with the "found" body of the template.'''
     new_root = new_tree.getroot()
     new_body = new_root.find(f'.//{get_ns("body")}')
     return new_body
 
 def get_entry(lemma):
+    '''Creates entry parent node with its attributes.'''
     entry = et.Element("entry")
     entry.set('sortKey', f"{lemma}")
     entry.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{lemma}")
@@ -85,6 +97,7 @@ def get_entry(lemma):
 
 
 def merge_para_and_template(entry, contents):
+    '''Inserts entry in the template.'''
     [entry.append(hi) for hi in contents]
 
 

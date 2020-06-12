@@ -10,9 +10,13 @@ def is_one_form_verb(content0, content1):
     return content1.strip().isdigit() and content0[-1].strip() == 'o'
 
 def is_deponent_verb(content0, content1):
-    return content1.strip().isdigit() and content0[-1].strip() == 'o' or \
-        content0[-4:].strip() == 'o(r)' or content0[-2:].strip() == 'or' \
-            or (content0.split(', ')[0][-2:].strip() == 'or' and content0.split(', ')[1][-3:].strip() == 'sum')
+    return content1.strip().isdigit() and (content0.strip()[-1] == 'o' or \
+        (content0.split(', ')[0].strip()[-2:] == 'or' and content0.split(', ')[1].strip()[-3:] == 'sum') or\
+            content0.strip()[-4:] == 'o(r)' or content0.strip()[-2:] == 'or')
+
+def is_special_verb(content0):
+    first_word = content0.split(', ')[0].strip()
+    return first_word[-4:] == '-sum' or first_word[-5:] == '-fero' or first_word[-3:] == '-eo'
 
 def is_simple_noun(content0, content1):
     return  content1.strip() in ('m', 'f', 'n', 'mf')
@@ -48,11 +52,14 @@ def is_multiple_form_verb(content0, content1):
 def match_and_prefix_form_and_grammar_meta(contents):
     content0 = contents[0].text
     content1 = contents[1].text
+    
     return any([
     is_adj_1_2_decl(content0, content1),
     is_adv(content0, content1),
     is_one_form_verb(content0, content1),
     is_multiple_form_verb(content0, content1),
+    is_deponent_verb(content0, content1),
+    is_special_verb(content0),
     is_noun(content0, content1),
     is_conjunct(content0, content1),
     is_praep(content0, content1)])

@@ -2,7 +2,8 @@ from copy import deepcopy
 from lxml import etree as et
 import re
 from unidecode import unidecode
-import string 
+import string
+import matcher as m
 
 def get_ns(tag):
     '''Prefixes tag with TEI namespace.'''

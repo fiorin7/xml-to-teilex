@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../TEI_Lex-0/TEILex0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Title</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Publication Information</publisher>
+         </publicationStmt>
+         <sourceDesc>
+            <bibl>Information about the source</bibl>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <entry sortKey="ab" xml:id="LBR.ab" xml:lang="la">
+            <form type="lemma">a</form>
+            <pc>,</pc>
+            <form type="lemma">ab</form>
+            <pc>,</pc>
+            <form type="lemma">abs</form>
+            <gramGrp><gram type="pos">praep.</gram>
+               <gram type="colloc">c abl.</gram></gramGrp>
+            <sense xml:id="LBR.ab.I">
+               <lbl>I.</lbl>
+               <usg type="domain">за място</usg>
+               <!-- THIS IS NOT THE CORRECT VALUE -->
+               <!-- IS IT? -->
+               <pc>:</pc>
+               <sense xml:id="LBR.ab.I1">
+                  <lbl>1.</lbl>
+                  <sense xml:id="LBR.ab.I1a">
+                     <lbl>а</lbl>
+                     <pc>)</pc>
+                     <usg type="hint">при abl. separ.</usg>
+                     <def xml:lang="bg">от</def>
+                     <cit type="example">
+                        <quote>secerne te a bonis</quote>
+                     </cit>
+                     <pc>,</pc>
+                     <usg type="hint">при abl. orig.</usg>
+                     <def xml:lang="bg">от</def>
+                     <pc>;</pc>
+                     <cit type="example">
+                        <quote>Belgas esse ortos ab Germanis</quote>
+                     </cit>
+                     <pc>;</pc>
+                     <cit type="example">
+                        <quote>ab milibus passuum duobus castra posuerunt</quote>
+                     </cit>
+                     <cit type="translation">
+                        <quote> на разстояние 2000 крачки...</quote>
+                     </cit>
+                  </sense>
+                  <sense xml:id="LBR.ab.I1b">
+                     <lbl>b</lbl>
+                     <pc>)</pc>
+                     <usg type="hint">при abl. auct., causae</usg>
+                     <def>от</def>
+                     <pc>,</pc>
+                     <def>поради</def>
+                     <cit type="example">
+                        <quote>se ita a patribus didicisse</quote>
+                     </cit>
+                     <pc>,</pc>
+                     <cit type="example">
+                        <quote>niger a radiis solis</quote>
+                     </cit>
+                     <pc>,</pc>
+                     <cit type="example">
+                        <quote>tempus a nostris triste malis</quote>
+                     </cit>
+                     <pc>,</pc>
+                     <cit type="example">
+                        <quote>ab odio</quote>
+                     </cit>
+                     <pc>.</pc>
+                  </sense>
+               </sense>
+               <sense xml:id="LBR.ab.I2">
+                  <pc>—</pc>
+                  <lbl>2</lbl>
+                  <pc>.</pc>
+                  <sense xml:id="LBR.I2a"><lbl>а</lbl><pc>)</pc>
+                     <usg type="hint">за означаване страната, посоката</usg>
+                     <pc>:</pc>
+                     <def xml:lang="bg">от</def><pc>,</pc>
+                     <def xml:lang="bg">откъм</def><pc>,</pc>
+                     <def xml:lang="bg">при</def><pc>,</pc>
+                     <def xml:lang="bg">у</def><pc>,</pc>
+                     <def xml:lang="bg">на</def>
+                     <cit type="example">
+                        <quote>castra munita erant а porta ducumana</quote>
+                     </cit><pc>;</pc>
+                     <cit type="example">
+                        <quote>a fronte</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>отпред</quote>
+                     </cit><pc>,</pc>
+                     <cit type="example">
+                        <quote>a tergo</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>отзад</quote>
+                     </cit><pc>,</pc>
+                     <cit type="example">
+                        <quote>a latere</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>отстрани</quote>
+                     </cit><pc>,</pc>
+                     <cit type="example">
+                        <quote>a dextro cornu</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>на дясното крило</quote>
+                     </cit><pc>,</pc>
+                     <cit type="example">
+                        <quote>a dextra</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>отдясно, вдясно</quote>
+                     </cit><pc>,</pc>
+                     <cit type="example">
+                        <quote>а sinistra</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>отляво, вляво</quote>
+                     </cit><pc>;</pc>
+                     <cit type="example">
+                        <quote>а medio colle</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>сред хълма</quote>
+                     </cit><pc>;</pc>
+                     <usg type="meaningType">прен.</usg>
+                     <cit type="example">
+                        <quote>а reo dicere</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>говоря в полза на обвиняемия</quote>
+                     </cit>
+                     <pc>;</pc>
+                     <cit type="example">
+                        <quote>esse (stare) ab aliquo</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>на нечия страна съм</quote>
+                     </cit><pc>.</pc> </sense>
+                  <sense xml:id="LBR.ab.I2b"><lbl>b</lbl><pc>)</pc>
+                     <usg type="hint">при отношение</usg><pc>:</pc>
+                     <def xml:lang="bg">откъм</def><pc>,</pc> <def xml:lang="bg">относно</def>
+                     <!-- EX относително -->
+                     <cit type="example">
+                        <quote>inops ab amicis</quote>
+                     </cit><pc>.</pc></sense>
+                  <sense xml:id="LBR.ab.I2c">
+                     <lbl>c</lbl>
+                     <pc>)</pc>
+                     <usg type="hint">за означаване особен вид дейност</usg>
+                     <pc>:</pc>
+                     <cit type="example">
+                        <quote>servus а pedibus</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>бързоходец</quote>
+                     </cit>
+                     <pc>,</pc>
+                     <cit type="example">
+                        <quote>а manu</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>писар</quote>
+                     </cit>
+                     <pc>,</pc>
+                     <cit type="example">
+                        <quote>ab epistulis</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>секретар</quote>
+                     </cit>
+                     <pc>,</pc>
+                     <cit type="example">
+                        <quote>а rationibus</quote>
+                     </cit>
+                     <cit type="translation" xml:lang="bg">
+                        <quote>сметководител</quote>
+                     </cit>
+                     <pc>.</pc>
+                  </sense>
+               </sense>
+            </sense>
+            <sense xml:id="LBR.ab.II">
+               <pc>—</pc>
+               <lbl>II</lbl>
+               <pc>.</pc>
+               <usg type="domain">за време</usg>
+               <pc>:</pc>
+               <sense xml:id="LBR.ab.II1">
+                  <lbl>1</lbl>
+                  <pc>1</pc>
+                  <def xml:lang="bg">от</def>
+                  <cit type="example">
+                     <quote>ab hora tertia</quote>
+                  </cit>
+                  <pc>;</pc>
+                  <cit type="example">
+                     <quote>а puero</quote>
+                  </cit>
+                  <cit type="translation" xml:lang="bg">
+                     <quote>от детинство</quote>
+                  </cit>
+                  <pc>.</pc>
+               </sense>
+               <sense xml:id="LBR.ab.II2">
+                  <pc>—</pc>
+                  <lbl>2</lbl>
+                  <pc>.</pc>
+                  <def xml:lang="bg">след</def>
+                  <cit type="example">
+                     <quote>ab his tacuit</quote>
+                  </cit>
+                  <cit type="translation" xml:lang="bg">
+                     <quote>след това млъкна</quote>
+                  </cit>
+                  <pc>,</pc>
+                  <cit type="example">
+                     <quote>ab urbe condita</quote>
+                  </cit>
+                  <cit type="translation" xml:lang="bg">
+                     <quote>след основаването на града</quote>
+                  </cit>
+                  <pc>;</pc>
+                  <cit type="example">
+                     <quote>missio а sedecim annis</quote>
+                  </cit>
+                  <cit type="translation" xml:lang="bg">
+                     <quote>уволняване след 10 години</quote>
+                  </cit>
+                  <pc>.</pc>
+               </sense>
+            </sense>
+         </entry>
+      </body>
+   </text>
+</TEI>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml"
+	schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<?xml-model href="../../TEI_Lex-0/TEILex0.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0">
+   <teiHeader>
+      <fileDesc>
+         <titleStmt>
+            <title>Title</title>
+         </titleStmt>
+         <publicationStmt>
+            <publisher>Publication Information</publisher>
+         </publicationStmt>
+         <sourceDesc>
+            <bibl>Information about the source</bibl>
+         </sourceDesc>
+      </fileDesc>
+   </teiHeader>
+   <text>
+      <body>
+         <entry sortKey="Abas" xml:id="LBR.Abas" xml:lang="la"><form type="lemma"
+               ><orth>Abās</orth></form><pc>,</pc>
+            <form type="inflected">Abantis</form>
+            <gramGrp><gram type="pos">m</gram></gramGrp>
+            <sense xml:id="LBR.Abas.1">
+               <def xml:lang="bg">Абант, цар на Аргос</def>
+               <pc>.</pc>
+            </sense>
+            <sense xml:id="LBR.Abas.2"><form type="lemma"><orth>Abantēus</orth></form>
+            <gramGrp><gram type="iType">3</gram></gramGrp>
+            <def xml:lang="bg">Абантов</def><pc>.</pc></sense>
+            <form type="lemma">Abantiadēs</form><pc>,</pc> ае m потомък на А. = Acrisius, син на А., или =
+            Perseus, правнук на А. прадядо. </entry>
+      </body>
+   </text>
+</TEI>

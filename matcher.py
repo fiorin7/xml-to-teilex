@@ -3,6 +3,11 @@ import re
 def is_adj_1_2_decl(content0s, content1s):
     return content1s.isdigit() and ',' not in content0s and content0s[-2:] == 'us'
 
+def is_adj_like_acer_aequalis(content0s):
+    split_c0s = content0s.split(', ')
+    return len(split_c0s) in (2, 3) and split_c0s[-2].strip()[-2:] == 'is' and\
+        split_c0s[-1].strip()[-1] in ('e', 'е')
+
 def is_adv(content0s, content1s):
     return content1s == 'adv.' and len(re.split(', | ', content0s)) == 1
 
@@ -57,6 +62,7 @@ def match_and_prefix_form_and_grammar_meta(contents):
     
     return any([
     is_adj_1_2_decl(content0s, content1s),
+    is_adj_like_acer_aequalis(content0s),
     is_adv(content0s, content1s),
     is_one_form_verb(content0s, content1s),
     is_multiple_form_verb(content0s, content1s),

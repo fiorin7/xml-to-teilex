@@ -5,19 +5,19 @@ from unidecode import unidecode
 import string
 import matcher as m
 
-class Entries:
+class Entry:
     def __init__(self, contents=[]):
         self.contents = contents
-        self.title_lemma = self.get_title_lemma(contents)
+        self.title_lemma = self.get_title_lemma()
         self.entry_node = self.get_entry_node()
         self.entry_type = ''
     
-    def get_title_lemma(self, contents):
+    def get_title_lemma(self):
         '''
         Returns the "dictionary form" of the lemma e.g. ago, homo, ego.
         Words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one.
         '''
-        his = [x for x in p if x.tag == get_ns('hi')]
+        his = [x for x in self.contents if x.tag == get_ns('hi')]
         first_line = re.split(', | ', his[0].text)
         lemma = unidecode(first_line[0])
         lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
@@ -134,7 +134,7 @@ for p in body.iter(f'{get_ns("p")}'):
     new_tree = get_new_tree(template)
     new_body = get_new_body(new_tree)
     contents = get_p_contents(p)
-    entry = Entries(contents)
+    entry = Entry(contents)
     
     new_body.append(entry.entry_node)
     

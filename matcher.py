@@ -26,7 +26,7 @@ def is_deponent_verb(content0s, content1s):
 
 def is_special_verb(content0):
     first_word = content0.split(', ')[0].strip()
-    return first_word[-4:] == '-sum' or first_word[-5:] == '-fero' or first_word[-3:] == '-eo'
+    return (first_word[-4:] == '-sum' or first_word[-5:] == '-fero' or first_word[-3:] == '-eo') and '1.' not in content0
 
 def is_simple_noun(content1s):
     return  content1s in ('m', 'f', 'n', 'mf')
@@ -64,20 +64,36 @@ def match_and_prefix_form_and_grammar_meta(contents):
     content1 = contents[1].text
     content0s = contents[0].text.strip()
     content1s = contents[1].text.strip()
-    
-    return any([
-    is_adj_1_2_decl(content0s, content1s),
-    is_adj_like_acer_aequalis(content0s),
-    is_adj_1_2_decl_three_forms_written_out(content0s),
-    is_adv(content0s, content1s),
-    is_one_form_verb(content0s, content1s),
-    is_multiple_form_verb(content0s, content1s),
-    is_deponent_verb(content0s, content1s),
-    is_special_verb(content0),
-    is_noun(content1s),
-    is_conjunct(content0s, content1s),
-    is_praep(content1s)])
 
+    entry_type = ''
+
+    if is_adj_1_2_decl(content0s, content1s):
+        entry_type = 'adj_1_2_decl'
+    elif is_adj_like_acer_aequalis(content0s):
+        entry_type = 'adj_like_acer_aequalis'
+    elif is_adj_1_2_decl_three_forms_written_out(content0s):
+        entry_type = 'adj_1_2_decl_three_forms_written_out'
+    elif is_adv(content0s, content1s):
+        entry_type = 'adv'
+    elif is_one_form_verb(content0s, content1s):
+        entry_type = 'one_form_verb'
+    elif is_multiple_form_verb(content0s, content1s):
+        entry_type = 'multiple_form_verb'
+    elif is_deponent_verb(content0s, content1s):
+        entry_type = 'deponent_verb'
+    elif is_special_verb(content0):
+        entry_type = 'special_verb'
+    elif is_noun(content1s):
+        entry_type = 'noun'
+    elif is_conjunct(content0s, content1s):
+        entry_type = 'conjunct'
+    elif is_praep(content1s):
+        entry_type = 'praep'
+    else:
+        entry_type = 'UNKNOWN'
+    
+    return entry_type
+    
 
 
 

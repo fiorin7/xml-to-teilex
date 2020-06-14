@@ -5,6 +5,44 @@ from unidecode import unidecode
 import string
 import matcher as m
 
+class Entries:
+    def __init__(self, contents=[]):
+        self.contents = contents
+        self.title_lemma = self.get_title_lemma(contents)
+        self.entry_node = self.get_entry_node()
+        self.entry_type = ''
+    
+    def get_title_lemma(self, contents):
+        '''
+        Returns the "dictionary form" of the lemma e.g. ago, homo, ego.
+        Words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one.
+        '''
+        his = [x for x in p if x.tag == get_ns('hi')]
+        first_line = re.split(', | ', his[0].text)
+        lemma = unidecode(first_line[0])
+        lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
+        return lemma_stripped
+    
+    def get_entry_node(self):
+        '''Returns entry node with its children.'''
+        entry_parent_node = self.get_entry_parent_node(self.title_lemma)
+        return self.merge_entry_parent_and_contents(entry_parent_node, self.contents)
+    
+    def get_entry_parent_node(self, lemma):
+        '''Creates entry parent node with its attributes.'''
+        entry_node = et.Element("entry")
+        entry_node.set('sortKey', f"{lemma}")
+        entry_node.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{lemma}")
+        entry_node.set('{http://www.w3.org/XML/1998/namespace}lang', "la")
+        return entry_node
+    
+    def merge_entry_parent_and_contents(self, entry_parent_node, contents):
+        '''Inserts original contents in the entry node.'''
+        merged_entry = entry_parent_node
+        [entry_parent_node.append(hi) for hi in self.contents]
+        return merged_entry
+
+
 def get_ns(tag):
     '''Prefixes tag with TEI namespace.'''
     return r'{http://www.tei-c.org/ns/1.0}' + tag
@@ -55,18 +93,6 @@ def general_fix_up_input(body):
     remove_style_attrib(body)
     merge_elements_with_same_attribs(body)
 
-
-def get_title_lemma(p):
-    '''
-    Returns the "dictionary form" of the lemma e.g. ago, homo, ego.
-    Words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one.
-    '''
-    his = [x for x in p if x.tag == get_ns('hi')]
-    first_line = re.split(', | ', his[0].text)
-    lemma = unidecode(first_line[0])
-    lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
-    return lemma_stripped
-
 def invalid_para(p):
     '''Dismisses the p's which contain the one letter title of a section like A, B etc.'''
     his = [hi for hi in p]
@@ -88,19 +114,6 @@ def get_new_body(new_tree):
     new_body = new_root.find(f'.//{get_ns("body")}')
     return new_body
 
-def get_entry(lemma):
-    '''Creates entry parent node with its attributes.'''
-    entry = et.Element("entry")
-    entry.set('sortKey', f"{lemma}")
-    entry.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{lemma}")
-    entry.set('{http://www.w3.org/XML/1998/namespace}lang', "la")
-    return entry
-
-
-def merge_para_and_template(entry, contents):
-    '''Inserts entry in the template.'''
-    [entry.append(hi) for hi in contents]
-
 
 parser = et.XMLParser(remove_blank_text=True)
 
@@ -111,9 +124,8 @@ body = root.find(f'.//{get_ns("body")}')
 general_fix_up_input(body)
 
 
-
 counter = 0
-
+counter_matches = 0
 for p in body.iter(f'{get_ns("p")}'):
     if invalid_para(p):
         continue
@@ -121,17 +133,11 @@ for p in body.iter(f'{get_ns("p")}'):
     counter += 1
     new_tree = get_new_tree(template)
     new_body = get_new_body(new_tree)
-    title_lemma = get_title_lemma(p)
-    
-    entry = get_entry(title_lemma)
-    new_body.append(entry)
     contents = get_p_contents(p)
-
-    merge_para_and_template(entry, contents)
-
-
-    new_tree.write(open(f'example/example-output/{title_lemma}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+    entry = Entries(contents)
+    
+    new_body.append(entry.entry_node)
+    
+    new_tree.write(open(f'example/example-output/{entry.title_lemma}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
     # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
-
-
 

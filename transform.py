@@ -4,13 +4,15 @@ import re
 from unidecode import unidecode
 import string
 import matcher as m
+import teifier_for_morphological_part as morph
 
 class Entry:
     def __init__(self, contents=[]):
+        self.raw_contents = contents
         self.contents = contents
         self.title_lemma = self.get_title_lemma()
-        self.entry_node = self.get_entry_node()
-        self.entry_type = ''
+        self.entry_node = self.get_entry_parent_node(self.title_lemma)
+        self.entry_type = m.match_and_prefix_form_and_grammar_meta(self.contents)
     
     def get_title_lemma(self):
         '''
@@ -41,6 +43,14 @@ class Entry:
         merged_entry = entry_parent_node
         [entry_parent_node.append(hi) for hi in self.contents]
         return merged_entry
+    
+    def insert_morph_info_in_entry(self):
+        morph_xml, tag_span_of_morph_info = morph.get_morph_info(self.entry_type, self.contents)
+        if morph_xml:
+            for x in range(tag_span_of_morph_info):
+                # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
+                self.contents.remove(self.contents[0])
+            [self.entry_node.append(x) for x in morph_xml]
 
 
 def get_ns(tag):
@@ -135,6 +145,7 @@ for p in body.iter(f'{get_ns("p")}'):
     new_body = get_new_body(new_tree)
     contents = get_p_contents(p)
     entry = Entry(contents)
+    entry.insert_morph_info_in_entry()
     
     new_body.append(entry.entry_node)
     

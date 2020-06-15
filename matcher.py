@@ -20,9 +20,10 @@ def is_one_form_verb(content0s, content1s):
     return content1s.isdigit() and content0s[-1] == 'o'
 
 def is_deponent_verb(content0s, content1s):
-    return content1s.isdigit() and (content0s[-1] == 'o' or \
-        (content0s.split(', ')[0].strip()[-2:] == 'or' and content0s.split(', ')[1].strip()[-3:] == 'sum') or\
-            content0s[-4:] == 'o(r)' or content0s[-2:] == 'or')
+    if len(content0s.split(', ')) == 1:
+        return content1s.isdigit() and  content0s[-4:] == 'o(r)' or content0s[-2:] == 'or'
+    else:
+        return content1s.isdigit() and content0s.split(', ')[1].strip()[-3:] == 'sum'
 
 def is_special_verb(content0):
     first_word = content0.split(', ')[0].strip()

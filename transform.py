@@ -5,6 +5,7 @@ from unidecode import unidecode
 import string
 import matcher as m
 import teifier_for_morphological_part as morph
+import rearranger_of_wrong_input_tags as rt
 
 class Entry:
     def __init__(self, contents=[]):
@@ -12,7 +13,7 @@ class Entry:
         self.contents = contents
         self.title_lemma = self.get_title_lemma()
         self.entry_node = self.get_entry_parent_node(self.title_lemma)
-        self.entry_type = m.match_and_prefix_form_and_grammar_meta(self.contents)
+        self.entry_type =  self.get_entry_type()
     
     def get_title_lemma(self):
         '''
@@ -24,6 +25,20 @@ class Entry:
         lemma = unidecode(first_line[0])
         lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
         return lemma_stripped
+    
+    def get_entry_type(self):
+        match = m.match_and_prefix_form_and_grammar_meta(self.contents)
+        if match != 'UNKNOWN':
+            return match
+        else:
+            self.fix_input_morph_tags_and_raplace_wrong_ones(self.contents)
+            return m.match_and_prefix_form_and_grammar_meta(self.contents)
+    
+    def fix_input_morph_tags_and_raplace_wrong_ones(self, contents):
+        fixed_contents = rt.fix_wrong_tags_in_morph_part(contents)
+        if fixed_contents:
+            self.contents = fixed_contents
+
     
     def get_entry_node(self):
         '''Returns entry node with its children.'''
@@ -135,7 +150,7 @@ general_fix_up_input(body)
 
 
 counter = 0
-counter_matches = 0
+counter_unmatched = 0
 for p in body.iter(f'{get_ns("p")}'):
     if invalid_para(p):
         continue
@@ -151,4 +166,7 @@ for p in body.iter(f'{get_ns("p")}'):
     
     new_tree.write(open(f'example/example-output/{entry.title_lemma}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
     # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
-
+    if entry.entry_type == 'UNKNOWN':
+        counter_unmatched += 1
+        print(f'{entry.contents[0].text}|{entry.contents[1].text}')
+print(counter_unmatched)

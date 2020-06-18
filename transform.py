@@ -14,6 +14,9 @@ class Entry:
         self.title_lemma = self.get_title_lemma()
         self.entry_node = self.get_entry_parent_node(self.title_lemma)
         self.entry_type =  self.get_entry_type()
+        self.encoded_parts = {
+            'morph_part' : None
+        }
     
     def get_title_lemma(self):
         '''
@@ -59,10 +62,11 @@ class Entry:
         [entry_parent_node.append(hi) for hi in self.contents]
         return merged_entry
     
-    def insert_morph_info_in_entry(self):
+    def get_morph_info_and_insert_in_entry(self):
         morph_xml, tag_span_of_morph_info = morph.get_morph_info(self.entry_type, self.contents)
+        self.encoded_parts['morph_part'] = morph_xml
         if morph_xml:
-            for x in range(tag_span_of_morph_info):
+            for _ in range(tag_span_of_morph_info):
                 # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
                 self.contents.remove(self.contents[0])
             [self.entry_node.append(x) for x in morph_xml]
@@ -160,7 +164,7 @@ for p in body.iter(f'{get_ns("p")}'):
     new_body = get_new_body(new_tree)
     contents = get_p_contents(p)
     entry = Entry(contents)
-    entry.insert_morph_info_in_entry()
+    entry.get_morph_info_and_insert_in_entry()
     
     new_body.append(entry.entry_node)
     

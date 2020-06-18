@@ -17,7 +17,7 @@ class Entry:
     
     def get_title_lemma(self):
         '''
-        Returns the "dictionary form" of the lemma e.g. ago, homo, ego.
+        Return the "dictionary form" of the lemma e.g. ago, homo, ego.
         Words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one.
         '''
         his = [x for x in self.contents if x.tag == get_ns('hi')]
@@ -41,12 +41,12 @@ class Entry:
 
     
     def get_entry_node(self):
-        '''Returns entry node with its children.'''
+        '''Return entry node with its children.'''
         entry_parent_node = self.get_entry_parent_node(self.title_lemma)
         return self.merge_entry_parent_and_contents(entry_parent_node, self.contents)
     
     def get_entry_parent_node(self, lemma):
-        '''Creates entry parent node with its attributes.'''
+        '''Create entry parent node with its attributes.'''
         entry_node = et.Element("entry")
         entry_node.set('sortKey', f"{lemma}")
         entry_node.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{lemma}")
@@ -54,7 +54,7 @@ class Entry:
         return entry_node
     
     def merge_entry_parent_and_contents(self, entry_parent_node, contents):
-        '''Inserts original contents in the entry node.'''
+        '''Insert original contents in the entry node.'''
         merged_entry = entry_parent_node
         [entry_parent_node.append(hi) for hi in self.contents]
         return merged_entry
@@ -69,11 +69,11 @@ class Entry:
 
 
 def get_ns(tag):
-    '''Prefixes tag with TEI namespace.'''
+    '''Prefix tag with TEI namespace.'''
     return r'{http://www.tei-c.org/ns/1.0}' + tag
 
 def remove_ref_parent(body):
-    '''Removes ref parent tag (which contains hyperlink).'''
+    '''Remove ref parent tag (which contains hyperlink).'''
     for p in body:
         for idx in range(len(p)):
             x = p[idx]
@@ -84,7 +84,7 @@ def remove_ref_parent(body):
                     p.insert(i+idx, children[i])
 
 def remove_style_attrib(body):
-    '''Removes the style attribute with it's values (font size and font family).'''
+    '''Remove the style attribute with it's values (font size and font family).'''
     for p in body:
         for el in p:
             if 'style' in el.attrib.keys():
@@ -92,7 +92,7 @@ def remove_style_attrib(body):
 
 def merge_elements_with_same_attribs(body):
     '''
-    Merges two xml nodes (the tags with their attributes and content)
+    Merge two xml nodes (the tags with their attributes and content)
     if the have matching attributes and values.
     xml:space attribute isn't taken into account during the comparison and is retained after the merging
     '''
@@ -113,28 +113,28 @@ def merge_elements_with_same_attribs(body):
             old_node = curr_node
 
 def general_fix_up_input(body):
-    '''This function calls all functions which do the initial manipulation of the input xml'''
+    '''Call all functions which do the initial manipulation of the input xml'''
     remove_ref_parent(body)
     remove_style_attrib(body)
     merge_elements_with_same_attribs(body)
 
 def invalid_para(p):
-    '''Dismisses the p's which contain the one letter title of a section like A, B etc.'''
+    '''Dismiss the p's which contain the one letter title of a section like A, B etc.'''
     his = [hi for hi in p]
     return len(his) == 1 and len(his[0].text) == 1
     # needs more checks
 
 def get_p_contents(p):
-    '''Returns the children of p of interest (in 'hi' tags).'''
+    '''Return the children of p of interest (in 'hi' tags).'''
     return [x for x in p if x.tag == get_ns('hi')]
     # what do with nested hi in ref
 
 def get_new_tree(template):
-    '''Returns deepcopy of template to insert new entry in.'''
+    '''Return deepcopy of template to insert new entry in.'''
     return deepcopy(template)
 
 def get_new_body(new_tree):
-    '''Returns variable with the "found" body of the template.'''
+    '''Return variable with the "found" body of the template.'''
     new_root = new_tree.getroot()
     new_body = new_root.find(f'.//{get_ns("body")}')
     return new_body

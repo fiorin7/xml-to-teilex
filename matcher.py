@@ -61,7 +61,7 @@ def is_multiple_form_verb(content0s, content1s):
     is_verb_based_on_conj_number_and_forms_count(content0s, content1s)])
     
 
-def match_and_prefix_form_and_grammar_meta(contents):
+def match_morph_structure(contents):
     content0 = contents[0].text
     content1 = contents[1].text
     content0s = contents[0].text.strip()

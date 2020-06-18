@@ -88,10 +88,11 @@ def get_morph_info(entry_type, contents):
     contents1 = contents[1].text
 
     res = None
-    tag_span_of_morph_info = 2
+    tag_span_of_morph_info = 0
 
     if entry_type == 'noun':
         res = noun_xml(contents0, contents1)
+        tag_span_of_morph_info = 2
 
     elif entry_type in ('one_form_verb', 'multiple_form_verb', 'deponent_verb', 'special_verb'):
         res = verb_xml(entry_type, contents0, contents1)
@@ -100,6 +101,7 @@ def get_morph_info(entry_type, contents):
 
     elif entry_type == 'adj_1_2_decl':
         res = adj_1_2_decl_xml(contents0, contents1)
+        tag_span_of_morph_info = 2
 
     elif entry_type in ('adj_like_acer_aequalis', 'adj_1_2_decl_three_forms_written_out'):
         res = adj_multiple_forms_xml(contents0)
@@ -107,5 +109,6 @@ def get_morph_info(entry_type, contents):
     
     elif entry_type in ('adv', 'praep', 'conjunct'):
         res = adv_praep_conjunct_xml(contents0, contents1)
+        tag_span_of_morph_info = 2
 
     return res, tag_span_of_morph_info

@@ -15,8 +15,9 @@ class Entry:
         self.entry_node = self.get_entry_parent_node(self.title_lemma)
         self.entry_type =  self.get_entry_type()
         self.encoded_parts = {
-            'morph_part' : None
+            'morph_part' : self.set_morph_part_xml()
         }
+        self.senses_start = m.get_senses_start(self.contents, self.entry_type, self.encoded_parts['morph_part'])
     
     def get_title_lemma(self):
         '''
@@ -30,12 +31,12 @@ class Entry:
         return lemma_stripped
     
     def get_entry_type(self):
-        match = m.match_and_prefix_form_and_grammar_meta(self.contents)
+        match = m.match_morph_structure(self.contents)
         if match != 'UNKNOWN':
             return match
         else:
             self.fix_input_morph_tags_and_raplace_wrong_ones(self.contents)
-            return m.match_and_prefix_form_and_grammar_meta(self.contents)
+            return m.match_morph_structure(self.contents)
     
     def fix_input_morph_tags_and_raplace_wrong_ones(self, contents):
         fixed_contents = rt.fix_wrong_tags_in_morph_part(contents)
@@ -60,16 +61,22 @@ class Entry:
         '''Insert original contents in the entry node.'''
         merged_entry = entry_parent_node
         [entry_parent_node.append(hi) for hi in self.contents]
-        return merged_entry
-    
-    def get_morph_info_and_insert_in_entry(self):
-        morph_xml, tag_span_of_morph_info = morph.get_morph_info(self.entry_type, self.contents)
-        self.encoded_parts['morph_part'] = morph_xml
-        if morph_xml:
-            for _ in range(tag_span_of_morph_info):
-                # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
-                self.contents.remove(self.contents[0])
-            [self.entry_node.append(x) for x in morph_xml]
+        return merged_entry   
+
+    def set_morph_part_xml(self):
+        morph_part, tag_span_of_morph_info = morph.get_morph_info(self.entry_type, self.contents)
+        for _ in range(tag_span_of_morph_info):
+            # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
+            self.contents.remove(self.contents[0])
+        return morph_part
+
+    def insert_encoded_parts_in_entry(self):
+        for part in self.encoded_parts.values():
+            if part:
+                if type(part) in (tuple, list):
+                    [self.entry_node.append(x) for x in part]
+                else:
+                    self.entry_node.append(part)
 
 
 def get_ns(tag):
@@ -164,7 +171,7 @@ for p in body.iter(f'{get_ns("p")}'):
     new_body = get_new_body(new_tree)
     contents = get_p_contents(p)
     entry = Entry(contents)
-    entry.get_morph_info_and_insert_in_entry()
+    entry.insert_encoded_parts_in_entry()
     
     new_body.append(entry.entry_node)
     

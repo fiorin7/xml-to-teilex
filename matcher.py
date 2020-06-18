@@ -21,7 +21,7 @@ def is_one_form_verb(content0s, content1s):
 
 def is_deponent_verb(content0s, content1s):
     if len(content0s.split(', ')) == 1:
-        return content1s.isdigit() and  content0s[-4:] == 'o(r)' or content0s[-2:] == 'or'
+        return content1s.isdigit() and  (content0s[-4:] == 'o(r)' or content0s[-2:] == 'or')
     else:
         return content1s.isdigit() and content0s.split(', ')[1].strip()[-3:] == 'sum'
 

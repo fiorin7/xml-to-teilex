@@ -17,8 +17,8 @@ class Entry:
         self.encoded_parts = {
             'morph_part' : self.set_morph_part_xml()
         }
-        self.senses_start = m.get_senses_start(self.contents, self.entry_type, self.encoded_parts['morph_part'])
-    
+        self.append_senses(self.contents, self.entry_type, self.encoded_parts['morph_part'])
+        
     def get_title_lemma(self):
         '''
         Return the "dictionary form" of the lemma e.g. ago, homo, ego.
@@ -77,6 +77,45 @@ class Entry:
                     [self.entry_node.append(x) for x in part]
                 else:
                     self.entry_node.append(part)
+    
+    def fix_extra_morph_brackets(self):
+        extra_morph = ''
+        for i in range(len(contents)):
+            x = contents[i]
+            if ')' in x.text:
+                if x.text.strip()[-1] == ')':
+                    extra_morph += x.text
+                    contents[i].text = ''
+                    break
+                else:
+                    idx = x.text.index(')')
+                    extra_morph += x.text[:idx+1]
+                    contents[i].text = x.text[idx:]
+                    break
+            else:
+                extra_morph += x.text
+                contents[i].text = ''
+
+        extra = et.Element("extraMorph")
+        extra.text = extra_morph
+        self.encoded_parts['morph_part'].append(extra)
+    
+    def append_senses(self, contents, entry_type, morph_part):
+        content0 = contents[0].text
+        if entry_type != 'UNKNOWN' and morph_part:
+            try:
+                if content0.strip()[0] == 'I' or content0.strip()[:2] == '1.':
+                    self.contents = None
+                    self.encoded_parts['senses'] = contents
+            
+                elif content0.strip()[0] == '(':
+                    self.fix_extra_morph_brackets()
+                    self.append_senses(contents, entry_type, morph_part)
+                
+                self.encoded_parts['senses'] = [x for x in contents if x.text]
+                self.contents = None
+            except IndexError:
+                print(f'Index error: {self.title_lemma}')
 
 
 def get_ns(tag):

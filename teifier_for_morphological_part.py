@@ -98,6 +98,8 @@ def get_morph_info(entry_type, contents):
         res = verb_xml(entry_type, contents0, contents1)
         if entry_type == 'special_verb':
             tag_span_of_morph_info = 1
+        else:
+            tag_span_of_morph_info = 2
 
     elif entry_type == 'adj_1_2_decl':
         res = adj_1_2_decl_xml(contents0, contents1)

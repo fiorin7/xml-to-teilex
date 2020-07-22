@@ -33,7 +33,7 @@ def noun_xml(contents0, contents1):
     form_inflected = get_form_inflected_node(contents0_split[1])
     gram_grp = get_gram_grp(contents1)
 
-    return form_lemma, pc, form_inflected, gram_grp
+    return [form_lemma, pc, form_inflected, gram_grp]
 
 def verb_xml(entry_type, contents0, contents1):
     result = []
@@ -60,7 +60,7 @@ def adj_1_2_decl_xml(contents0, contents1):
     pc = get_pc_node(', ')
     gram_grp = get_gram_grp(contents1, "????")
 
-    return form_lemma, pc, gram_grp
+    return [form_lemma, pc, gram_grp]
 
 def adj_multiple_forms_xml(contents0):
     contents0_split = contents0.split(', ')
@@ -80,8 +80,7 @@ def adj_multiple_forms_xml(contents0):
 def adv_praep_conjunct_xml(contents0, contents1):
     form_lemma = get_form_lemma_node(contents0)
     gram_grp = get_gram_grp(contents1, "????")
-    return form_lemma, gram_grp
-
+    return [form_lemma, gram_grp]
 
 def get_morph_info(entry_type, contents):
     contents0 = contents[0].text

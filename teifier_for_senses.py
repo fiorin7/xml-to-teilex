@@ -155,15 +155,9 @@ def append_contents():
             
 def append_sense_container_and_label(entry, new_node):
     assigned = False
-    last_sense_container = None
     for i in range(len(entry.encoded_parts['senses'])-1, -1, -1):
         node = entry.encoded_parts['senses'][i]
-        if node.tag == 'sense' and new_node.tag != 'sense':
-            entry.encoded_parts['senses'][i].append(new_node)
-            assigned = True
-            last_sense_container = new_node
-            break
-        elif node.tag == 'sense' and new_node.tag == 'sense':
+        if node.tag == 'sense':
             if node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isupper() and new_node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].islower():
                 children = node.getchildren()
                 for i in range(len(children)-1, -1, -1):
@@ -184,12 +178,7 @@ def append_sense_container_and_label(entry, new_node):
                 last_sense_container = new_node
                 break
     if not assigned:
-        if last_sense_container:
-            last_sense_container.append(new_node)
-            print(last_sense_container)
-            print(new_node)
-        else:
-            entry.encoded_parts['senses'].append(new_node)
+        entry.encoded_parts['senses'].append(new_node)
     # [print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8')) for x in entry.encoded_parts['senses']]
     # [print(x.text) for x in entry.encoded_parts['senses']]
     # entry.encoded_parts['senses'].append(new_node)
@@ -208,11 +197,14 @@ def encode_senses(entry):
     if raw_senses and not is_numbered_entry(raw_senses):
         entry.encoded_parts['senses'].append(create_sense_container_non_numbered(title_lemma))
 
+    last_sense_container = None
+
     while raw_senses:
         encoded = False
         initial = raw_senses[0].text.strip()
         initial = fix_cyrillic_letter(initial, title_lemma)
         
+        # what do
         if is_subsense_number(initial):
 
             if fix_mixed_numbers(entry, initial):
@@ -226,15 +218,24 @@ def encode_senses(entry):
             append_sense_container_and_label(entry, last_sense_container)
             encoded = True
         
-        elif raw_senses[0].get('rend') == "italic":
-            usg_node = create_usg_node(raw_senses[0].text)
-            append_sense_container_and_label(entry, usg_node)
-            encoded = True
-        
-        
-        if not encoded:
-            append_sense_container_and_label(entry, raw_senses[0])
+        else:
+            content_node = raw_senses[0]
+
+            if raw_senses[0].get('rend') == "italic":
+                content_node = create_usg_node(raw_senses[0].text)
+            
+            # if not encoded:
+            #     entry.encoded_parts['senses'].append(raw_senses[0])
+
+            if last_sense_container:
+                last_sense_container.append(content_node)
+                print('kek')
+            else:
+                entry.encoded_parts['senses'].append(content_node)
+            # encoded = True
+
         raw_senses.pop(0)
+
     
     # print(range(len(entry.encoded_parts['senses'])-1, -1, -1))
     # [print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8')) for x in entry.encoded_parts['senses']]

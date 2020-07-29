@@ -3,7 +3,11 @@ from lxml import etree as et
 def get_form_lemma_node(text):
     form_lemma = et.Element("form")
     form_lemma.set('type', 'lemma')
-    form_lemma.text = text
+    
+    orth_node = et.Element("orth")
+    orth_node.text = text
+
+    form_lemma.append(orth_node)
     return form_lemma
 
 def get_form_inflected_node(text):
@@ -77,10 +81,20 @@ def adj_multiple_forms_xml(contents0):
     
     return result
 
-def adv_praep_conjunct_xml(contents0, contents1):
+def adv_conjunct_xml(contents0, contents1):
     form_lemma = get_form_lemma_node(contents0)
     gram_grp = get_gram_grp(contents1, "????")
     return [form_lemma, gram_grp]
+
+def praep_xml(contents0, contents1):
+    form_lemma = get_form_lemma_node(contents0)
+    gram_grp = get_gram_grp('praep.', "pos")
+    colloc_node = et.Element('gram')
+    colloc_node.set('type', 'colloc')
+    colloc_node.text = contents1.replace('praep.', '')
+    gram_grp.append(colloc_node)
+    return [form_lemma, gram_grp]
+
 
 def get_morph_info(entry_type, contents):
     contents0 = contents[0].text
@@ -108,8 +122,12 @@ def get_morph_info(entry_type, contents):
         res = adj_multiple_forms_xml(contents0)
         tag_span_of_morph_info = 1
     
-    elif entry_type in ('adv', 'praep', 'conjunct'):
-        res = adv_praep_conjunct_xml(contents0, contents1)
+    elif entry_type in ('adv', 'conjunct'):
+        res = adv_conjunct_xml(contents0, contents1)
+        tag_span_of_morph_info = 2
+    
+    elif entry_type == 'praep':
+        res = praep_xml(contents0, contents1)
         tag_span_of_morph_info = 2
 
     return res, tag_span_of_morph_info

@@ -157,6 +157,97 @@ def create_def_node(node_content):
         if i < len(node_content.split(', '))-1:
             result.append(get_pc_node(', '))
     return result
+
+def assemble_cit_nodes(cit_type, quote_content):
+    if cit_type == 'translation':
+        cit_node = et.Element("cit")
+        cit_node.set('type', 'translation')
+        cit_node.set('{http://www.w3.org/XML/1998/namespace}lang', 'bg')
+
+    elif cit_type == 'example':
+        cit_node = et.Element("cit")
+        cit_node.set('type', 'example')
+
+    quote_node = et.Element("quote")
+    quote_node.text = quote_content
+
+    cit_node.append(quote_node)
+
+    return cit_node
+
+
+def create_cit_nodes(node_content):
+    result = []
+    dash_in_the_end = False
+    dot_in_the_end = False
+    semi_colon_in_the_end = False
+
+    if 'insignis ad deformitatem puer' in node_content:
+        breakpoint
+    if node_content.strip()[-1] == '–':
+        if node_content[-1] == ' ':
+            node_content = node_content[:-2]
+            dash_node = get_pc_node('— ')
+        else:
+            dash_node = get_pc_node('—')
+            node_content = node_content[:-1]
+        dash_in_the_end = True
+    
+    if node_content.strip()[-1] == '.':
+        if node_content[-1] == ' ':
+            node_content = node_content[:-2]
+            dot_node = get_pc_node('. ')
+        else:
+            dot_node = get_pc_node('.')
+            node_content = node_content[:-1]
+        dot_in_the_end = True
+    
+    if node_content.strip()[-1] == ';':
+        if node_content[-1] == ' ':
+            node_content = node_content[:-2]
+            s_colon_node = get_pc_node('; ')
+        else:
+            s_colon_node = get_pc_node(';')
+            node_content = node_content[:-1]
+        semi_colon_in_the_end = True
+        
+    
+    split_contents = node_content.split('; ')
+    split_contents = [x for x in split_contents if x.strip() != '']
+
+    for y in range(len(split_contents)):
+        x = split_contents[y]
+
+        for i in range(len(x.split(' '))):
+            word = x.split(' ')[i]
+            if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(x.split(' ')[i+1])):
+                if i > 0:
+                    cit_node = assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])))
+                    result.append(cit_node)
+                cit_node = assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))
+                result.append(cit_node)
+                break
+            elif i == len(x.split(' ')) - 1:
+                cit_node = assemble_cit_nodes('example', ' '.join((x.split(' '))))
+                result.append(cit_node)
+                break
+        
+        if y < (len(split_contents)-1):
+            result.append(get_pc_node('; '))
+            # print(x)
+            # print('kek')
+    
+    
+    if dot_in_the_end:
+        result.append(dot_node)
+    if semi_colon_in_the_end:
+        result.append(s_colon_node)
+    if dash_in_the_end:
+        result.append(dash_node)
+    
+    return result
+
+
 def create_subsense_number_node(title_lemma, numbers, initial):
     sense_container = create_sense_container(title_lemma, find_previous_numbers(numbers))
     label = create_label(initial)

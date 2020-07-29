@@ -2,6 +2,8 @@ from lxml import etree as et
 from copy import copy
 from collections import deque
 import re
+from teifier_for_morphological_part import get_pc_node
+from string import punctuation
 
 def one_is_missing(raw_senses):
     one_spotted = False
@@ -90,14 +92,6 @@ def fix_cyrillic_letter(initial, title_lemma):
                 initial = replacements[initial[0]] + ')'
     return initial
         
-
-
-# def create_sense_container(title_lemma, sense_number='1'):
-#     if one_is_missing(raw_senses):
-#         sense_container = assemble_sense_container(title_lemma)
-    
-#     else:
-#         sense_container = assemble_sense_container(title_lemma)
 
 def fix_mixed_numbers(entry, initial):
     raw_senses = entry.raw_senses
@@ -253,13 +247,6 @@ def create_subsense_number_node(title_lemma, numbers, initial):
     label = create_label(initial)
     sense_container.append(label)
     return sense_container
-
-
-# def add_subsense_number_node(title_lemma, numbers, initial, entry):
-#     append_sense_container_and_label(entry, sense_container)
-
-def append_contents():
-    pass
             
 def append_sense_container_and_label(entry, new_node):
     assigned = False
@@ -311,7 +298,7 @@ def encode_senses(entry):
         encoded = False
         initial = raw_senses[0].text.strip()
         initial = fix_cyrillic_letter(initial, title_lemma)
-        
+
         # what do
         if is_subsense_number(initial):
 
@@ -327,20 +314,28 @@ def encode_senses(entry):
             encoded = True
         
         else:
-            content_node = raw_senses[0]
+            content_node = [raw_senses[0]]
 
             if raw_senses[0].get('rend') == "italic":
-                content_node = create_usg_node(raw_senses[0].text)
+                content_node = [create_usg_node(raw_senses[0].text)]
             
-            # if not encoded:
-            #     entry.encoded_parts['senses'].append(raw_senses[0])
+            elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(raw_senses[0].text):
+                content_node = create_def_node(raw_senses[0].text)
+            
+            elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in ('cit', 'quote')]) == 0) and \
+                has_more_cyrillic_than_latin(raw_senses[0].text.split(' ')[0]) and ';' not in raw_senses[0].text:
+                    content_node = create_def_node(raw_senses[0].text)
+            
+            elif raw_senses[0].text.strip() in punctuation or raw_senses[0].text.strip() == '–':
+                content_node = get_pc_node(raw_senses[0].text)
+            
+            else:
+                content_node = create_cit_nodes(raw_senses[0].text)
 
             if last_sense_container:
-                last_sense_container.append(content_node)
-                print('kek')
+                [last_sense_container.append(x) for x in content_node]
             else:
-                entry.encoded_parts['senses'].append(content_node)
-            # encoded = True
+                [entry.encoded_parts['senses'].append(x) for x in content_node]
 
         raw_senses.pop(0)
 

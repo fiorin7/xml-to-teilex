@@ -146,6 +146,17 @@ def create_usg_node(node_content):
     usg_node.text = node_content
     return usg_node
 
+def create_def_node(node_content):
+    result = []
+    for i in range(len(node_content.split(', '))):
+        x = node_content.split(', ')[i]
+        def_node = et.Element("def")
+        def_node.set('{http://www.w3.org/XML/1998/namespace}lang', 'bg')
+        def_node.text = x
+        result.append(def_node)
+        if i < len(node_content.split(', '))-1:
+            result.append(get_pc_node(', '))
+    return result
 def create_subsense_number_node(title_lemma, numbers, initial):
     sense_container = create_sense_container(title_lemma, find_previous_numbers(numbers))
     label = create_label(initial)

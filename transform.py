@@ -6,6 +6,7 @@ import string
 import matcher as m
 import teifier_for_morphological_part as morph
 import rearranger_of_wrong_input_tags as rt
+import teifier_for_senses as sns
 
 class Entry:
     def __init__(self, contents=[]):
@@ -15,9 +16,12 @@ class Entry:
         self.entry_node = self.get_entry_parent_node(self.title_lemma)
         self.entry_type =  self.get_entry_type()
         self.encoded_parts = {
-            'morph_part' : self.set_morph_part_xml()
+            'morph_part' : self.set_morph_part_xml(),
+            'senses' : []
         }
-        self.append_senses(self.contents, self.entry_type, self.encoded_parts['morph_part'])
+        self.raw_senses = self.append_senses()
+        sns.encode_senses(self)
+        
         
     def get_title_lemma(self):
         '''
@@ -90,7 +94,7 @@ class Entry:
                 else:
                     idx = x.text.index(')')
                     extra_morph += x.text[:idx+1]
-                    contents[i].text = x.text[idx:]
+                    contents[i].text = x.text[idx+1:]
                     break
             else:
                 extra_morph += x.text
@@ -99,23 +103,20 @@ class Entry:
         extra = et.Element("extraMorph")
         extra.text = extra_morph
         self.encoded_parts['morph_part'].append(extra)
+        self.contents = [x for x in self.contents if x.text]
     
-    def append_senses(self, contents, entry_type, morph_part):
-        content0 = contents[0].text
-        if entry_type != 'UNKNOWN' and morph_part:
-            try:
-                if content0.strip()[0] == 'I' or content0.strip()[:2] == '1.':
-                    self.contents = None
-                    self.encoded_parts['senses'] = contents
-            
-                elif content0.strip()[0] == '(':
-                    self.fix_extra_morph_brackets()
-                    self.append_senses(contents, entry_type, morph_part)
-                
-                self.encoded_parts['senses'] = [x for x in contents if x.text]
+    def append_senses(self):
+        content0 = self.contents[0].text
+        res = []
+        if self.entry_type != 'UNKNOWN' and self.encoded_parts.get('morph_part'):
+            if content0.strip()[0] == '(':
+                self.fix_extra_morph_brackets()
+                self.append_senses()
+            if self.contents:
+                res = [x for x in self.contents if x.text]
                 self.contents = None
-            except IndexError:
-                print(f'Index error: {self.title_lemma}')
+            return res
+
 
 
 def get_ns(tag):

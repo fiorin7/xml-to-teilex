@@ -1,6 +1,7 @@
 from lxml import etree as et
 from copy import copy
 from collections import deque
+import re
 
 def one_is_missing(raw_senses):
     one_spotted = False
@@ -35,6 +36,11 @@ def is_subsense_number(initial):
                 (initial[0].isalpha() and initial[1] == ')')
     return condition
 
+def has_more_cyrillic_than_latin(string):
+    pattern = '[а-яА-Я]'
+    cyrillic = re.findall(pattern, string)
+    latin = [x for x in string if (x.isalpha() and x not in cyrillic)]
+    return len(cyrillic) > len(latin)
 
 def create_sense_container_non_numbered(title_lemma):
     sense_container = et.Element("sense")

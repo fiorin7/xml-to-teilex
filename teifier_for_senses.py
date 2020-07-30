@@ -333,11 +333,76 @@ def encode_senses(entry):
                 content_node = create_def_node(raw_senses[0].text)
             
             elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in ('cit', 'quote')]) == 0) and \
-                has_more_cyrillic_than_latin(raw_senses[0].text.split(' ')[0]) and ';' not in raw_senses[0].text:
-                    content_node = create_def_node(raw_senses[0].text)
+                has_more_cyrillic_than_latin(raw_senses[0].text.strip().split(' ')[0]):
+
+                    dash_in_the_end = False
+                    dot_in_the_end = False
+                    semi_colon_in_the_end = False
+
+                    node_content = raw_senses[0].text
+
+                    if node_content.strip()[-1] == '–':
+                        if node_content[-1] == ' ':
+                            node_content = node_content[:-2]
+                            dash_node = get_pc_node('— ')
+                        else:
+                            dash_node = get_pc_node('—')
+                            node_content = node_content[:-1]
+                        dash_in_the_end = True
+                    
+                    if node_content.strip()[-1] == '.':
+                        if node_content[-1] == ' ':
+                            node_content = node_content[:-2]
+                            dot_node = get_pc_node('. ')
+                        else:
+                            dot_node = get_pc_node('.')
+                            node_content = node_content[:-1]
+                        dot_in_the_end = True
+                    
+                    if node_content.strip()[-1] == ';':
+                        if node_content[-1] == ' ':
+                            node_content = node_content[:-2]
+                            s_colon_node = get_pc_node('; ')
+                        else:
+                            s_colon_node = get_pc_node(';')
+                            node_content = node_content[:-1]
+                        semi_colon_in_the_end = True
+                    
+                    content_node = []
+
+                    found_latin = False
+
+                    for i in range(len(node_content.split(' '))):
+                        word = node_content.split(' ')[i]
+                        if word.strip() == '':
+                            continue
+                        if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(node_content.split(' ')[i+1])):
+                            pass
+                        else:
+                            found_latin = True
+                            break
+                    if not found_latin:
+                        def_node = create_def_node(node_content)
+                        content_node.extend(def_node)
+                        if dot_in_the_end:
+                            content_node.append(dot_node)
+                        if semi_colon_in_the_end:
+                            content_node.append(s_colon_node)
+                        if dash_in_the_end:
+                            content_node.append(dash_node)
+                    else:
+                        def_node = create_def_node(' '.join(node_content.split(' ')[:i]) + ' ')
+                        content_node.extend(def_node)
+                        cit_node = create_cit_nodes(' '.join(node_content.split(' ')[i:]))
+                        content_node.extend(cit_node)
+                        if dot_in_the_end:
+                            content_node.append(dot_node)
+                        if semi_colon_in_the_end:
+                            content_node.append(s_colon_node)
+                        if dash_in_the_end:
+                            content_node.append(dash_node)
+
             
-            elif raw_senses[0].text.strip() in punctuation or raw_senses[0].text.strip() == '–':
-                content_node = get_pc_node(raw_senses[0].text)
             
             else:
                 content_node = create_cit_nodes(raw_senses[0].text)

@@ -144,10 +144,13 @@ def create_def_node(node_content):
     result = []
     for i in range(len(node_content.split(', '))):
         x = node_content.split(', ')[i]
+        for y in range(len([z for z in x.split('; ') if z.strip() != ''])):
         def_node = et.Element("def")
         def_node.set('{http://www.w3.org/XML/1998/namespace}lang', 'bg')
-        def_node.text = x
+            def_node.text = x.split('; ')[y]
         result.append(def_node)
+            if y < len(x.split('; '))-1:
+                result.append(get_pc_node('; '))
         if i < len(node_content.split(', '))-1:
             result.append(get_pc_node(', '))
     return result
@@ -214,10 +217,17 @@ def create_cit_nodes(node_content):
 
         for i in range(len(x.split(' '))):
             word = x.split(' ')[i]
+            if word.strip() == '' and i != len(x.split(' '))-1:
+                continue
+
             if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(x.split(' ')[i+1])):
                 if i > 0:
-                    cit_node = assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])))
+                    if not (x.split(' ')[0] == '' and i == 1):
+                        cit_node = assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])) + ' ')
                     result.append(cit_node)
+                if x.split(' ')[0] == '' and i == 1:
+                    cit_node = assemble_cit_nodes('translation', ' '.join(x.split(' ')))
+                else:
                 cit_node = assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))
                 result.append(cit_node)
                 break

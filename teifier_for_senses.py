@@ -145,10 +145,10 @@ def create_def_node(node_content):
     for i in range(len(node_content.split(', '))):
         x = node_content.split(', ')[i]
         for y in range(len([z for z in x.split('; ') if z.strip() != ''])):
-        def_node = et.Element("def")
-        def_node.set('{http://www.w3.org/XML/1998/namespace}lang', 'bg')
+            def_node = et.Element("def")
+            def_node.set('{http://www.w3.org/XML/1998/namespace}lang', 'bg')
             def_node.text = x.split('; ')[y]
-        result.append(def_node)
+            result.append(def_node)
             if y < len(x.split('; '))-1:
                 result.append(get_pc_node('; '))
         if i < len(node_content.split(', '))-1:
@@ -224,18 +224,18 @@ def create_cit_nodes(node_content):
                 if i > 0:
                     if not (x.split(' ')[0] == '' and i == 1):
                         cit_node = assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])) + ' ')
-                    result.append(cit_node)
+                        result.append(cit_node)
                 if x.split(' ')[0] == '' and i == 1:
                     cit_node = assemble_cit_nodes('translation', ' '.join(x.split(' ')))
                 else:
-                cit_node = assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))
+                    cit_node = assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))
                 result.append(cit_node)
                 break
             elif i == len(x.split(' ')) - 1:
                 cit_node = assemble_cit_nodes('example', ' '.join((x.split(' '))))
                 result.append(cit_node)
                 break
-        
+            
         if y < (len(split_contents)-1):
             result.append(get_pc_node('; '))
             # print(x)

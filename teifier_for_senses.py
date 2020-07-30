@@ -326,7 +326,10 @@ def encode_senses(entry):
         else:
             content_node = [raw_senses[0]]
 
-            if raw_senses[0].get('rend') == "italic":
+            if raw_senses[0].text.strip() in punctuation or raw_senses[0].text.strip() == '–':
+                content_node = get_pc_node(raw_senses[0].text)
+
+            elif raw_senses[0].get('rend') == "italic":
                 content_node = [create_usg_node(raw_senses[0].text)]
             
             elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(raw_senses[0].text):

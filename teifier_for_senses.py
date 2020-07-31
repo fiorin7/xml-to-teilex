@@ -124,9 +124,10 @@ def fix_mixed_numbers(entry, initial):
     return(fixed)
 
 def fix_dot_in_next_node(raw_senses):
-    if raw_senses[0].text.strip().isdigit() and raw_senses[1].text[0] == '.':
-        raw_senses[0].text += '.'
-        raw_senses[1].text = raw_senses[1].text[1:]
+    for i in range(len(raw_senses)):
+        if raw_senses[i].text.strip().isdigit() and raw_senses[i+1].text[0] == '.':
+            raw_senses[i].text += '.'
+            raw_senses[i+1].text = raw_senses[i+1].text[1:]
 
 def add_missing_one(entry, title_lemma):
     sense_container = create_sense_container(title_lemma)

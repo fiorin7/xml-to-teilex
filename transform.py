@@ -105,13 +105,13 @@ class Entry:
         self.encoded_parts['morph_part'].append(extra)
         self.contents = [x for x in self.contents if x.text]
     
-    def append_senses(self):
+    def append_senses(self, res = []):
         content0 = self.contents[0].text
-        res = []
+
         if self.entry_type != 'UNKNOWN' and self.encoded_parts.get('morph_part'):
             if content0.strip()[0] == '(':
                 self.fix_extra_morph_brackets()
-                self.append_senses()
+                res = self.append_senses()
             if self.contents:
                 res = [x for x in self.contents if x.text]
                 self.contents = None

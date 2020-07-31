@@ -7,13 +7,14 @@ import matcher as m
 import teifier_for_morphological_part as morph
 import rearranger_of_wrong_input_tags as rt
 import teifier_for_senses as sns
+import node_creator as nc
 
 class Entry:
     def __init__(self, contents=[]):
         self.raw_contents = contents
         self.contents = contents
         self.title_lemma = self.get_title_lemma()
-        self.entry_node = self.get_entry_parent_node(self.title_lemma)
+        self.entry_node = nc.create_entry_parent_node(self.title_lemma)
         self.entry_type =  self.get_entry_type()
         self.encoded_parts = {
             'morph_part' : self.set_morph_part_xml(),
@@ -47,19 +48,6 @@ class Entry:
         if fixed_contents:
             self.contents = fixed_contents
 
-    
-    def get_entry_node(self):
-        '''Return entry node with its children.'''
-        entry_parent_node = self.get_entry_parent_node(self.title_lemma)
-        return self.merge_entry_parent_and_contents(entry_parent_node, self.contents)
-    
-    def get_entry_parent_node(self, lemma):
-        '''Create entry parent node with its attributes.'''
-        entry_node = et.Element("entry")
-        entry_node.set('sortKey', f"{lemma}")
-        entry_node.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{lemma}")
-        entry_node.set('{http://www.w3.org/XML/1998/namespace}lang', "la")
-        return entry_node
     
     def merge_entry_parent_and_contents(self, entry_parent_node, contents):
         '''Insert original contents in the entry node.'''

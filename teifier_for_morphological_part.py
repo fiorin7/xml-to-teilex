@@ -129,5 +129,9 @@ def get_morph_info(entry_type, contents):
     elif entry_type == 'praep':
         res = praep_xml(contents0, contents1)
         tag_span_of_morph_info = 2
+    
+    elif entry_type == 'unknown but clear senses start':
+        res = get_form_lemma_node(contents0)
+        tag_span_of_morph_info = 1
 
     return res, tag_span_of_morph_info

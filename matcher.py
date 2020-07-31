@@ -91,6 +91,10 @@ def match_morph_structure(contents):
         entry_type = 'conjunct'
     elif is_praep(content1s):
         entry_type = 'praep'
+
+    elif content1s[:2] in ('1.', 'I.'):
+        entry_type = 'unknown but clear senses start'
+
     else:
         entry_type = 'UNKNOWN'
     

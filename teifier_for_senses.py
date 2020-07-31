@@ -46,7 +46,7 @@ def has_more_cyrillic_than_latin(string):
 
 def create_sense_container_non_numbered(title_lemma):
     sense_container = et.Element("sense")
-    sense_container.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{title_lemma}")
+    sense_container.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{title_lemma}.1")
     return sense_container
 
 def create_sense_container(title_lemma, sense_number=['1']):
@@ -292,6 +292,8 @@ def append_sense_container_and_label(entry, new_node):
 def encode_senses(entry):
     raw_senses = entry.raw_senses
     title_lemma = entry.title_lemma
+    last_sense_container = None
+
     if raw_senses:
         fix_dot_in_next_node(raw_senses)
     numbers = []
@@ -302,8 +304,9 @@ def encode_senses(entry):
     
     if raw_senses and not is_numbered_entry(raw_senses):
         entry.encoded_parts['senses'].append(create_sense_container_non_numbered(title_lemma))
+        last_sense_container = entry.encoded_parts['senses'][0]
+        numbers.append('1')
 
-    last_sense_container = None
 
     while raw_senses:
         encoded = False
@@ -411,7 +414,7 @@ def encode_senses(entry):
             else:
                 content_node = create_cit_nodes(raw_senses[0].text)
 
-            if last_sense_container:
+            if last_sense_container is not None:
                 [last_sense_container.append(x) for x in content_node]
             else:
                 [entry.encoded_parts['senses'].append(x) for x in content_node]

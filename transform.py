@@ -82,35 +82,13 @@ class Entry:
                 else:
                     self.entry_node.append(part)
     
-    def fix_extra_morph_brackets(self):
-        extra_morph = ''
-        for i in range(len(contents)):
-            x = contents[i]
-            if ')' in x.text:
-                if x.text.strip()[-1] == ')':
-                    extra_morph += x.text
-                    contents[i].text = ''
-                    break
-                else:
-                    idx = x.text.index(')')
-                    extra_morph += x.text[:idx+1]
-                    contents[i].text = x.text[idx+1:]
-                    break
-            else:
-                extra_morph += x.text
-                contents[i].text = ''
-
-        extra = et.Element("extraMorph")
-        extra.text = extra_morph
-        self.encoded_parts['morph_part'].append(extra)
-        self.contents = [x for x in self.contents if x.text]
     
     def append_senses(self, res = []):
         content0 = self.contents[0].text
 
         if self.entry_type != 'UNKNOWN' and self.encoded_parts.get('morph_part'):
             if content0.strip()[0] == '(':
-                self.fix_extra_morph_brackets()
+                morph.fix_extra_morph_brackets(self)
                 res = self.append_senses()
             if self.contents:
                 res = [x for x in self.contents if x.text]

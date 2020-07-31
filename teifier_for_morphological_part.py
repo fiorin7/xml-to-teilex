@@ -1,5 +1,29 @@
 from lxml import etree as et
 
+def fix_extra_morph_brackets(entry):
+        contents = entry.contents
+        extra_morph = ''
+        for i in range(len(contents)):
+            x = contents[i]
+            if ')' in x.text:
+                if x.text.strip()[-1] == ')':
+                    extra_morph += x.text
+                    contents[i].text = ''
+                    break
+                else:
+                    idx = x.text.index(')')
+                    extra_morph += x.text[:idx+1]
+                    contents[i].text = x.text[idx+1:]
+                    break
+            else:
+                extra_morph += x.text
+                contents[i].text = ''
+
+        extra = et.Element("extraMorph")
+        extra.text = extra_morph
+        entry.encoded_parts['morph_part'].append(extra)
+        entry.contents = [x for x in contents if x.text]
+
 def get_form_lemma_node(text):
     form_lemma = et.Element("form")
     form_lemma.set('type', 'lemma')

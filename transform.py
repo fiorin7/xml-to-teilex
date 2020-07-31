@@ -94,7 +94,8 @@ class Entry:
                 res = [x for x in self.contents if x.text]
                 self.contents = None
             return res
-
+        else:
+            return morph.unknown_entry_type_find_senses_start(self)
 
 
 def get_ns(tag):

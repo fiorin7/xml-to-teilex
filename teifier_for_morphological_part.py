@@ -24,6 +24,18 @@ def fix_extra_morph_brackets(entry):
         entry.encoded_parts['morph_part'].append(extra)
         entry.contents = [x for x in contents if x.text]
 
+def unknown_entry_type_find_senses_start(entry):
+    contents = entry.contents
+    for i in range(len(contents)):
+        if contents[i].text.strip()[:2] == '1.':
+            if i > 0:
+                entry.encoded_parts['morph_part'] = contents[:i]
+                entry.entry_type = 'unknown but clear senses start'
+                return contents[i:]
+
+
+
+
 def get_form_lemma_node(text):
     form_lemma = et.Element("form")
     form_lemma.set('type', 'lemma')

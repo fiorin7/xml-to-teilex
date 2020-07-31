@@ -1,4 +1,12 @@
 from lxml import etree as et
+import re
+from copy import copy
+
+def has_more_cyrillic_than_latin(string):
+    pattern = '[а-яА-Я]'
+    cyrillic = re.findall(pattern, string)
+    latin = [x for x in string if (x.isalpha() and x not in cyrillic)]
+    return len(cyrillic) > len(latin)
 
 def fix_extra_morph_brackets(entry):
         contents = entry.contents
@@ -32,7 +40,42 @@ def unknown_entry_type_find_senses_start(entry):
                 entry.encoded_parts['morph_part'] = contents[:i]
                 entry.entry_type = 'unknown but clear senses start'
                 return contents[i:]
+        elif contents[i].get('rend' ) == 'bold' and contents[i].text.strip()[-2:] == '1.':
+            number_node = copy(contents[i])
+            number_node.text = '1.'
+            contents[i].text = contents[i].text.replace('1.', '')
+            if contents[i].text[-1] == ' ':
+                number_node.text += ' '
+                contents[i].text = contents[i].text[:-1]
 
+            entry.encoded_parts['morph_part'] = contents[:i+1]
+            entry.entry_type = 'unknown but clear senses start'
+
+            res = []
+            res.append(number_node)
+            res.extend(contents[i+1:])
+            return res
+
+        elif contents[i].get('rend' ) == 'bold' and contents[i].text[-1] == '1' and contents[i+1].text[0] == '.':
+            number_node = copy(contents[i])
+            number_node.text = '1.'
+            contents[i].text = contents[i].text[:-1]
+            contents[i+1].text = contents[i+1].text[1:]
+
+            entry.encoded_parts['morph_part'] = contents[:i+1]
+            entry.entry_type = 'unknown but clear senses start'
+
+            res = []
+            res.append(number_node)
+            res.extend(contents[i+1:])
+            return res
+
+    for i in range(len(contents)):
+        if has_more_cyrillic_than_latin(contents[i].text.strip().split(' ')[0]) and not contents[i].get('rend'):
+            if i > 0:
+                entry.encoded_parts['morph_part'] = contents[:i]
+                entry.entry_type = 'unknown but clear senses start'
+                return contents[i:]
 
 
 

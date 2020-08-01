@@ -256,6 +256,9 @@ def encode_senses(entry):
             last_sense_container = entry.encoded_parts['senses'][0]
             numbers.append('1')
     
+    else:
+        [entry.encoded_parts['senses'].append(x) for x in entry.contents]
+
 
     while raw_senses:
         encoded = False

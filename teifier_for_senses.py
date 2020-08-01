@@ -241,20 +241,21 @@ def encode_senses(entry):
     raw_senses = entry.raw_senses
     title_lemma = entry.title_lemma
     last_sense_container = None
+    numbers = []
 
     if raw_senses:
         fix_dot_in_next_node(raw_senses)
-    numbers = []
+        
 
-    if raw_senses and one_is_missing(raw_senses):
-        add_missing_one(entry, title_lemma)
-        numbers.append('1')
+        if one_is_missing(raw_senses):
+            add_missing_one(entry, title_lemma)
+            numbers.append('1')
     
-    if raw_senses and not is_numbered_entry(raw_senses):
-        entry.encoded_parts['senses'].append(nc.create_sense_container_non_numbered(title_lemma))
-        last_sense_container = entry.encoded_parts['senses'][0]
-        numbers.append('1')
-
+        if not is_numbered_entry(raw_senses):
+            entry.encoded_parts['senses'].append(nc.create_sense_container_non_numbered(title_lemma))
+            last_sense_container = entry.encoded_parts['senses'][0]
+            numbers.append('1')
+    
 
     while raw_senses:
         encoded = False

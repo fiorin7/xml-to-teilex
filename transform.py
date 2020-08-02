@@ -83,7 +83,7 @@ class Entry:
                 self.contents = None
             return res
         else:
-            return morph.unknown_entry_type_find_senses_start(self)
+            return morph.deal_with_unknown_entry(self)
 
 
 def get_ns(tag):

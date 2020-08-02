@@ -2,6 +2,7 @@ from lxml import etree as et
 import re
 from copy import copy
 import node_creator as nc
+from string import punctuation
 
 def has_more_cyrillic_than_latin(string):
     pattern = '[а-яА-Я]'
@@ -30,6 +31,11 @@ def fix_extra_morph_brackets(entry):
 
         entry.encoded_parts['morph_part'].append(nc.create_extra_morph(extra_morph))
         entry.contents = [x for x in contents if x.text]
+
+def deal_with_unknown_entry(entry):
+    senses = unknown_entry_type_find_senses_start(entry)
+    unknown_entry_partially_encode(entry)
+    return senses
 
 def unknown_entry_type_find_senses_start(entry):
     contents = entry.contents
@@ -76,7 +82,50 @@ def unknown_entry_type_find_senses_start(entry):
                 entry.entry_type = 'unknown but clear senses start'
                 return contents[i:]
 
+def unknown_entry_partially_encode(entry):
+    old_morph_part = copy(entry.encoded_parts['morph_part'])
+    entry.encoded_parts['morph_part'] = []
 
+    counter = 0
+    while old_morph_part:
+        content_node = [old_morph_part[0]]
+        if counter == 0:
+            content_node = unknown_initial_xml(content_node[0].text)
+            
+        elif old_morph_part[0].text.strip() in punctuation or old_morph_part[0].text.strip() == '–':
+                content_node = [nc.create_pc_node(old_morph_part[0].text)]
+
+        elif old_morph_part[0].get('rend') == "italic":
+            if old_morph_part[0].text.strip() in ('m', 'f', 'n'):
+                content_node = [nc.create_gram_grp(old_morph_part[0].text)]
+            else:
+                content_node = [nc.create_usg_node(old_morph_part[0].text)]
+        
+        [entry.encoded_parts['morph_part'].append(x) for x in content_node]
+        old_morph_part.pop(0)
+        counter += 1
+
+
+def unknown_initial_xml(contents0):
+    res = []
+    contents0_split = [x for x in contents0.split(', ') if x.strip() != '']
+    for i in range(len(contents0_split)):
+        if i == 0:
+            form_lemma = nc.create_form_lemma_node(contents0_split[i])
+            res.append(form_lemma)
+
+            if len(contents0_split) > 1:
+                pc = nc.create_pc_node(', ')
+                res.append(pc)
+        elif i == len(contents0_split)-1:
+            form_inflected = nc.create_form_inflected_node(contents0_split[i])
+            res.append(form_inflected)
+        else:
+            form_inflected = nc.create_form_inflected_node(contents0_split[i])
+            pc = nc.create_pc_node(', ')
+            res.append(form_inflected)
+            res.append(pc)
+    return res
 
 
 def noun_xml(contents0, contents1):

@@ -14,6 +14,7 @@ class Entry:
         self.raw_contents = contents
         self.contents = contents
         self.title_lemma = self.get_title_lemma()
+        self.fix_input_morph_tags_and_raplace_wrong_ones()
         self.entry_node = nc.create_entry_parent_node(self.title_lemma)
         self.entry_type =  self.get_entry_type()
         self.encoded_parts = {
@@ -37,11 +38,12 @@ class Entry:
     
     def get_entry_type(self):
         match = m.match_morph_structure(self.contents)
-        if match != 'UNKNOWN':
-            return match
-        else:
-            self.fix_input_morph_tags_and_raplace_wrong_ones()
-            return m.match_morph_structure(self.contents)
+        # if match != 'UNKNOWN':
+        #     return match
+        # else:
+        #     self.fix_input_morph_tags_and_raplace_wrong_ones()
+        #     return m.match_morph_structure(self.contents)
+        return match
     
     def fix_input_morph_tags_and_raplace_wrong_ones(self):
         fixed_contents = rt.fix_wrong_tags_in_morph_part(self.contents)

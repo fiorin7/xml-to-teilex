@@ -211,12 +211,12 @@ def append_sense_container_and_label(entry, new_node):
     assigned = False
     for i in range(len(entry.encoded_parts['senses'])-1, -1, -1):
         node = entry.encoded_parts['senses'][i]
-        if node.tag == 'sense':
+        if node.tag == nc.get_ns('sense'):
             if node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isupper() and new_node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].islower():
                 children = node.getchildren()
                 for i in range(len(children)-1, -1, -1):
                     child = children[i]
-                    if child.tag == 'sense' and child.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isdigit():
+                    if child.tag == nc.get_ns('sense') and child.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isdigit():
                         child.append(new_node)
                         assigned = True
                         last_sense_container = new_node
@@ -291,7 +291,7 @@ def encode_senses(entry):
             elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(raw_senses[0].text):
                 content_node = nc.create_def_node(raw_senses[0].text)
             
-            elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in ('cit', 'quote')]) == 0) and \
+            elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in (nc.get_ns('cit'), nc.get_ns('quote'))]) == 0) and \
                 has_more_cyrillic_than_latin(raw_senses[0].text.strip().split(' ')[0]):
                 # ()
 

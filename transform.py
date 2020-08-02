@@ -30,7 +30,7 @@ class Entry:
         Return the "dictionary form" of the lemma e.g. ago, homo, ego.
         Words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one.
         '''
-        his = [x for x in self.contents if x.tag == get_ns('hi')]
+        his = [x for x in self.contents if x.tag == nc.get_ns('hi')]
         first_line = re.split(', | ', his[0].text)
         lemma = unidecode(first_line[0])
         lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
@@ -91,16 +91,12 @@ class Entry:
             return morph.deal_with_unknown_entry(self)
 
 
-def get_ns(tag):
-    '''Prefix tag with TEI namespace.'''
-    return r'{http://www.tei-c.org/ns/1.0}' + tag
-
 def remove_ref_parent(body):
     '''Remove ref parent tag (which contains hyperlink).'''
     for p in body:
         for idx in range(len(p)):
             x = p[idx]
-            if x.tag == get_ns('ref'):
+            if x.tag == nc.get_ns('ref'):
                 children = x.getchildren()
                 p.remove(x)
                 for i in range(len(children)):
@@ -149,7 +145,7 @@ def invalid_para(p):
 
 def get_p_contents(p):
     '''Return the children of p of interest (in 'hi' tags).'''
-    return [x for x in p if x.tag == get_ns('hi')]
+    return [x for x in p if x.tag == nc.get_ns('hi')]
     # what do with nested hi in ref
 
 def get_new_tree(template):
@@ -159,7 +155,7 @@ def get_new_tree(template):
 def get_new_body(new_tree):
     '''Return variable with the "found" body of the template.'''
     new_root = new_tree.getroot()
-    new_body = new_root.find(f'.//{get_ns("body")}')
+    new_body = new_root.find(f'.//{nc.get_ns("body")}')
     return new_body
 
 
@@ -168,13 +164,13 @@ parser = et.XMLParser(remove_blank_text=True)
 template = et.parse('template.xml', parser)
 tree = et.parse('example/raw_input.xml', parser)
 root = tree.getroot()
-body = root.find(f'.//{get_ns("body")}')
+body = root.find(f'.//{nc.get_ns("body")}')
 general_fix_up_input(body)
 
 
 counter = 0
 counter_unmatched = 0
-for p in body.iter(f'{get_ns("p")}'):
+for p in body.iter(f'{nc.get_ns("p")}'):
     if invalid_para(p):
         continue
     

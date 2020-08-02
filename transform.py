@@ -60,6 +60,13 @@ class Entry:
         for _ in range(tag_span_of_morph_info):
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
             self.contents.remove(self.contents[0])
+
+        if self.entry_type != 'UNKNOWN' and morph_part:
+            if self.contents[0].text.strip() == '(':
+                print('kek')
+                extra_morph = morph.fix_extra_morph_brackets(self)
+                # TODO: move this somewhere else
+                morph_part.append(extra_morph)
         return morph_part
 
     def insert_encoded_parts_in_entry(self):
@@ -72,15 +79,9 @@ class Entry:
     
     
     def append_senses(self, res = []):
-        content0 = self.contents[0].text
-
-        if self.entry_type != 'UNKNOWN' and self.encoded_parts.get('morph_part'):
-            if content0.strip()[0] == '(':
-                morph.fix_extra_morph_brackets(self)
-                res = self.append_senses()
-            if self.contents:
-                res = [x for x in self.contents if x.text]
-                self.contents = None
+        if self.entry_type != 'UNKNOWN' and self.encoded_parts.get('morph_part') and self.contents:
+            res = [x for x in self.contents if x.text]
+            self.contents = None
             return res
         else:
             return morph.deal_with_unknown_entry(self)

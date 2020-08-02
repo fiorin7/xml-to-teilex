@@ -29,8 +29,8 @@ def fix_extra_morph_brackets(entry):
                 extra_morph += x.text
                 contents[i].text = ''
 
-        entry.encoded_parts['morph_part'].append(nc.create_extra_morph(extra_morph))
         entry.contents = [x for x in contents if x.text]
+        return nc.create_extra_morph(extra_morph)
 
 def deal_with_unknown_entry(entry):
     senses = unknown_entry_type_find_senses_start(entry)

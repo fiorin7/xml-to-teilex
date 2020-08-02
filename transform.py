@@ -66,11 +66,6 @@ class Entry:
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
             self.contents.remove(self.contents[0])
 
-        if self.entry_type != 'UNKNOWN' and morph_part:
-            if self.contents[0].text.strip() == '(':
-                extra_morph = morph.fix_extra_morph_brackets(self)
-                # TODO: move this somewhere else
-                morph_part.append(extra_morph)
         return morph_part
 
     def insert_encoded_parts_in_entry(self):

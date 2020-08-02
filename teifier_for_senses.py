@@ -130,7 +130,7 @@ def create_cit_nodes(node_content):
 
     if 'insignis ad deformitatem puer' in node_content:
         breakpoint
-    if node_content.strip()[-1] == '–':
+    if node_content.strip() != '' and node_content.strip()[-1] == '–':
         if node_content[-1] == ' ':
             node_content = node_content[:-2]
             dash_node = nc.create_pc_node('— ')
@@ -139,7 +139,7 @@ def create_cit_nodes(node_content):
             node_content = node_content[:-1]
         dash_in_the_end = True
     
-    if node_content.strip()[-1] == '.':
+    if node_content.strip() != '' and node_content.strip()[-1] == '.':
         if node_content[-1] == ' ':
             node_content = node_content[:-2]
             dot_node = nc.create_pc_node('. ')
@@ -148,7 +148,7 @@ def create_cit_nodes(node_content):
             node_content = node_content[:-1]
         dot_in_the_end = True
     
-    if node_content.strip()[-1] == ';':
+    if node_content.strip() != '' and node_content.strip()[-1] == ';':
         if node_content[-1] == ' ':
             node_content = node_content[:-2]
             s_colon_node = nc.create_pc_node('; ')
@@ -293,6 +293,7 @@ def encode_senses(entry):
             
             elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in ('cit', 'quote')]) == 0) and \
                 has_more_cyrillic_than_latin(raw_senses[0].text.strip().split(' ')[0]):
+                # ()
 
                     dash_in_the_end = False
                     dot_in_the_end = False
@@ -300,7 +301,7 @@ def encode_senses(entry):
 
                     node_content = raw_senses[0].text
 
-                    if node_content.strip()[-1] == '–':
+                    if node_content.strip() != '' and node_content.strip()[-1] == '–':
                         if node_content[-1] == ' ':
                             node_content = node_content[:-2]
                             dash_node = nc.create_pc_node('— ')
@@ -309,7 +310,7 @@ def encode_senses(entry):
                             node_content = node_content[:-1]
                         dash_in_the_end = True
                     
-                    if node_content.strip()[-1] == '.':
+                    if node_content.strip() != '' and node_content.strip()[-1] == '.':
                         if node_content[-1] == ' ':
                             node_content = node_content[:-2]
                             dot_node = nc.create_pc_node('. ')
@@ -318,7 +319,7 @@ def encode_senses(entry):
                             node_content = node_content[:-1]
                         dot_in_the_end = True
                     
-                    if node_content.strip()[-1] == ';':
+                    if node_content.strip() != '' and node_content.strip()[-1] == ';':
                         if node_content[-1] == ' ':
                             node_content = node_content[:-2]
                             s_colon_node = nc.create_pc_node('; ')

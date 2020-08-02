@@ -91,6 +91,9 @@ def unknown_entry_partially_encode(entry):
         content_node = [old_morph_part[0]]
         if counter == 0:
             content_node = unknown_initial_xml(content_node[0].text)
+        
+        elif old_morph_part[0].text.strip()[0] == '(' and old_morph_part[0].text.strip()[-1] == ')':
+            content_node = [nc.create_extra_morph(old_morph_part[0].text)]
             
         elif old_morph_part[0].text.strip() in punctuation or old_morph_part[0].text.strip() == '–':
                 content_node = [nc.create_pc_node(old_morph_part[0].text)]

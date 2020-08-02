@@ -26,6 +26,11 @@ def create_form_lemma_node(text):
     form_lemma.append(orth_node)
     return form_lemma
 
+def create_orth_node(text):
+    orth_node = et.Element(get_ns("orth"))
+    orth_node.text = text
+    return orth_node
+
 def create_form_inflected_node(text):
     form_inflected = et.Element("form")
     form_inflected.set('type', 'inflected')

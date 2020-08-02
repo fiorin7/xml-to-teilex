@@ -1,4 +1,5 @@
 import re
+from teifier_for_morphological_part import fix_extra_morph_brackets
 
 def is_adj_1_2_decl(content0s, content1s):
     return content1s.isdigit() and ',' not in content0s and content0s[-2:] == 'us'

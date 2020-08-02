@@ -1,4 +1,5 @@
 from lxml import etree as et
+from copy import copy
 
 def make_bold_hi_node(text):
     hi_node = et.Element("hi")
@@ -8,6 +9,12 @@ def make_bold_hi_node(text):
 
 def make_normal_hi_node(text):
     hi_node = et.Element("hi")
+    hi_node.text = text
+    return hi_node
+
+def make_italic_hi_node(text):
+    hi_node = et.Element("hi")
+    hi_node.set('rend', 'italic')
     hi_node.text = text
     return hi_node
 
@@ -58,4 +65,78 @@ def fix_wrong_tags_in_morph_part(contents):
         #     print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8'))
         
         return result
+
+def fix_separated_brackets(contents):
+    if 'apto' in contents[0].text:
+        breakpoint
+    new_contents = []
+    old_contents = copy(contents)
+    opening_brackets_idx = None
+    opening_brackets_content = ''
+    italic = False
+    error = False
+    i = 0
+    while contents:
+        if '(' in contents[i].text and opening_brackets_idx:
+            error = True
+            break
+
+
+        if '(' in contents[i].text and not ')' in contents[i].text:
+            opening_brackets_idx = i
+            idx_in_text = contents[i].text.index('(')
+            if (idx_in_text == 1 and contents[i].text[0] == ' ') or idx_in_text == 0:
+                opening_brackets_content = contents[i].text
+                if contents[i].get('rend') == 'italic':
+                    italic = True
+            else:
+                opening_brackets_content = contents[i].text[idx_in_text:]
+                contents[i].text = contents[i].text.replace(opening_brackets_content, '')
+                if contents[i].get('rend') == 'italic':
+                    italic = True
+                new_contents.append(contents[i])
+        
+        elif ')' in contents[i].text and opening_brackets_idx is not None:
+            idx_in_text = contents[i].text.index(')')
+            current_content = ''
+            if contents[i].text[-2:] == ') ' or contents[i].text[-1] == ')':
+                opening_brackets_content += contents[i].text
+
+                if italic:
+                    new_contents.append(make_italic_hi_node(opening_brackets_content))
+                else:
+                    new_contents.append(make_normal_hi_node(opening_brackets_content))
+
+                opening_brackets_idx = None
+                opening_brackets_content = ''
+                italic = False
+            else:
+                current_content = contents[i].text[:idx_in_text+1]
+                opening_brackets_content += current_content
+                contents[i].text = contents[i].text.replace(current_content, '')
+                
+                if italic:
+                    new_contents.append(make_italic_hi_node(opening_brackets_content))
+                else:
+                    new_contents.append(make_normal_hi_node(opening_brackets_content))
+
+                new_contents.append(contents[i])
+                opening_brackets_idx = None
+                opening_brackets_content = ''
+                italic = False
+        
+        elif opening_brackets_idx is not None:
+            opening_brackets_content += contents[i].text
+            if contents[i].get('rend') == 'italic':
+                italic = True
+        
+        else:
+            new_contents.append(contents[i])
+
+        contents.pop(0)
+        
+
+    if error:
+        new_contents = old_contents
     
+    return new_contents

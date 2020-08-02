@@ -40,13 +40,14 @@ class Entry:
         if match != 'UNKNOWN':
             return match
         else:
-            self.fix_input_morph_tags_and_raplace_wrong_ones(self.contents)
+            self.fix_input_morph_tags_and_raplace_wrong_ones()
             return m.match_morph_structure(self.contents)
     
-    def fix_input_morph_tags_and_raplace_wrong_ones(self, contents):
-        fixed_contents = rt.fix_wrong_tags_in_morph_part(contents)
+    def fix_input_morph_tags_and_raplace_wrong_ones(self):
+        fixed_contents = rt.fix_wrong_tags_in_morph_part(self.contents)
         if fixed_contents:
             self.contents = fixed_contents
+        self.contents = rt.fix_separated_brackets(self.contents)
 
     
     def merge_entry_parent_and_contents(self, entry_parent_node, contents):
@@ -56,6 +57,8 @@ class Entry:
         return merged_entry   
 
     def set_morph_part_xml(self):
+        if self.title_lemma == 'adolescens':
+            breakpoint
         morph_part, tag_span_of_morph_info = morph.get_morph_info(self.entry_type, self.contents)
         for _ in range(tag_span_of_morph_info):
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
@@ -63,7 +66,6 @@ class Entry:
 
         if self.entry_type != 'UNKNOWN' and morph_part:
             if self.contents[0].text.strip() == '(':
-                print('kek')
                 extra_morph = morph.fix_extra_morph_brackets(self)
                 # TODO: move this somewhere else
                 morph_part.append(extra_morph)

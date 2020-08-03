@@ -102,6 +102,13 @@ def unknown_entry_partially_encode(entry):
         elif old_morph_part[0].get('rend') == "italic":
             if old_morph_part[0].text.strip() in ('m', 'f', 'n'):
                 content_node = [nc.create_gram_grp(old_morph_part[0].text)]
+
+            elif len(entry.encoded_parts['morph_part']) == 1 and len(old_morph_part) >= 2 and old_morph_part[1].get('rend' ) == 'bold' and old_morph_part[0].text.strip() == 'и' and entry.encoded_parts['morph_part'][-1].tag == nc.get_ns('form'):
+                content_node = []
+                entry.encoded_parts['morph_part'][-1].append(old_morph_part[0])
+                entry.encoded_parts['morph_part'][-1].append(nc.create_orth_node(old_morph_part[1].text))
+                old_morph_part.pop(0)
+
             else:
                 content_node = [nc.create_usg_node(old_morph_part[0].text)]
         

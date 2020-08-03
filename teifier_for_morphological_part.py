@@ -34,8 +34,9 @@ def fix_extra_morph_brackets(entry):
 
 def deal_with_unknown_entry(entry):
     senses = unknown_entry_type_find_senses_start(entry)
-    unknown_entry_partially_encode(entry)
-    return senses
+    if senses:
+        unknown_entry_partially_encode(entry)
+        return senses
 
 def unknown_entry_type_find_senses_start(entry):
     contents = entry.contents

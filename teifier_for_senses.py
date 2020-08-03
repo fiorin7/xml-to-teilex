@@ -283,7 +283,7 @@ def encode_senses(entry):
             content_node = [raw_senses[0]]
 
             if raw_senses[0].text.strip() in punctuation or raw_senses[0].text.strip() == '–':
-                content_node = nc.create_pc_node(raw_senses[0].text)
+                content_node = [nc.create_pc_node(raw_senses[0].text)]
 
             elif raw_senses[0].get('rend') == "italic":
                 content_node = [nc.create_usg_node(raw_senses[0].text)]

@@ -221,6 +221,8 @@ def append_sense_container_and_label(entry, new_node):
                         assigned = True
                         last_sense_container = new_node
                         break
+            if assigned:
+                break
             if node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isdigit() and new_node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].islower():
                 entry.encoded_parts['senses'][i].append(new_node)
                 assigned = True

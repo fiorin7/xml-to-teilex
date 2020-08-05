@@ -173,10 +173,9 @@ def verb_xml(entry_type, contents0, contents1):
 
 def adj_1_2_decl_xml(contents0, contents1):
     form_lemma = nc.create_form_lemma_node(contents0)
-    pc = nc.create_pc_node(', ')
     gram_grp = nc.create_gram_grp(contents1, "????")
 
-    return [form_lemma, pc, gram_grp]
+    return [form_lemma, gram_grp]
 
 def adj_multiple_forms_xml(contents0):
     contents0_split = contents0.split(', ')

@@ -285,7 +285,7 @@ def encode_senses(entry):
             if sense_number == 'I':
                 sense_number = initial[:-1]
             numbers.append(sense_number)
-            last_sense_container = create_subsense_number_node(title_lemma, numbers, initial)
+            last_sense_container = create_subsense_number_node(title_lemma, numbers, raw_senses[0].text)
             append_sense_container_and_label(entry, last_sense_container)
             encoded = True
         

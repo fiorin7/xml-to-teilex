@@ -37,8 +37,11 @@ def fix_wrong_tags_in_morph_part(contents):
     result = []
 
     if number_one_is_in_c0(content0):
+        number_node_text = '1.'
+        if content0_node.text[-1] == ' ':
+            number_node_text += ' '
+        content0_2_node = make_bold_hi_node(number_node_text)
         content0_node.text = content0_node.text.rstrip()[:-2]
-        content0_2_node = make_bold_hi_node('1.')
         result.append(content0_node)
         result.append(content0_2_node)
         [result.append(x) for x in contents[1:]]

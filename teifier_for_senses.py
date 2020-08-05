@@ -132,7 +132,7 @@ def create_cit_nodes(node_content):
         breakpoint
     if node_content.strip() != '' and node_content.strip()[-1] == '–':
         if node_content[-1] == ' ':
-            node_content = node_content[:-2]
+            node_content = node_content.rstrip()[:-1]
             dash_node = nc.create_pc_node('— ')
         else:
             dash_node = nc.create_pc_node('—')
@@ -141,7 +141,7 @@ def create_cit_nodes(node_content):
     
     if node_content.strip() != '' and node_content.strip()[-1] == '.':
         if node_content[-1] == ' ':
-            node_content = node_content[:-2]
+            node_content = node_content.rstrip()[:-1]
             dot_node = nc.create_pc_node('. ')
         else:
             dot_node = nc.create_pc_node('.')
@@ -150,7 +150,7 @@ def create_cit_nodes(node_content):
     
     if node_content.strip() != '' and node_content.strip()[-1] == ';':
         if node_content[-1] == ' ':
-            node_content = node_content[:-2]
+            node_content = node_content.rstrip()[:-1]
             s_colon_node = nc.create_pc_node('; ')
         else:
             s_colon_node = nc.create_pc_node(';')
@@ -313,7 +313,7 @@ def encode_senses(entry):
 
                     if node_content.strip() != '' and node_content.strip()[-1] == '–':
                         if node_content[-1] == ' ':
-                            node_content = node_content[:-2]
+                            node_content = node_content.rstrip()[:-1]
                             dash_node = nc.create_pc_node('— ')
                         else:
                             dash_node = nc.create_pc_node('—')
@@ -322,7 +322,7 @@ def encode_senses(entry):
                     
                     if node_content.strip() != '' and node_content.strip()[-1] == '.':
                         if node_content[-1] == ' ':
-                            node_content = node_content[:-2]
+                            node_content = node_content.rstrip()[:-1]
                             dot_node = nc.create_pc_node('. ')
                         else:
                             dot_node = nc.create_pc_node('.')
@@ -331,7 +331,7 @@ def encode_senses(entry):
                     
                     if node_content.strip() != '' and node_content.strip()[-1] == ';':
                         if node_content[-1] == ' ':
-                            node_content = node_content[:-2]
+                            node_content = node_content.rstrip()[:-1]
                             s_colon_node = nc.create_pc_node('; ')
                         else:
                             s_colon_node = nc.create_pc_node(';')

@@ -200,6 +200,14 @@ def create_cit_nodes(node_content):
     
     return result
 
+def deal_with_completely_unknown_entry(entry):
+    first_node = entry.contents[0]
+
+    if len(re.split(', | ', first_node.text)) == 1:
+        entry.encoded_parts['senses'].append(nc.create_form_lemma_node(first_node.text))
+        entry.contents.pop(0)
+
+    [entry.encoded_parts['senses'].append(x) for x in entry.contents]
 
 def create_subsense_number_node(title_lemma, numbers, initial):
     sense_container = nc.create_sense_container(title_lemma, find_previous_numbers(numbers))
@@ -259,7 +267,7 @@ def encode_senses(entry):
             numbers.append('1')
     
     else:
-        [entry.encoded_parts['senses'].append(x) for x in entry.contents]
+        deal_with_completely_unknown_entry(entry)
 
 
     while raw_senses:

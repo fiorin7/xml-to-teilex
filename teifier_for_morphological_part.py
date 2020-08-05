@@ -49,10 +49,10 @@ def unknown_entry_type_find_senses_start(entry):
         elif contents[i].get('rend' ) == 'bold' and contents[i].text.strip()[-2:] == '1.':
             number_node = copy(contents[i])
             number_node.text = '1.'
-            contents[i].text = contents[i].text.replace('1.', '')
             if contents[i].text[-1] == ' ':
                 number_node.text += ' '
                 contents[i].text = contents[i].text[:-1]
+            contents[i].text = contents[i].text.replace('1.', '')
 
             entry.encoded_parts['morph_part'] = contents[:i+1]
             entry.entry_type = 'unknown but clear senses start'

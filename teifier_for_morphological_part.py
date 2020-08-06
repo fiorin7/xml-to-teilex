@@ -110,7 +110,7 @@ def unknown_entry_partially_encode(entry):
                 old_morph_part.pop(0)
 
             else:
-                content_node = [nc.create_usg_node(old_morph_part[0].text)]
+                content_node = nc.create_usg_node(old_morph_part[0].text)
         
         elif old_morph_part[0].text.strip() in ('1', '2', '3', '4') and (len(old_morph_part) == 1 or old_morph_part[1].text.strip() != '.'):
             content_node = [nc.create_gram_grp(old_morph_part[0].text, 'iType')]

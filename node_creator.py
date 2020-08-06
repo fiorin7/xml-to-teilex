@@ -84,10 +84,24 @@ def create_label(label_content):
 # ############### MOSTLY SENSE ##################
 
 def create_usg_node(node_content):
+    res = []
+    pc_text = None
+
+    if node_content.strip()[-1] == ':':
+        idx_pc = node_content.index(':')
+        pc_text = node_content[idx_pc:]
+        node_content = node_content[:idx_pc]
+
     usg_node = et.Element(get_ns("usg"))
     usg_node.set('type', '???')
     usg_node.text = node_content
-    return usg_node
+    res.append(usg_node)
+
+    if pc_text:
+        pc_node = create_pc_node(pc_text)
+        res.append(pc_node)
+        
+    return res
 
 def create_def_node(node_content):
     result = []

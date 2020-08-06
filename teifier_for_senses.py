@@ -296,7 +296,7 @@ def encode_senses(entry):
                 content_node = [nc.create_pc_node(raw_senses[0].text)]
 
             elif raw_senses[0].get('rend') == "italic":
-                content_node = [nc.create_usg_node(raw_senses[0].text)]
+                content_node = nc.create_usg_node(raw_senses[0].text)
             
             elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(raw_senses[0].text):
                 content_node = nc.create_def_node(raw_senses[0].text)

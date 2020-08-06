@@ -8,6 +8,7 @@ import teifier_for_morphological_part as morph
 import rearranger_of_wrong_input_tags as rt
 import teifier_for_senses as sns
 import node_creator as nc
+from os import path
 
 class Entry:
     def __init__(self, contents=[]):
@@ -159,6 +160,17 @@ def get_new_body(new_tree):
     new_body = new_root.find(f'.//{nc.get_ns("body")}')
     return new_body
 
+def find_filename(title_lemma):
+    file_number = 0
+    file_name = ''
+    
+    while True:
+        file_name = entry.title_lemma + " " + str(file_number) if file_number else entry.title_lemma
+        if path.exists(f'example/example-output/{file_name}.xml'):
+            file_number += 1
+        else:
+            break
+    return file_name
 
 parser = et.XMLParser(remove_blank_text=True)
 
@@ -184,7 +196,9 @@ for p in body.iter(f'{nc.get_ns("p")}'):
     
     new_body.append(entry.entry_node)
     
-    new_tree.write(open(f'example/example-output/{entry.title_lemma}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+    file_name = find_filename(entry.title_lemma)
+    new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+    new_tree.write(open(f'../xml-to-teilex-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
     # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
     if entry.entry_type == 'UNKNOWN':
         counter_unmatched += 1

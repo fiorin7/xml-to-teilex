@@ -1,4 +1,4 @@
-from copy import deepcopy
+from copy import deepcopy, copy
 from lxml import etree as et
 import re
 from unidecode import unidecode

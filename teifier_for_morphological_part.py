@@ -1,7 +1,7 @@
 from lxml import etree as et
 import re
 from copy import copy
-import node_creator as nc
+import node_factory as nf
 from string import punctuation
 
 def has_more_cyrillic_than_latin(string):
@@ -30,7 +30,7 @@ def fix_extra_morph_brackets(entry):
                 contents[i].text = ''
 
         entry.contents = [x for x in contents if x.text]
-        return nc.create_extra_morph(extra_morph)
+        return nf.create_extra_morph(extra_morph)
 
 def deal_with_unknown_entry(entry):
     senses = unknown_entry_type_find_senses_start(entry)
@@ -94,26 +94,26 @@ def unknown_entry_partially_encode(entry):
             content_node = unknown_initial_xml(content_node[0].text)
         
         elif old_morph_part[0].text.strip()[0] == '(' and old_morph_part[0].text.strip()[-1] == ')':
-            content_node = [nc.create_extra_morph(old_morph_part[0].text)]
+            content_node = [nf.create_extra_morph(old_morph_part[0].text)]
             
         elif old_morph_part[0].text.strip() in punctuation or old_morph_part[0].text.strip() == '–':
-                content_node = [nc.create_pc_node(old_morph_part[0].text)]
+                content_node = [nf.create_pc_node(old_morph_part[0].text)]
 
         elif old_morph_part[0].get('rend') == "italic":
             if old_morph_part[0].text.strip() in ('m', 'f', 'n'):
-                content_node = [nc.create_gram_grp(old_morph_part[0].text)]
+                content_node = [nf.create_gram_grp(old_morph_part[0].text)]
 
-            elif len(entry.encoded_parts['morph_part']) == 1 and len(old_morph_part) >= 2 and old_morph_part[1].get('rend' ) == 'bold' and old_morph_part[0].text.strip() == 'и' and entry.encoded_parts['morph_part'][-1].tag == nc.get_ns('form'):
+            elif len(entry.encoded_parts['morph_part']) == 1 and len(old_morph_part) >= 2 and old_morph_part[1].get('rend' ) == 'bold' and old_morph_part[0].text.strip() == 'и' and entry.encoded_parts['morph_part'][-1].tag == nf.get_ns('form'):
                 content_node = []
                 entry.encoded_parts['morph_part'][-1].append(old_morph_part[0])
-                entry.encoded_parts['morph_part'][-1].append(nc.create_orth_node(old_morph_part[1].text))
+                entry.encoded_parts['morph_part'][-1].append(nf.create_orth_node(old_morph_part[1].text))
                 old_morph_part.pop(0)
 
             else:
-                content_node = nc.create_usg_node(old_morph_part[0].text)
+                content_node = nf.create_usg_node(old_morph_part[0].text)
         
         elif old_morph_part[0].text.strip() in ('1', '2', '3', '4') and (len(old_morph_part) == 1 or old_morph_part[1].text.strip() != '.'):
-            content_node = [nc.create_gram_grp(old_morph_part[0].text, 'iType')]
+            content_node = [nf.create_gram_grp(old_morph_part[0].text, 'iType')]
         
         [entry.encoded_parts['morph_part'].append(x) for x in content_node]
         old_morph_part.pop(0)
@@ -125,18 +125,18 @@ def unknown_initial_xml(contents0):
     contents0_split = [x for x in contents0.split(', ') if x.strip() != '']
     for i in range(len(contents0_split)):
         if i == 0:
-            form_lemma = nc.create_form_lemma_node(contents0_split[i])
+            form_lemma = nf.create_form_lemma_node(contents0_split[i])
             res.append(form_lemma)
 
             if len(contents0_split) > 1:
-                pc = nc.create_pc_node(', ')
+                pc = nf.create_pc_node(', ')
                 res.append(pc)
         elif i == len(contents0_split)-1:
-            form_inflected = nc.create_form_inflected_node(contents0_split[i])
+            form_inflected = nf.create_form_inflected_node(contents0_split[i])
             res.append(form_inflected)
         else:
-            form_inflected = nc.create_form_inflected_node(contents0_split[i])
-            pc = nc.create_pc_node(', ')
+            form_inflected = nf.create_form_inflected_node(contents0_split[i])
+            pc = nf.create_pc_node(', ')
             res.append(form_inflected)
             res.append(pc)
     return res
@@ -144,36 +144,36 @@ def unknown_initial_xml(contents0):
 
 def noun_xml(contents0, contents1):
     contents0_split = contents0.split(', ')
-    form_lemma = nc.create_form_lemma_node(contents0_split[0])
-    pc = nc.create_pc_node(', ')
-    form_inflected = nc.create_form_inflected_node(contents0_split[1])
-    gram_grp = nc.create_gram_grp(contents1)
+    form_lemma = nf.create_form_lemma_node(contents0_split[0])
+    pc = nf.create_pc_node(', ')
+    form_inflected = nf.create_form_inflected_node(contents0_split[1])
+    gram_grp = nf.create_gram_grp(contents1)
 
     return [form_lemma, pc, form_inflected, gram_grp]
 
 def verb_xml(entry_type, contents0, contents1):
     result = []
     contents0_split = contents0.split(', ')
-    form_lemma = nc.create_form_lemma_node(contents0_split[0])
+    form_lemma = nf.create_form_lemma_node(contents0_split[0])
     result.append(form_lemma)
 
     if len(contents0_split) > 1:
         for word in contents0_split[1:]:
-            pc = nc.create_pc_node(', ')
-            form_inflected = nc.create_form_inflected_node(word)
+            pc = nf.create_pc_node(', ')
+            form_inflected = nf.create_form_inflected_node(word)
             result.append(pc)
             result.append(form_inflected)
     
     if entry_type != 'special_verb':
-        gram_grp = nc.create_gram_grp(contents1, "iType")
+        gram_grp = nf.create_gram_grp(contents1, "iType")
         result.append(gram_grp)
 
     return result
     
 
 def adj_1_2_decl_xml(contents0, contents1):
-    form_lemma = nc.create_form_lemma_node(contents0)
-    gram_grp = nc.create_gram_grp(contents1, "????")
+    form_lemma = nf.create_form_lemma_node(contents0)
+    gram_grp = nf.create_gram_grp(contents1, "????")
 
     return [form_lemma, gram_grp]
 
@@ -181,20 +181,20 @@ def adj_multiple_forms_xml(contents0):
     contents0_split = contents0.split(', ')
     result = []
 
-    form_lemma = nc.create_form_lemma_node(contents0_split[0])
+    form_lemma = nf.create_form_lemma_node(contents0_split[0])
     result.append(form_lemma)
 
     for word in contents0_split[1:]:
-        form_inflected = nc.create_form_inflected_node(word)
-        pc = nc.create_pc_node(', ')
+        form_inflected = nf.create_form_inflected_node(word)
+        pc = nf.create_pc_node(', ')
         result.append(pc)
         result.append(form_inflected)
     
     return result
 
 def adv_conjunct_xml(contents0, contents1):
-    form_lemma = nc.create_form_lemma_node(contents0)
-    gram_grp = nc.create_gram_grp(contents1, "????")
+    form_lemma = nf.create_form_lemma_node(contents0)
+    gram_grp = nf.create_gram_grp(contents1, "????")
     return [form_lemma, gram_grp]
 
 
@@ -231,7 +231,7 @@ def get_morph_info(entry_type, contents):
         tag_span_of_morph_info = 2
     
     elif entry_type == 'praep':
-        res = nc.create_praep_xml(contents0, contents1)
+        res = nf.create_praep_xml(contents0, contents1)
         tag_span_of_morph_info = 2
     
     elif entry_type == 'unknown but clear senses start':

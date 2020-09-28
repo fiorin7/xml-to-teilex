@@ -3,7 +3,7 @@ from copy import copy
 from collections import deque
 import re
 from string import punctuation
-import node_creator as nc
+import node_factory as nf
 
 def one_is_missing(raw_senses):
     one_spotted = False
@@ -114,8 +114,8 @@ def fix_dot_in_next_node(raw_senses):
             raw_senses[i+1].text = raw_senses[i+1].text[1:]
 
 def add_missing_one(entry, title_lemma):
-    sense_container = nc.create_sense_container(title_lemma)
-    label = nc.create_label('1.')
+    sense_container = nf.create_sense_container(title_lemma)
+    label = nf.create_label('1.')
     sense_container.append(label)
     append_sense_container_and_label(entry, sense_container)
 
@@ -133,27 +133,27 @@ def create_cit_nodes(node_content):
     if node_content.strip() != '' and node_content.strip()[-1] == '–':
         if node_content[-1] == ' ':
             node_content = node_content.rstrip()[:-1]
-            dash_node = nc.create_pc_node('— ')
+            dash_node = nf.create_pc_node('— ')
         else:
-            dash_node = nc.create_pc_node('—')
+            dash_node = nf.create_pc_node('—')
             node_content = node_content[:-1]
         dash_in_the_end = True
     
     if node_content.strip() != '' and node_content.strip()[-1] == '.':
         if node_content[-1] == ' ':
             node_content = node_content.rstrip()[:-1]
-            dot_node = nc.create_pc_node('. ')
+            dot_node = nf.create_pc_node('. ')
         else:
-            dot_node = nc.create_pc_node('.')
+            dot_node = nf.create_pc_node('.')
             node_content = node_content[:-1]
         dot_in_the_end = True
     
     if node_content.strip() != '' and node_content.strip()[-1] == ';':
         if node_content[-1] == ' ':
             node_content = node_content.rstrip()[:-1]
-            s_colon_node = nc.create_pc_node('; ')
+            s_colon_node = nf.create_pc_node('; ')
         else:
-            s_colon_node = nc.create_pc_node(';')
+            s_colon_node = nf.create_pc_node(';')
             node_content = node_content[:-1]
         semi_colon_in_the_end = True
         
@@ -172,21 +172,21 @@ def create_cit_nodes(node_content):
             if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(x.split(' ')[i+1])):
                 if i > 0:
                     if not (x.split(' ')[0] == '' and i == 1):
-                        cit_node = nc.assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])) + ' ')
+                        cit_node = nf.assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])) + ' ')
                         result.append(cit_node)
                 if x.split(' ')[0] == '' and i == 1:
-                    cit_node = nc.assemble_cit_nodes('translation', ' '.join(x.split(' ')))
+                    cit_node = nf.assemble_cit_nodes('translation', ' '.join(x.split(' ')))
                 else:
-                    cit_node = nc.assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))
+                    cit_node = nf.assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))
                 result.append(cit_node)
                 break
             elif i == len(x.split(' ')) - 1:
-                cit_node = nc.assemble_cit_nodes('example', ' '.join((x.split(' '))))
+                cit_node = nf.assemble_cit_nodes('example', ' '.join((x.split(' '))))
                 result.append(cit_node)
                 break
             
         if y < (len(split_contents)-1):
-            result.append(nc.create_pc_node('; '))
+            result.append(nf.create_pc_node('; '))
             # print(x)
             # print('kek')
     
@@ -204,14 +204,14 @@ def deal_with_completely_unknown_entry(entry):
     first_node = entry.contents[0]
 
     if len(re.split(', | ', first_node.text)) == 1:
-        entry.encoded_parts['senses'].append(nc.create_form_lemma_node(first_node.text))
+        entry.encoded_parts['senses'].append(nf.create_form_lemma_node(first_node.text))
         entry.contents.pop(0)
 
     [entry.encoded_parts['senses'].append(x) for x in entry.contents]
 
 def create_subsense_number_node(title_lemma, numbers, initial):
-    sense_container = nc.create_sense_container(title_lemma, find_previous_numbers(numbers))
-    label = nc.create_label(initial)
+    sense_container = nf.create_sense_container(title_lemma, find_previous_numbers(numbers))
+    label = nf.create_label(initial)
     sense_container.append(label)
     return sense_container
             
@@ -219,12 +219,12 @@ def append_sense_container_and_label(entry, new_node):
     assigned = False
     for i in range(len(entry.encoded_parts['senses'])-1, -1, -1):
         node = entry.encoded_parts['senses'][i]
-        if node.tag == nc.get_ns('sense'):
+        if node.tag == nf.get_ns('sense'):
             if node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isupper() and new_node.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].islower():
                 children = node.getchildren()
                 for i in range(len(children)-1, -1, -1):
                     child = children[i]
-                    if child.tag == nc.get_ns('sense') and child.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isdigit():
+                    if child.tag == nf.get_ns('sense') and child.attrib['{http://www.w3.org/XML/1998/namespace}id'][-1].isdigit():
                         child.append(new_node)
                         assigned = True
                         last_sense_container = new_node
@@ -262,7 +262,7 @@ def encode_senses(entry):
             numbers.append('1')
     
         if not is_numbered_entry(raw_senses):
-            entry.encoded_parts['senses'].append(nc.create_sense_container_non_numbered(title_lemma))
+            entry.encoded_parts['senses'].append(nf.create_sense_container_non_numbered(title_lemma))
             last_sense_container = entry.encoded_parts['senses'][0]
             numbers.append('1')
     
@@ -293,15 +293,15 @@ def encode_senses(entry):
             content_node = [raw_senses[0]]
 
             if raw_senses[0].text.strip() in punctuation or raw_senses[0].text.strip() == '–':
-                content_node = [nc.create_pc_node(raw_senses[0].text)]
+                content_node = [nf.create_pc_node(raw_senses[0].text)]
 
             elif raw_senses[0].get('rend') == "italic":
-                content_node = nc.create_usg_node(raw_senses[0].text)
+                content_node = nf.create_usg_node(raw_senses[0].text)
             
             elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(raw_senses[0].text):
-                content_node = nc.create_def_node(raw_senses[0].text)
+                content_node = nf.create_def_node(raw_senses[0].text)
             
-            elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in (nc.get_ns('cit'), nc.get_ns('quote'))]) == 0) and \
+            elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in (nf.get_ns('cit'), nf.get_ns('quote'))]) == 0) and \
                 has_more_cyrillic_than_latin(raw_senses[0].text.strip().split(' ')[0]):
                 # ()
 
@@ -314,27 +314,27 @@ def encode_senses(entry):
                     if node_content.strip() != '' and node_content.strip()[-1] == '–':
                         if node_content[-1] == ' ':
                             node_content = node_content.rstrip()[:-1]
-                            dash_node = nc.create_pc_node('— ')
+                            dash_node = nf.create_pc_node('— ')
                         else:
-                            dash_node = nc.create_pc_node('—')
+                            dash_node = nf.create_pc_node('—')
                             node_content = node_content[:-1]
                         dash_in_the_end = True
                     
                     if node_content.strip() != '' and node_content.strip()[-1] == '.':
                         if node_content[-1] == ' ':
                             node_content = node_content.rstrip()[:-1]
-                            dot_node = nc.create_pc_node('. ')
+                            dot_node = nf.create_pc_node('. ')
                         else:
-                            dot_node = nc.create_pc_node('.')
+                            dot_node = nf.create_pc_node('.')
                             node_content = node_content[:-1]
                         dot_in_the_end = True
                     
                     if node_content.strip() != '' and node_content.strip()[-1] == ';':
                         if node_content[-1] == ' ':
                             node_content = node_content.rstrip()[:-1]
-                            s_colon_node = nc.create_pc_node('; ')
+                            s_colon_node = nf.create_pc_node('; ')
                         else:
-                            s_colon_node = nc.create_pc_node(';')
+                            s_colon_node = nf.create_pc_node(';')
                             node_content = node_content[:-1]
                         semi_colon_in_the_end = True
                     
@@ -352,7 +352,7 @@ def encode_senses(entry):
                             found_latin = True
                             break
                     if not found_latin:
-                        def_node = nc.create_def_node(node_content)
+                        def_node = nf.create_def_node(node_content)
                         content_node.extend(def_node)
                         if dot_in_the_end:
                             content_node.append(dot_node)
@@ -361,7 +361,7 @@ def encode_senses(entry):
                         if dash_in_the_end:
                             content_node.append(dash_node)
                     else:
-                        def_node = nc.create_def_node(' '.join(node_content.split(' ')[:i]) + ' ')
+                        def_node = nf.create_def_node(' '.join(node_content.split(' ')[:i]) + ' ')
                         content_node.extend(def_node)
                         cit_node = create_cit_nodes(' '.join(node_content.split(' ')[i:]))
                         content_node.extend(cit_node)

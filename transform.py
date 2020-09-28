@@ -7,7 +7,7 @@ import matcher as m
 import teifier_for_morphological_part as morph
 import rearranger_of_wrong_input_tags as rt
 import teifier_for_senses as sns
-import node_creator as nc
+import node_factory as nf
 from os import path
 
 class Entry:
@@ -16,7 +16,7 @@ class Entry:
         self.contents = copy(contents)
         self.title_lemma = self.get_title_lemma()
         self.fix_input_morph_tags_and_raplace_wrong_ones()
-        self.entry_node = nc.create_entry_parent_node(self.title_lemma)
+        self.entry_node = nf.create_entry_parent_node(self.title_lemma)
         self.entry_type =  self.get_entry_type()
         self.encoded_parts = {
             'morph_part' : self.set_morph_part_xml(),
@@ -31,7 +31,7 @@ class Entry:
         Return the "dictionary form" of the lemma e.g. ago, homo, ego.
         Words with both deponent and non-deponent forms like arbitro(r) accept as lemma the deponent one.
         '''
-        his = [x for x in self.contents if x.tag == nc.get_ns('hi')]
+        his = [x for x in self.contents if x.tag == nf.get_ns('hi')]
         first_line = re.split(', | ', his[0].text)
         lemma = unidecode(first_line[0])
         lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
@@ -65,7 +65,7 @@ class Entry:
         
         if self.contents[0].text.strip()[0] == '(' and self.contents[0].text.strip()[-1] == ')':
             if self.contents[1].text.strip()[:2] in ('1.', 'I.') or (not morph.has_more_cyrillic_than_latin(self.contents[0].text) and morph.has_more_cyrillic_than_latin(self.contents[1].text.split()[0])):
-                morph_part.append(nc.create_extra_morph(self.contents[0].text))
+                morph_part.append(nf.create_extra_morph(self.contents[0].text))
                 self.contents.remove(self.contents[0])
 
         return morph_part
@@ -93,7 +93,7 @@ def remove_ref_parent(body):
     for p in body:
         for idx in range(len(p)):
             x = p[idx]
-            if x.tag == nc.get_ns('ref'):
+            if x.tag == nf.get_ns('ref'):
                 children = x.getchildren()
                 p.remove(x)
                 for i in range(len(children)):
@@ -142,7 +142,7 @@ def invalid_para(p):
 
 def get_p_contents(p):
     '''Return the children of p of interest (in 'hi' tags).'''
-    return [x for x in p if x.tag == nc.get_ns('hi')]
+    return [x for x in p if x.tag == nf.get_ns('hi')]
     # what do with nested hi in ref
 
 def get_new_tree(template):
@@ -152,7 +152,7 @@ def get_new_tree(template):
 def get_new_body(new_tree):
     '''Return variable with the "found" body of the template.'''
     new_root = new_tree.getroot()
-    new_body = new_root.find(f'.//{nc.get_ns("body")}')
+    new_body = new_root.find(f'.//{nf.get_ns("body")}')
     return new_body
 
 def find_filename(title_lemma):
@@ -172,13 +172,13 @@ parser = et.XMLParser(remove_blank_text=True)
 template = et.parse('template.xml', parser)
 tree = et.parse('example/raw_input.xml', parser)
 root = tree.getroot()
-body = root.find(f'.//{nc.get_ns("body")}')
+body = root.find(f'.//{nf.get_ns("body")}')
 general_fix_up_input(body)
 
 
 counter = 0
 counter_unmatched = 0
-for p in body.iter(f'{nc.get_ns("p")}'):
+for p in body.iter(f'{nf.get_ns("p")}'):
     if invalid_para(p):
         continue
     

@@ -39,11 +39,6 @@ class Entry:
     
     def get_entry_type(self):
         match = m.match_morph_structure(self.contents)
-        # if match != 'UNKNOWN':
-        #     return match
-        # else:
-        #     self.fix_input_morph_tags_and_raplace_wrong_ones()
-        #     return m.match_morph_structure(self.contents)
         return match
     
     def fix_input_morph_tags_and_raplace_wrong_ones(self):

@@ -171,10 +171,10 @@ def create_cit_nodes(node_content):
 
             if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(x.split(' ')[i+1])):
                 if i > 0:
-                    if not (x.split(' ').startswith('') and i == 1):
+                    if not (x.split(' ')[0] == '' and i == 1):
                         cit_node = nf.assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])) + ' ')
                         result.append(cit_node)
-                if x.split(' ').startswith('') and i == 1:
+                if x.split(' ')[0] == '' and i == 1:
                     cit_node = nf.assemble_cit_nodes('translation', ' '.join(x.split(' ')))
                 else:
                     cit_node = nf.assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))

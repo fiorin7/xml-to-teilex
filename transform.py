@@ -12,8 +12,8 @@ from os import path
 
 class Entry:
     def __init__(self, contents=[]):
-        self.raw_contents = contents
-        self.contents = contents
+        self.raw_contents = copy(contents)
+        self.contents = copy(contents)
         self.title_lemma = self.get_title_lemma()
         self.fix_input_morph_tags_and_raplace_wrong_ones()
         self.entry_node = nc.create_entry_parent_node(self.title_lemma)

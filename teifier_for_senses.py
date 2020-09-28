@@ -28,12 +28,12 @@ def is_numbered_entry(raw_senses):
     return False
 
 def is_long_roman_numeral(initial):
-    return (len(initial) > 2 and (initial[:3] in ('II.', 'IV.')) or (len(initial) > 3 and initial[:4] == 'III.'))
+    return (len(initial) > 2 and initial.startswith(('II.', 'IV.'))) or (len(initial) > 3 and initial.startswith('III.'))
 
 def is_subsense_number(initial):
     if len(initial) < 2:
         return False
-    condition = initial[:2] == 'I.' or initial[:3] in ('II.', 'IV.') or initial[:4] == 'III.' or\
+    condition = initial.startswith(('I.', 'II.', 'III.', 'IV.')) or\
             (initial[0].isdigit() and initial[1] == '.') or\
                 (initial[0].isalpha() and initial[1] == ')')
     return condition
@@ -86,7 +86,7 @@ def fix_mixed_numbers(entry, initial):
 
             fixed = True
 
-            if raw_senses[0].text[0] == ' ':
+            if raw_senses[0].text.startswith(' '):
                 space_in_front = True
             
             initial_node = copy(raw_senses[0])
@@ -109,7 +109,7 @@ def fix_mixed_numbers(entry, initial):
 
 def fix_dot_in_next_node(raw_senses):
     for i in range(len(raw_senses)):
-        if raw_senses[i].text.strip().isdigit() and raw_senses[i+1].text[0] == '.':
+        if raw_senses[i].text.strip().isdigit() and raw_senses[i+1].text.startswith('.'):
             raw_senses[i].text += '.'
             raw_senses[i+1].text = raw_senses[i+1].text[1:]
 
@@ -130,8 +130,8 @@ def create_cit_nodes(node_content):
 
     if 'insignis ad deformitatem puer' in node_content:
         breakpoint
-    if node_content.strip() != '' and node_content.strip()[-1] == '–':
-        if node_content[-1] == ' ':
+    if node_content.strip() != '' and node_content.strip().endswith('–'):
+        if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
             dash_node = nf.create_pc_node('— ')
         else:
@@ -139,8 +139,8 @@ def create_cit_nodes(node_content):
             node_content = node_content[:-1]
         dash_in_the_end = True
     
-    if node_content.strip() != '' and node_content.strip()[-1] == '.':
-        if node_content[-1] == ' ':
+    if node_content.strip() != '' and node_content.strip().endswith('.'):
+        if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
             dot_node = nf.create_pc_node('. ')
         else:
@@ -148,8 +148,8 @@ def create_cit_nodes(node_content):
             node_content = node_content[:-1]
         dot_in_the_end = True
     
-    if node_content.strip() != '' and node_content.strip()[-1] == ';':
-        if node_content[-1] == ' ':
+    if node_content.strip() != '' and node_content.strip().endswith(';'):
+        if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
             s_colon_node = nf.create_pc_node('; ')
         else:
@@ -171,10 +171,10 @@ def create_cit_nodes(node_content):
 
             if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(x.split(' ')[i+1])):
                 if i > 0:
-                    if not (x.split(' ')[0] == '' and i == 1):
+                    if not (x.split(' ').startswith('') and i == 1):
                         cit_node = nf.assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])) + ' ')
                         result.append(cit_node)
-                if x.split(' ')[0] == '' and i == 1:
+                if x.split(' ').startswith('') and i == 1:
                     cit_node = nf.assemble_cit_nodes('translation', ' '.join(x.split(' ')))
                 else:
                     cit_node = nf.assemble_cit_nodes('translation', ' '.join(x.split(' ')[i:]))
@@ -311,8 +311,8 @@ def encode_senses(entry):
 
                     node_content = raw_senses[0].text
 
-                    if node_content.strip() != '' and node_content.strip()[-1] == '–':
-                        if node_content[-1] == ' ':
+                    if node_content.strip() != '' and node_content.strip().endswith('–'):
+                        if node_content.endswith(' '):
                             node_content = node_content.rstrip()[:-1]
                             dash_node = nf.create_pc_node('— ')
                         else:
@@ -320,8 +320,8 @@ def encode_senses(entry):
                             node_content = node_content[:-1]
                         dash_in_the_end = True
                     
-                    if node_content.strip() != '' and node_content.strip()[-1] == '.':
-                        if node_content[-1] == ' ':
+                    if node_content.strip() != '' and node_content.strip().endswith('.'):
+                        if node_content.endswith(' '):
                             node_content = node_content.rstrip()[:-1]
                             dot_node = nf.create_pc_node('. ')
                         else:
@@ -329,8 +329,8 @@ def encode_senses(entry):
                             node_content = node_content[:-1]
                         dot_in_the_end = True
                     
-                    if node_content.strip() != '' and node_content.strip()[-1] == ';':
-                        if node_content[-1] == ' ':
+                    if node_content.strip() != '' and node_content.strip().endswith(';'):
+                        if node_content.endswith(' '):
                             node_content = node_content.rstrip()[:-1]
                             s_colon_node = nf.create_pc_node('; ')
                         else:

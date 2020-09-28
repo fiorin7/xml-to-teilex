@@ -2,33 +2,33 @@ import re
 from teifier_for_morphological_part import fix_extra_morph_brackets
 
 def is_adj_1_2_decl(content0s, content1s):
-    return content1s.isdigit() and ',' not in content0s and content0s[-2:] == 'us'
+    return content1s.isdigit() and ',' not in content0s and content0s.endswith('us')
 
 def is_adj_1_2_decl_three_forms_written_out(content0s):
     split_c0s = content0s.split(', ')
-    return len(split_c0s) == 3 and split_c0s[-2].strip()[-1] == 'a' and\
-        split_c0s[-1].strip()[-2:] == 'um'
+    return len(split_c0s) == 3 and split_c0s[-2].strip().endswith('a') and\
+        split_c0s[-1].strip().endswith('um')
 
 def is_adj_like_acer_aequalis(content0s):
     split_c0s = content0s.split(', ')
-    return len(split_c0s) in (2, 3) and split_c0s[-2].strip()[-2:] == 'is' and\
-        split_c0s[-1].strip()[-1] in ('e', 'е')
+    return len(split_c0s) in (2, 3) and split_c0s[-2].strip().endswith('is') and\
+        split_c0s[-1].strip().endswith(('e', 'е'))
 
 def is_adv(content0s, content1s):
     return content1s == 'adv.' and len(re.split(', | ', content0s)) == 1
 
 def is_one_form_verb(content0s, content1s):
-    return content1s.isdigit() and content0s[-1] == 'o'
+    return content1s.isdigit() and content0s.endswith('o')
 
 def is_deponent_verb(content0s, content1s):
     if len(content0s.split(', ')) == 1:
-        return content1s.isdigit() and  (content0s[-4:] == 'o(r)' or content0s[-2:] == 'or')
+        return content1s.isdigit() and  content0s.endswith(('o(r)', 'or'))
     else:
-        return content1s.isdigit() and content0s.split(', ')[1].strip()[-3:] == 'sum'
+        return content1s.isdigit() and content0s.split(', ')[1].strip().endswith('sum')
 
 def is_special_verb(content0):
     first_word = content0.split(', ')[0].strip()
-    return (first_word[-4:] == '-sum' or first_word[-5:] == '-fero' or first_word[-3:] == '-eo') and '1.' not in content0
+    return first_word.endswith(('-sum', '-fero', '-eo')) and '1.' not in content0
 
 def is_simple_noun(content1s):
     return  content1s in ('m', 'f', 'n', 'mf')

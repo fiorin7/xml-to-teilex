@@ -63,8 +63,8 @@ class Entry:
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
             self.contents.remove(self.contents[0])
         
-        if self.contents[0].text.strip()[0] == '(' and self.contents[0].text.strip()[-1] == ')':
-            if self.contents[1].text.strip()[:2] in ('1.', 'I.') or (not morph.has_more_cyrillic_than_latin(self.contents[0].text) and morph.has_more_cyrillic_than_latin(self.contents[1].text.split()[0])):
+        if self.contents[0].text.strip().startswith('(') and self.contents[0].text.strip().endswith(')'):
+            if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not morph.has_more_cyrillic_than_latin(self.contents[0].text) and morph.has_more_cyrillic_than_latin(self.contents[1].text.split()[0])):
                 morph_part.append(nf.create_extra_morph(self.contents[0].text))
                 self.contents.remove(self.contents[0])
 

@@ -16,7 +16,7 @@ def fix_extra_morph_brackets(entry):
         for i in range(len(contents)):
             x = contents[i]
             if ')' in x.text:
-                if x.text.strip()[-1] == ')':
+                if x.text.strip().endswith(')'):
                     extra_morph += x.text
                     contents[i].text = ''
                     break
@@ -41,15 +41,15 @@ def deal_with_unknown_entry(entry):
 def unknown_entry_type_find_senses_start(entry):
     contents = entry.contents
     for i in range(len(contents)):
-        if contents[i].text.strip()[:2] == '1.':
+        if contents[i].text.strip().startswith('1.'):
             if i > 0:
                 entry.encoded_parts['morph_part'] = contents[:i]
                 entry.entry_type = 'unknown but clear senses start'
                 return contents[i:]
-        elif contents[i].get('rend' ) == 'bold' and contents[i].text.strip()[-2:] == '1.':
+        elif contents[i].get('rend' ) == 'bold' and contents[i].text.strip().endswith('1.'):
             number_node = copy(contents[i])
             number_node.text = '1.'
-            if contents[i].text[-1] == ' ':
+            if contents[i].text.endswith(' '):
                 number_node.text += ' '
                 contents[i].text = contents[i].text[:-1]
             contents[i].text = contents[i].text.replace('1.', '')
@@ -62,7 +62,7 @@ def unknown_entry_type_find_senses_start(entry):
             res.extend(contents[i+1:])
             return res
 
-        elif contents[i].get('rend' ) == 'bold' and contents[i].text[-1] == '1' and contents[i+1].text[0] == '.':
+        elif contents[i].get('rend' ) == 'bold' and contents[i].text.endswith('1') and contents[i+1].text.startswith('.'):
             number_node = copy(contents[i])
             number_node.text = '1.'
             contents[i].text = contents[i].text[:-1]
@@ -93,7 +93,7 @@ def unknown_entry_partially_encode(entry):
         if counter == 0:
             content_node = unknown_initial_xml(content_node[0].text)
         
-        elif old_morph_part[0].text.strip()[0] == '(' and old_morph_part[0].text.strip()[-1] == ')':
+        elif old_morph_part[0].text.strip().startswith('(') and old_morph_part[0].text.strip().endswith(')'):
             content_node = [nf.create_extra_morph(old_morph_part[0].text)]
             
         elif old_morph_part[0].text.strip() in punctuation or old_morph_part[0].text.strip() == '–':

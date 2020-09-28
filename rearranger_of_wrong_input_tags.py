@@ -19,13 +19,16 @@ def make_italic_hi_node(text):
     return hi_node
 
 def number_one_is_in_c0(content0):
-    return content0.strip()[-2:] == '1.'
+    return content0.strip().endswith('1.')
 
 def gram_number_is_in_c1(content0, content1):
-    first_word_stripped = content0.split(', ')[0].strip()
-    is_verb = first_word_stripped[-1] == 'o' or first_word_stripped[-2:] == 'or' or first_word_stripped[-4:] == 'o(r)'
-    is_adj = len(content0.split(', ')) == 1 and content0.strip()[-2:] == 'us'
-    return  (is_verb or is_adj) and content1.strip()[0].isdigit() and content1.strip()[1] != '.'
+    try:
+        first_word_stripped = content0.split(', ')[0].strip()
+        is_verb = first_word_stripped.endswith(('o', 'or', 'o(r)'))
+        is_adj = len(content0.split(', ')) == 1 and content0.strip().endswith('us')
+        return  (is_verb or is_adj) and content1.strip()[0].isdigit() and content1.strip()[1] != '.'
+    except:
+        pass
 
 
 def fix_wrong_tags_in_morph_part(contents):
@@ -38,7 +41,7 @@ def fix_wrong_tags_in_morph_part(contents):
 
     if number_one_is_in_c0(content0):
         number_node_text = '1.'
-        if content0_node.text[-1] == ' ':
+        if content0_node.text.endswith(' '):
             number_node_text += ' '
         content0_2_node = make_bold_hi_node(number_node_text)
         content0_node.text = content0_node.text.rstrip()[:-2]
@@ -55,7 +58,7 @@ def fix_wrong_tags_in_morph_part(contents):
     elif gram_number_is_in_c1(content0, content1):
         result.append(content0_node)
         number = ''
-        if content1[0] == ' ':
+        if content1.startswith(' '):
             number += ' '
         number += content1.lstrip()[0]
         content0_2_node = make_normal_hi_node(number)
@@ -102,7 +105,7 @@ def fix_separated_brackets(contents):
         elif ')' in contents[i].text and opening_brackets_idx is not None:
             idx_in_text = contents[i].text.index(')')
             current_content = ''
-            if contents[i].text[-2:] == ') ' or contents[i].text[-1] == ')':
+            if contents[i].text.endswith((') ', ')')):
                 opening_brackets_content += contents[i].text
 
                 if italic:

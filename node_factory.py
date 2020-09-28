@@ -87,7 +87,7 @@ def create_usg_node(node_content):
     res = []
     pc_text = None
 
-    if node_content.strip()[-1] == ':':
+    if node_content.strip().endswith(':'):
         idx_pc = node_content.index(':')
         pc_text = node_content[idx_pc:]
         node_content = node_content[:idx_pc]

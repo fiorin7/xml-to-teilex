@@ -8,6 +8,7 @@ import teifier_for_morphological_part as morph
 import rearranger_of_wrong_input_tags as rt
 import teifier_for_senses as sns
 import node_factory as nf
+from utils import has_more_cyrillic_than_latin
 from os import path
 
 class Entry:
@@ -64,7 +65,7 @@ class Entry:
             self.contents.remove(self.contents[0])
         
         if self.contents[0].text.strip().startswith('(') and self.contents[0].text.strip().endswith(')'):
-            if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not morph.has_more_cyrillic_than_latin(self.contents[0].text) and morph.has_more_cyrillic_than_latin(self.contents[1].text.split()[0])):
+            if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not has_more_cyrillic_than_latin(self.contents[0].text) and has_more_cyrillic_than_latin(self.contents[1].text.split()[0])):
                 morph_part.append(nf.create_extra_morph(self.contents[0].text))
                 self.contents.remove(self.contents[0])
 

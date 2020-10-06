@@ -235,6 +235,11 @@ def get_morph_info(entry_type, contents):
         tag_span_of_morph_info = 2
     
     elif entry_type == 'unknown but clear senses start':
+        print(contents0)
+        pass
+    
+    elif entry_type == 'UNKNOWN':
+        print(contents0)
         pass
 
     return res, tag_span_of_morph_info

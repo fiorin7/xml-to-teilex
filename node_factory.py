@@ -53,12 +53,12 @@ def create_gram_grp(text, gram_type="pos"):
     gram_prnt.append(gram_chld)
     return gram_prnt
 
-def create_praep_xml(contents0, contents1):
-    form_lemma = create_form_lemma_node(contents0)
+def create_praep_xml(content0, content1):
+    form_lemma = create_form_lemma_node(content0)
     gram_grp = create_gram_grp('praep.', "pos")
     colloc_node = et.Element(get_ns('gram'))
     colloc_node.set('type', 'colloc')
-    colloc_node.text = contents1.replace('praep.', '')
+    colloc_node.text = content1.replace('praep.', '')
     gram_grp.append(colloc_node)
     return [form_lemma, gram_grp]
 

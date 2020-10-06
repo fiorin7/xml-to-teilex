@@ -271,7 +271,6 @@ def encode_senses(entry):
 
 
     while raw_senses:
-        encoded = False
         initial = raw_senses[0].text.strip()
         initial = fix_cyrillic_letter(initial, title_lemma)
 
@@ -287,7 +286,6 @@ def encode_senses(entry):
             numbers.append(sense_number)
             last_sense_container = create_subsense_number_node(title_lemma, numbers, raw_senses[0].text)
             append_sense_container_and_label(entry, last_sense_container)
-            encoded = True
         
         else:
             content_node = [raw_senses[0]]

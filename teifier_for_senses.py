@@ -128,8 +128,6 @@ def create_cit_nodes(node_content):
     dot_in_the_end = False
     semi_colon_in_the_end = False
 
-    if 'insignis ad deformitatem puer' in node_content:
-        breakpoint
     if node_content.strip() != '' and node_content.strip().endswith('–'):
         if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
@@ -385,7 +383,7 @@ def encode_senses(entry):
     
     # print(range(len(entry.encoded_parts['senses'])-1, -1, -1))
     # [print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8')) for x in entry.encoded_parts['senses']]
-    [print(x.attrib) for x in entry.encoded_parts['senses']]
+    # [print(x.attrib) for x in entry.encoded_parts['senses']]
 
 
 

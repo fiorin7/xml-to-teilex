@@ -120,13 +120,12 @@ def add_missing_one(entry, title_lemma):
     append_sense_container_and_label(entry, sense_container)
 
 
+def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
+    dash_node = None
+    dot_node = None
+    s_colon_node = None
 
-
-def create_cit_nodes(node_content):
-    result = []
-    dash_in_the_end = False
-    dot_in_the_end = False
-    semi_colon_in_the_end = False
+    result = deque()
 
     if node_content.strip() != '' and node_content.strip().endswith('–'):
         if node_content.endswith(' '):
@@ -135,7 +134,7 @@ def create_cit_nodes(node_content):
         else:
             dash_node = nf.create_pc_node('—')
             node_content = node_content[:-1]
-        dash_in_the_end = True
+        result.appendleft(dash_node)
     
     if node_content.strip() != '' and node_content.strip().endswith('.'):
         if node_content.endswith(' '):
@@ -144,7 +143,7 @@ def create_cit_nodes(node_content):
         else:
             dot_node = nf.create_pc_node('.')
             node_content = node_content[:-1]
-        dot_in_the_end = True
+        result.appendleft(dot_node)
     
     if node_content.strip() != '' and node_content.strip().endswith(';'):
         if node_content.endswith(' '):
@@ -153,8 +152,16 @@ def create_cit_nodes(node_content):
         else:
             s_colon_node = nf.create_pc_node(';')
             node_content = node_content[:-1]
-        semi_colon_in_the_end = True
-        
+        result.appendleft(s_colon_node)
+    
+    result.appendleft(node_content)
+    
+    return result
+
+
+def create_cit_nodes(node_content):
+    result = []
+    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(node_content)      
     
     split_contents = node_content.split('; ')
     split_contents = [x for x in split_contents if x.strip() != '']
@@ -188,13 +195,8 @@ def create_cit_nodes(node_content):
             # print(x)
             # print('kek')
     
-    
-    if dot_in_the_end:
-        result.append(dot_node)
-    if semi_colon_in_the_end:
-        result.append(s_colon_node)
-    if dash_in_the_end:
-        result.append(dash_node)
+    for punct_node in separated_end_punctuation:
+        result.append(punct_node)
     
     return result
 
@@ -299,40 +301,8 @@ def encode_senses(entry):
             
             elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in (nf.get_ns('cit'), nf.get_ns('quote'))]) == 0) and \
                 has_more_cyrillic_than_latin(raw_senses[0].text.strip().split(' ')[0]):
-                # ()
 
-                    dash_in_the_end = False
-                    dot_in_the_end = False
-                    semi_colon_in_the_end = False
-
-                    node_content = raw_senses[0].text
-
-                    if node_content.strip() != '' and node_content.strip().endswith('–'):
-                        if node_content.endswith(' '):
-                            node_content = node_content.rstrip()[:-1]
-                            dash_node = nf.create_pc_node('— ')
-                        else:
-                            dash_node = nf.create_pc_node('—')
-                            node_content = node_content[:-1]
-                        dash_in_the_end = True
-                    
-                    if node_content.strip() != '' and node_content.strip().endswith('.'):
-                        if node_content.endswith(' '):
-                            node_content = node_content.rstrip()[:-1]
-                            dot_node = nf.create_pc_node('. ')
-                        else:
-                            dot_node = nf.create_pc_node('.')
-                            node_content = node_content[:-1]
-                        dot_in_the_end = True
-                    
-                    if node_content.strip() != '' and node_content.strip().endswith(';'):
-                        if node_content.endswith(' '):
-                            node_content = node_content.rstrip()[:-1]
-                            s_colon_node = nf.create_pc_node('; ')
-                        else:
-                            s_colon_node = nf.create_pc_node(';')
-                            node_content = node_content[:-1]
-                        semi_colon_in_the_end = True
+                    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(raw_senses[0].text)
                     
                     content_node = []
 
@@ -350,23 +320,14 @@ def encode_senses(entry):
                     if not found_latin:
                         def_node = nf.create_def_node(node_content)
                         content_node.extend(def_node)
-                        if dot_in_the_end:
-                            content_node.append(dot_node)
-                        if semi_colon_in_the_end:
-                            content_node.append(s_colon_node)
-                        if dash_in_the_end:
-                            content_node.append(dash_node)
                     else:
                         def_node = nf.create_def_node(' '.join(node_content.split(' ')[:i]) + ' ')
                         content_node.extend(def_node)
                         cit_node = create_cit_nodes(' '.join(node_content.split(' ')[i:]))
                         content_node.extend(cit_node)
-                        if dot_in_the_end:
-                            content_node.append(dot_node)
-                        if semi_colon_in_the_end:
-                            content_node.append(s_colon_node)
-                        if dash_in_the_end:
-                            content_node.append(dash_node)
+
+                    for punct_node in separated_end_punctuation:
+                        content_node.append(punct_node)
 
             
             

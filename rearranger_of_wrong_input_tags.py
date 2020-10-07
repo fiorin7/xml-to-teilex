@@ -1,6 +1,7 @@
 from utils import is_empty_string
 from lxml import etree as et
 from copy import copy
+from utils import SafeString
 
 def make_bold_hi_node(text):
     hi_node = et.Element("hi")
@@ -32,8 +33,8 @@ def gram_number_is_in_c1(content0, content1):
 def fix_wrong_tags_in_morph_part(contents):
     content0_node = contents[0]
     content1_node = contents[1]
-    content0 = contents[0].text
-    content1 = contents[1].text
+    content0 = SafeString(contents[0].text)
+    content1 = SafeString(contents[1].text)
 
     result = []
 

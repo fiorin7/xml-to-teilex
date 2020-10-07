@@ -1,4 +1,5 @@
 from lxml import etree as et
+from utils import is_empty_string
 
 # ############ RELATED #########################
 def get_ns(tag):
@@ -107,7 +108,7 @@ def create_def_node(node_content):
     result = []
     for i in range(len(node_content.split(', '))):
         x = node_content.split(', ')[i]
-        for y in range(len([z for z in x.split('; ') if z.strip() != ''])):
+        for y in range(len([z for z in x.split('; ') if not is_empty_string(z)])):
             def_node = et.Element(get_ns("def"))
             def_node.set('{http://www.w3.org/XML/1998/namespace}lang', 'bg')
             def_node.text = x.split('; ')[y]

@@ -4,7 +4,7 @@ from collections import deque
 import re
 from string import punctuation
 import node_factory as nf
-from utils import has_more_cyrillic_than_latin
+from utils import has_more_cyrillic_than_latin, is_empty_string
 
 def one_is_missing(raw_senses):
     one_spotted = False
@@ -121,7 +121,7 @@ def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
 
     result = deque()
 
-    if node_content.strip() != '' and node_content.strip().endswith('–'):
+    if node_content.strip().endswith('–'):
         if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
             dash_node = nf.create_pc_node('— ')
@@ -130,7 +130,7 @@ def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
             node_content = node_content[:-1]
         result.appendleft(dash_node)
     
-    if node_content.strip() != '' and node_content.strip().endswith('.'):
+    if node_content.strip().endswith('.'):
         if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
             dot_node = nf.create_pc_node('. ')
@@ -139,7 +139,7 @@ def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
             node_content = node_content[:-1]
         result.appendleft(dot_node)
     
-    if node_content.strip() != '' and node_content.strip().endswith(';'):
+    if node_content.strip().endswith(';'):
         if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
             s_colon_node = nf.create_pc_node('; ')
@@ -158,14 +158,14 @@ def create_cit_nodes(node_content):
     node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(node_content)      
     
     split_contents = node_content.split('; ')
-    split_contents = [x for x in split_contents if x.strip() != '']
+    split_contents = [x for x in split_contents if not is_empty_string(x)]
 
     for y in range(len(split_contents)):
         x = split_contents[y]
 
         for i in range(len(x.split(' '))):
             word = x.split(' ')[i]
-            if word.strip() == '' and i != len(x.split(' '))-1:
+            if is_empty_string(word) and i != len(x.split(' '))-1:
                 continue
 
             if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(x.split(' ')[i+1])):
@@ -304,7 +304,7 @@ def encode_senses(entry):
 
                     for i in range(len(node_content.split(' '))):
                         word = node_content.split(' ')[i]
-                        if word.strip() == '':
+                        if is_empty_string(word):
                             continue
                         if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(node_content.split(' ')[i+1])):
                             pass

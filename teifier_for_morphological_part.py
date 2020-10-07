@@ -3,7 +3,7 @@ import re
 from copy import copy
 import node_factory as nf
 from string import punctuation
-from utils import has_more_cyrillic_than_latin
+from utils import has_more_cyrillic_than_latin, is_empty_string
 
 def fix_extra_morph_brackets(entry):
         contents = entry.contents
@@ -117,7 +117,7 @@ def unknown_entry_partially_encode(entry):
 
 def unknown_initial_xml(content0):
     res = []
-    content0_split = [x for x in content0.split(', ') if x.strip() != '']
+    content0_split = [x for x in content0.split(', ') if not is_empty_string(x)]
     for i in range(len(content0_split)):
         if i == 0:
             form_lemma = nf.create_form_lemma_node(content0_split[i])

@@ -1,3 +1,4 @@
+from utils import is_empty_string
 from lxml import etree as et
 from copy import copy
 
@@ -149,7 +150,7 @@ def fix_separated_brackets(contents):
 
 def fix_displaced_punct(contents):
     for i in range(len(contents)):
-        if contents[i].text.strip() != '' and contents[i].text.strip()[0] in r'!%),.:;?]|}' and i > 0 and len(contents[i].text.strip()) >= 2:
+        if not is_empty_string(contents[i].text) and contents[i].text.strip()[0] in r'!%),.:;?]|}' and i > 0 and len(contents[i].text.strip()) >= 2:
             if contents[i].text[0] == ' ':
                 contents[i-1].text += ' ' + contents[i].text.strip()[0]
                 contents[i].text = contents[i].text[2:]

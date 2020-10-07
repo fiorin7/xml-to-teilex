@@ -23,13 +23,10 @@ def number_one_is_in_c0(content0):
     return content0.strip().endswith('1.')
 
 def gram_number_is_in_c1(content0, content1):
-    try:
-        first_word_stripped = content0.split(', ')[0].strip()
-        is_verb = first_word_stripped.endswith(('o', 'or', 'o(r)'))
-        is_adj = len(content0.split(', ')) == 1 and content0.strip().endswith('us')
-        return  (is_verb or is_adj) and content1.strip()[0].isdigit() and content1.strip()[1] != '.'
-    except:
-        pass
+    first_word_stripped = content0.split(', ')[0].strip()
+    is_verb = first_word_stripped.endswith(('o', 'or', 'o(r)'))
+    is_adj = len(content0.split(', ')) == 1 and content0.strip().endswith('us')
+    return  (is_verb or is_adj) and len(content1.strip()) > 1 and content1.strip()[0].isdigit() and content1.strip()[1] != '.'
 
 
 def fix_wrong_tags_in_morph_part(contents):

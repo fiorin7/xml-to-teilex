@@ -13,16 +13,16 @@ def is_empty_string(text):
 
 class SafeList(list):
     def __getitem__(self, i):
-        if i >= 0 and i < len(self):
+        try:
             return super().__getitem__(i)
-        else:
+        except IndexError:
             return None
 
 class SafeString(str):
     def __getitem__(self, i):
-        if i >= 0 and i < len(self):
+        try:
             return super().__getitem__(i)
-        else:
+        except IndexError:
             return None
     
     def strip(self):

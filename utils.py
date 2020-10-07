@@ -34,13 +34,10 @@ class SafeString(str):
     def lstrip(self):
         return SafeString(super().lstrip())
     
-    # def split(self, sep: Optional[str] = ..., maxsplit: int = ...) -> List[str]:
-    #     return SafeList(super().split())
+    def split(self, *args, **kwargs) -> List[str]:
+        return SafeList(super().split(*args, **kwargs))
 
 
-# x = SafeString('b ')
+# x = SafeString('b, d')
 
-# print('***'+x.strip()+'***')
-
-# kek = 'kek'
-# kek.split()
+# print(x.split(', ')[3])

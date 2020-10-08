@@ -4,7 +4,7 @@ import re
 from unidecode import unidecode
 import string
 import matcher as m
-import teifier_for_morphological_part as morph
+import morph_teifier as morph
 import rearranger_of_wrong_input_tags as rt
 import teifier_for_senses as sns
 import node_factory as nf

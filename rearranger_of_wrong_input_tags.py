@@ -22,7 +22,7 @@ def create_italic_hi_node(text):
     return hi_node
 
 def number_one_is_in_c0(content0):
-    return content0.strip().endswith('1.')
+    return len(content0.strip()) > 2 and content0.strip().endswith('1.')
 
 def gram_number_is_in_c1(content0, content1):
     first_word_stripped = content0.split(', ')[0].strip()

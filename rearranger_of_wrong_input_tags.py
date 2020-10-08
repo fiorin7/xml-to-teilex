@@ -66,6 +66,7 @@ def fix_wrong_tags_in_morph_part(contents):
         
         return result
 
+
 def fix_separated_brackets(contents):
 
     def two_opening_brackets_in_a_row():
@@ -160,6 +161,7 @@ def fix_separated_brackets(contents):
         new_contents = old_contents
     
     return new_contents
+
 
 def fix_misplaced_punct(contents):
     for i in range(len(contents)):

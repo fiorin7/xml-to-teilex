@@ -47,7 +47,7 @@ class Entry:
         if fixed_contents:
             self.contents = fixed_contents
         self.contents = rt.fix_separated_brackets(self.contents)
-        self.contents = rt.fix_displaced_punct(self.contents)
+        self.contents = rt.fix_misplaced_punct(self.contents)
 
     
     def merge_entry_parent_and_contents(self, entry_parent_node, contents):

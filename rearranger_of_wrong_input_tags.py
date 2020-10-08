@@ -138,7 +138,7 @@ def fix_separated_brackets(contents):
     
     return new_contents
 
-def fix_displaced_punct(contents):
+def fix_misplaced_punct(contents):
     for i in range(len(contents)):
         if not is_empty_string(contents[i].text) and contents[i].text.strip()[0] in r'!%),.:;?]|}' and i > 0 and len(contents[i].text.strip()) >= 2:
             if contents[i].text[0] == ' ':

@@ -5,7 +5,7 @@ from unidecode import unidecode
 import string
 from entry_type_matcher import match_entry_type
 import morph_teifier as morph
-import rearranger_of_wrong_input_tags as rt
+import input_nodes_rearranger as rearranger
 import senses_teifier as sns
 import node_factory as nf
 from utils import has_more_cyrillic_than_latin
@@ -42,11 +42,11 @@ class Entry:
         return match_entry_type(self.contents)
     
     def fix_input_morph_tags_and_raplace_wrong_ones(self):
-        fixed_contents = rt.fix_wrong_tags_in_morph_part(self.contents)
+        fixed_contents = rearranger.fix_wrong_tags_in_morph_part(self.contents)
         if fixed_contents:
             self.contents = fixed_contents
-        self.contents = rt.fix_separated_brackets(self.contents)
-        self.contents = rt.fix_misplaced_punct(self.contents)
+        self.contents = rearranger.fix_separated_brackets(self.contents)
+        self.contents = rearranger.fix_misplaced_punct(self.contents)
 
     
     def merge_entry_parent_and_contents(self, entry_parent_node, contents):

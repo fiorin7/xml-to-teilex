@@ -46,8 +46,7 @@ def is_verb_based_on_conj_number(content1s):
     return  content1s in ('2', '4')
 
 def is_verb_based_on_conj_number_and_forms_count(content0s, content1s):
-    return (content1s in ('1', '2', '3', '4')) and len(content0s.split(', ')) >= 2
-    # TODO: more checks, this isn't enough
+    return (content1s in ('1', '2', '3', '4')) and len(content0s.split(', ')) >= 2 and content0s.split(', ')[0].endswith(('o', 'm', 't', 'i'))
 
 # ********************
 

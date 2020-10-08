@@ -48,10 +48,6 @@ def fix_wrong_tags_in_morph_part(contents):
         result.append(content0_node)
         result.append(content0_2_node)
         [result.append(x) for x in contents[1:]]
-        # print('***************')
-        # for x in result[:4]:
-        #     print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8'))
-    
 
         return result
     
@@ -66,15 +62,10 @@ def fix_wrong_tags_in_morph_part(contents):
         result.append(content0_2_node)
         result.append(content1_node)
         [result.append(x) for x in contents[2:]]
-        # print('***************')
-        # for x in result[:4]:
-        #     print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8'))
         
         return result
 
 def fix_separated_brackets(contents):
-    if 'apto' in contents[0].text:
-        breakpoint
     new_contents = []
     old_contents = copy(contents)
     opening_brackets_idx = None

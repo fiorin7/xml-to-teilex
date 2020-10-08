@@ -120,31 +120,27 @@ def fix_separated_brackets(contents):
         elif found_closing_bracket_matching_opening_bracket_in_node():
             idx_in_text = contents[i].text.index(')')
             current_content = ''
+            extra_text_to_append = False
+
             if closing_bracket_in_end_of_node():
                 opening_brackets_content += contents[i].text
-
-                if italic:
-                    new_contents.append(create_italic_hi_node(opening_brackets_content))
-                else:
-                    new_contents.append(create_normal_hi_node(opening_brackets_content))
-
-                opening_brackets_idx = None
-                opening_brackets_content = ''
-                italic = False
             else:
                 current_content = contents[i].text[:idx_in_text+1]
                 opening_brackets_content += current_content
                 contents[i].text = contents[i].text.replace(current_content, '')
+                extra_text_to_append = True
                 
-                if italic:
-                    new_contents.append(create_italic_hi_node(opening_brackets_content))
-                else:
-                    new_contents.append(create_normal_hi_node(opening_brackets_content))
+            if italic:
+                new_contents.append(create_italic_hi_node(opening_brackets_content))
+            else:
+                new_contents.append(create_normal_hi_node(opening_brackets_content))
 
+            if extra_text_to_append:
                 new_contents.append(contents[i])
-                opening_brackets_idx = None
-                opening_brackets_content = ''
-                italic = False
+
+            opening_brackets_idx = None
+            opening_brackets_content = ''
+            italic = False
         
         elif theres_an_opening_bracket_but_no_closing_bracket_yet():
             opening_brackets_content += contents[i].text

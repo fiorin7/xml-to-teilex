@@ -67,6 +67,26 @@ def fix_wrong_tags_in_morph_part(contents):
         return result
 
 def fix_separated_brackets(contents):
+
+    def two_opening_brackets_in_a_row():
+        return '(' in contents[i].text and opening_brackets_idx
+    
+    def found_opening_bracket_no_closing_bracket_in_node():
+        return '(' in contents[i].text and not ')' in contents[i].text
+    
+    def opening_bracket_in_beginning_of_node():
+        return (idx_in_text == 1 and contents[i].text[0] == ' ') or idx_in_text == 0
+    
+    def found_closing_bracket_matching_opening_bracket_in_node():
+        return ')' in contents[i].text and opening_brackets_idx is not None
+    
+    def closing_bracket_in_end_of_node():
+        return contents[i].text.endswith((') ', ')'))
+    
+    def theres_an_opening_bracket_but_no_closing_bracket_yet():
+        return opening_brackets_idx is not None
+    
+
     new_contents = []
     old_contents = copy(contents)
     opening_brackets_idx = None
@@ -74,16 +94,18 @@ def fix_separated_brackets(contents):
     italic = False
     error = False
     i = 0
+
+
     while contents:
-        if '(' in contents[i].text and opening_brackets_idx:
+        if two_opening_brackets_in_a_row():
             error = True
             break
 
 
-        if '(' in contents[i].text and not ')' in contents[i].text:
+        if found_opening_bracket_no_closing_bracket_in_node():
             opening_brackets_idx = i
             idx_in_text = contents[i].text.index('(')
-            if (idx_in_text == 1 and contents[i].text[0] == ' ') or idx_in_text == 0:
+            if opening_bracket_in_beginning_of_node():
                 opening_brackets_content = contents[i].text
                 if contents[i].get('rend') == 'italic':
                     italic = True
@@ -94,10 +116,10 @@ def fix_separated_brackets(contents):
                     italic = True
                 new_contents.append(contents[i])
         
-        elif ')' in contents[i].text and opening_brackets_idx is not None:
+        elif found_closing_bracket_matching_opening_bracket_in_node():
             idx_in_text = contents[i].text.index(')')
             current_content = ''
-            if contents[i].text.endswith((') ', ')')):
+            if closing_bracket_in_end_of_node():
                 opening_brackets_content += contents[i].text
 
                 if italic:
@@ -123,7 +145,7 @@ def fix_separated_brackets(contents):
                 opening_brackets_content = ''
                 italic = False
         
-        elif opening_brackets_idx is not None:
+        elif theres_an_opening_bracket_but_no_closing_bracket_yet():
             opening_brackets_content += contents[i].text
             if contents[i].get('rend') == 'italic':
                 italic = True

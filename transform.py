@@ -6,7 +6,7 @@ import string
 import matcher as m
 import morph_teifier as morph
 import rearranger_of_wrong_input_tags as rt
-import teifier_for_senses as sns
+import senses_teifier as sns
 import node_factory as nf
 from utils import has_more_cyrillic_than_latin
 from os import path

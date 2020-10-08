@@ -1,8 +1,7 @@
 from lxml import etree as et
-import re
 from copy import copy
-import node_factory as nf
 from string import punctuation
+import node_factory as nf
 from utils import has_more_cyrillic_than_latin, is_empty_string, SafeString
 
 def fix_extra_morph_brackets(entry):

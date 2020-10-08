@@ -21,17 +21,18 @@ def create_italic_hi_node(text):
     hi_node.text = text
     return hi_node
 
-def number_one_is_in_c0(content0):
-    return len(content0.strip()) > 2 and content0.strip().endswith('1.')
-
-def gram_number_is_in_c1(content0, content1):
-    first_word_stripped = content0.split(', ')[0].strip()
-    is_verb = first_word_stripped.endswith(('o', 'or', 'o(r)')) and content1.strip().startswith(('1', '2', '3', '4'))
-    is_adj = len(content0.split(', ')) == 1 and content0.strip().endswith('us') and content1.strip().startswith('3')
-    return  (is_verb or is_adj) and len(content1.strip()) > 1  and content1.strip()[1] != '.'
-
 
 def fix_wrong_tags_in_morph_part(contents):
+
+    def number_one_is_in_c0(content0):
+        return len(content0.strip()) > 2 and content0.strip().endswith('1.')
+
+    def gram_number_is_in_c1(content0, content1):
+        first_word_stripped = content0.split(', ')[0].strip()
+        is_verb = first_word_stripped.endswith(('o', 'or', 'o(r)')) and content1.strip().startswith(('1', '2', '3', '4'))
+        is_adj = len(content0.split(', ')) == 1 and content0.strip().endswith('us') and content1.strip().startswith('3')
+        return  (is_verb or is_adj) and len(content1.strip()) > 1  and content1.strip()[1] != '.'
+
     content0_node = contents[0]
     content1_node = contents[1]
     content0 = SafeString(contents[0].text)

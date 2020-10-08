@@ -3,7 +3,7 @@ import re
 from copy import copy
 import node_factory as nf
 from string import punctuation
-from utils import has_more_cyrillic_than_latin, is_empty_string
+from utils import has_more_cyrillic_than_latin, is_empty_string, SafeString
 
 def fix_extra_morph_brackets(entry):
         contents = entry.contents
@@ -85,30 +85,32 @@ def unknown_entry_partially_encode(entry):
     counter = 0
     while old_morph_part:
         content_node = [old_morph_part[0]]
+        node_content = SafeString(old_morph_part[0].text)
+
         if counter == 0:
             content_node = unknown_initial_xml(content_node[0].text)
         
-        elif old_morph_part[0].text.strip().startswith('(') and old_morph_part[0].text.strip().endswith(')'):
-            content_node = [nf.create_extra_morph(old_morph_part[0].text)]
+        elif node_content.strip().startswith('(') and node_content.strip().endswith(')'):
+            content_node = [nf.create_extra_morph(node_content)]
             
-        elif old_morph_part[0].text.strip() in punctuation or old_morph_part[0].text.strip() == '–':
-                content_node = [nf.create_pc_node(old_morph_part[0].text)]
+        elif node_content.strip() in punctuation or node_content.strip() == '–':
+                content_node = [nf.create_pc_node(node_content)]
 
         elif old_morph_part[0].get('rend') == "italic":
-            if old_morph_part[0].text.strip() in ('m', 'f', 'n'):
-                content_node = [nf.create_gram_grp(old_morph_part[0].text)]
+            if node_content.strip() in ('m', 'f', 'n'):
+                content_node = [nf.create_gram_grp(node_content)]
 
-            elif len(entry.encoded_parts['morph_part']) == 1 and len(old_morph_part) >= 2 and old_morph_part[1].get('rend' ) == 'bold' and old_morph_part[0].text.strip() == 'и' and entry.encoded_parts['morph_part'][-1].tag == nf.get_ns('form'):
+            elif len(entry.encoded_parts['morph_part']) == 1 and len(old_morph_part) >= 2 and old_morph_part[1].get('rend' ) == 'bold' and node_content.strip() == 'и' and entry.encoded_parts['morph_part'][-1].tag == nf.get_ns('form'):
                 content_node = []
                 entry.encoded_parts['morph_part'][-1].append(old_morph_part[0])
-                entry.encoded_parts['morph_part'][-1].append(nf.create_orth_node(old_morph_part[1].text))
+                entry.encoded_parts['morph_part'][-1].append(nf.create_orth_node(SafeString(old_morph_part[1].text)))
                 old_morph_part.pop(0)
 
             else:
-                content_node = nf.create_usg_node(old_morph_part[0].text)
+                content_node = nf.create_usg_node(node_content)
         
-        elif old_morph_part[0].text.strip() in ('1', '2', '3', '4') and (len(old_morph_part) == 1 or old_morph_part[1].text.strip() != '.'):
-            content_node = [nf.create_gram_grp(old_morph_part[0].text, 'iType')]
+        elif node_content.strip() in ('1', '2', '3', '4') and (len(old_morph_part) == 1 or old_morph_part[1].text.strip() != '.'):
+            content_node = [nf.create_gram_grp(node_content, 'iType')]
         
         [entry.encoded_parts['morph_part'].append(x) for x in content_node]
         old_morph_part.pop(0)
@@ -196,8 +198,8 @@ def adv_conjunct_xml(content0, content1):
 
 
 def get_morph_info(entry_type, contents):
-    content0 = contents[0].text
-    content1 = contents[1].text
+    content0 = SafeString(contents[0].text)
+    content1 = SafeString(contents[1].text)
 
     res = None
     tag_span_of_morph_info = 0

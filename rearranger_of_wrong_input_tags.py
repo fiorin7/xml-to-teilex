@@ -44,7 +44,7 @@ def fix_wrong_tags_in_morph_part(contents):
         if content0_node.text.endswith(' '):
             number_node_text += ' '
         content0_2_node = create_bold_hi_node(number_node_text)
-        content0_node.text = SafeString(content0_node.text).rstrip()[:-2]
+        content0_node.text = content0_node.text.rstrip()[:-2]
         result.append(content0_node)
         result.append(content0_2_node)
         [result.append(x) for x in contents[1:]]

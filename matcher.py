@@ -1,5 +1,4 @@
 import re
-from teifier_for_morphological_part import fix_extra_morph_brackets
 from utils import SafeString
 
 def is_adj_1_2_decl(content0s, content1s):

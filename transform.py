@@ -3,7 +3,7 @@ from lxml import etree as et
 import re
 from unidecode import unidecode
 import string
-import matcher as m
+import entry_type_matcher as m
 import morph_teifier as morph
 import rearranger_of_wrong_input_tags as rt
 import senses_teifier as sns

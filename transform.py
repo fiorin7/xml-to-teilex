@@ -3,7 +3,7 @@ from lxml import etree as et
 import re
 from unidecode import unidecode
 import string
-import entry_type_matcher as m
+from entry_type_matcher import match_entry_type
 import morph_teifier as morph
 import rearranger_of_wrong_input_tags as rt
 import senses_teifier as sns
@@ -39,8 +39,7 @@ class Entry:
         return lemma_stripped
     
     def get_entry_type(self):
-        match = m.match_morph_structure(self.contents)
-        return match
+        return match_entry_type(self.contents)
     
     def fix_input_morph_tags_and_raplace_wrong_ones(self):
         fixed_contents = rt.fix_wrong_tags_in_morph_part(self.contents)

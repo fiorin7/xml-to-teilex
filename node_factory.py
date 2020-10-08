@@ -64,6 +64,8 @@ def create_praep_xml(content0, content1):
     return [form_lemma, gram_grp]
 
 
+# ############### MOSTLY SENSE ##################
+
 def create_sense_container_non_numbered(title_lemma):
     sense_container = et.Element(get_ns("sense"))
     sense_container.set('{http://www.w3.org/XML/1998/namespace}id', f"LBR.{title_lemma}.1")
@@ -80,9 +82,6 @@ def create_label(label_content):
     label = et.Element(get_ns("lbl"))
     label.text = label_content
     return label
-
-
-# ############### MOSTLY SENSE ##################
 
 def create_usg_node(node_content):
     res = []

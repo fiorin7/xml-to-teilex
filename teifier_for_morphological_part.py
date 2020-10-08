@@ -1,4 +1,3 @@
-from lxml import etree as et
 from copy import copy
 from string import punctuation
 import node_factory as nf

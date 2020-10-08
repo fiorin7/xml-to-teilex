@@ -1,5 +1,6 @@
 import re
 from teifier_for_morphological_part import fix_extra_morph_brackets
+from utils import SafeString
 
 def is_adj_1_2_decl(content0s, content1s):
     return content1s.isdigit() and ',' not in content0s and content0s.endswith('us')
@@ -63,10 +64,10 @@ def is_multiple_form_verb(content0s, content1s):
     
 
 def match_morph_structure(contents):
-    content0 = contents[0].text
-    content1 = contents[1].text
-    content0s = contents[0].text.strip()
-    content1s = contents[1].text.strip()
+    content0 = SafeString(contents[0].text)
+    content1 = SafeString(contents[1].text)
+    content0s = content0.strip()
+    content1s = content1.strip()
 
     entry_type = ''
 

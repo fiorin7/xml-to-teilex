@@ -1,7 +1,6 @@
-from utils import is_empty_string
 from lxml import etree as et
 from copy import copy
-from utils import SafeString
+from utils import is_empty_string, SafeString
 
 def make_bold_hi_node(text):
     hi_node = et.Element("hi")

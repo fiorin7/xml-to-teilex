@@ -16,7 +16,7 @@ class Entry:
         self.raw_contents = copy(contents)
         self.contents = copy(contents)
         self.title_lemma = self.get_title_lemma()
-        self.fix_input_morph_tags_and_raplace_wrong_ones()
+        self.fix_input_node_contents()
         self.entry_node = nf.create_entry_parent_node(self.title_lemma)
         self.entry_type =  self.get_entry_type()
         self.encoded_parts = {
@@ -41,7 +41,7 @@ class Entry:
     def get_entry_type(self):
         return match_entry_type(self.contents)
     
-    def fix_input_morph_tags_and_raplace_wrong_ones(self):
+    def fix_input_node_contents(self):
         fixed_contents = rearranger.fix_morph_numbers(self.contents)
         if fixed_contents:
             self.contents = fixed_contents

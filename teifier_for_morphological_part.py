@@ -3,27 +3,6 @@ from string import punctuation
 import node_factory as nf
 from utils import has_more_cyrillic_than_latin, is_empty_string, SafeString
 
-def fix_extra_morph_brackets(entry):
-        contents = entry.contents
-        extra_morph = ''
-        for i in range(len(contents)):
-            x = contents[i]
-            if ')' in x.text:
-                if x.text.strip().endswith(')'):
-                    extra_morph += x.text
-                    contents[i].text = ''
-                    break
-                else:
-                    idx = x.text.index(')')
-                    extra_morph += x.text[:idx+1]
-                    contents[i].text = x.text[idx+1:]
-                    break
-            else:
-                extra_morph += x.text
-                contents[i].text = ''
-
-        entry.contents = [x for x in contents if x.text]
-        return nf.create_extra_morph(extra_morph)
 
 def deal_with_unknown_entry(entry):
     senses = unknown_entry_type_find_senses_start(entry)

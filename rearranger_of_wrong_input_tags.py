@@ -4,18 +4,18 @@ from utils import is_empty_string, SafeString
 from node_factory import get_ns
 
 
-def make_bold_hi_node(text):
+def create_bold_hi_node(text):
     hi_node = et.Element(get_ns("hi"))
     hi_node.set('rend', 'bold')
     hi_node.text = text
     return hi_node
 
-def make_normal_hi_node(text):
+def create_normal_hi_node(text):
     hi_node = et.Element(get_ns("hi"))
     hi_node.text = text
     return hi_node
 
-def make_italic_hi_node(text):
+def create_italic_hi_node(text):
     hi_node = et.Element(get_ns("hi"))
     hi_node.set('rend', 'italic')
     hi_node.text = text
@@ -43,7 +43,7 @@ def fix_wrong_tags_in_morph_part(contents):
         number_node_text = '1.'
         if content0_node.text.endswith(' '):
             number_node_text += ' '
-        content0_2_node = make_bold_hi_node(number_node_text)
+        content0_2_node = create_bold_hi_node(number_node_text)
         content0_node.text = content0_node.text.rstrip()[:-2]
         result.append(content0_node)
         result.append(content0_2_node)
@@ -61,7 +61,7 @@ def fix_wrong_tags_in_morph_part(contents):
         if content1.startswith(' '):
             number += ' '
         number += content1.lstrip()[0]
-        content0_2_node = make_normal_hi_node(number)
+        content0_2_node = create_normal_hi_node(number)
         content1_node.text = content1_node.text.lstrip()[1:]
         result.append(content0_2_node)
         result.append(content1_node)
@@ -109,9 +109,9 @@ def fix_separated_brackets(contents):
                 opening_brackets_content += contents[i].text
 
                 if italic:
-                    new_contents.append(make_italic_hi_node(opening_brackets_content))
+                    new_contents.append(create_italic_hi_node(opening_brackets_content))
                 else:
-                    new_contents.append(make_normal_hi_node(opening_brackets_content))
+                    new_contents.append(create_normal_hi_node(opening_brackets_content))
 
                 opening_brackets_idx = None
                 opening_brackets_content = ''
@@ -122,9 +122,9 @@ def fix_separated_brackets(contents):
                 contents[i].text = contents[i].text.replace(current_content, '')
                 
                 if italic:
-                    new_contents.append(make_italic_hi_node(opening_brackets_content))
+                    new_contents.append(create_italic_hi_node(opening_brackets_content))
                 else:
-                    new_contents.append(make_normal_hi_node(opening_brackets_content))
+                    new_contents.append(create_normal_hi_node(opening_brackets_content))
 
                 new_contents.append(contents[i])
                 opening_brackets_idx = None

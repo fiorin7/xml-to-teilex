@@ -22,7 +22,7 @@ def create_italic_hi_node(text):
     return hi_node
 
 
-def fix_wrong_tags_in_morph_part(contents):
+def fix_morph_numbers(contents):
 
     def number_one_is_in_c0(content0):
         return len(content0.strip()) > 2 and content0.strip().endswith('1.')

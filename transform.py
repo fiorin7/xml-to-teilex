@@ -42,7 +42,7 @@ class Entry:
         return match_entry_type(self.contents)
     
     def fix_input_morph_tags_and_raplace_wrong_ones(self):
-        fixed_contents = rearranger.fix_wrong_tags_in_morph_part(self.contents)
+        fixed_contents = rearranger.fix_morph_numbers(self.contents)
         if fixed_contents:
             self.contents = fixed_contents
         self.contents = rearranger.fix_separated_brackets(self.contents)

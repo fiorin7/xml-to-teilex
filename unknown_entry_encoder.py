@@ -48,7 +48,7 @@ def unknown_entry_type_find_senses_start(entry):
             return res
 
     for i in range(len(contents)):
-        if has_more_cyrillic_than_latin(contents[i].text.strip().split(' ')[0]) and not contents[i].get('rend'):
+        if has_more_cyrillic_than_latin(SafeString(contents[i].text).strip().split(' ')[0]) and not contents[i].get('rend'):
             if i > 0:
                 entry.encoded_parts['morph_part'] = contents[:i]
                 entry.entry_type = 'unknown but clear senses start'

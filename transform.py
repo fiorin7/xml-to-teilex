@@ -7,6 +7,7 @@ from entry_type_matcher import match_entry_type
 import morph_teifier as morph
 import input_nodes_rearranger as rearranger
 import senses_teifier as sns
+import unknown_entry_encoder
 import node_factory as nf
 from utils import has_more_cyrillic_than_latin
 from os import path

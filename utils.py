@@ -1,5 +1,5 @@
 import re
-from typing import List, Optional
+from typing import List
 
 def has_more_cyrillic_than_latin(string):
     pattern = '[а-яА-Я]'

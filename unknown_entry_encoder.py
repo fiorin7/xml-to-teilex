@@ -69,17 +69,18 @@ def unknown_entry_partially_encode(entry):
         elif node_content.strip().startswith('(') and node_content.strip().endswith(')'):
             content_node = [nf.create_extra_morph(node_content)]
             
-        elif node_content.strip() in punctuation or node_content.strip() == '–':
+        elif node_content.strip() in (punctuation + '–'):
                 content_node = [nf.create_pc_node(node_content)]
 
         elif old_morph_part[0].get('rend') == "italic":
             if node_content.strip() in ('m', 'f', 'n'):
                 content_node = [nf.create_gram_grp(node_content)]
 
-            elif len(entry.encoded_parts['morph_part']) == 1 and len(old_morph_part) >= 2 and old_morph_part[1].get('rend' ) == 'bold' and node_content.strip() == 'и' and entry.encoded_parts['morph_part'][-1].tag == nf.get_ns('form'):
+            elif len(entry.encoded_parts['morph_part']) == 1 and len(old_morph_part) >= 2 and old_morph_part[1].get('rend' ) == 'bold' and \
+                 node_content.strip() == 'и' and entry.encoded_parts['morph_part'][0].tag == nf.get_ns('form'):
                 content_node = []
-                entry.encoded_parts['morph_part'][-1].append(old_morph_part[0])
-                entry.encoded_parts['morph_part'][-1].append(nf.create_orth_node(SafeString(old_morph_part[1].text)))
+                entry.encoded_parts['morph_part'][0].append(old_morph_part[0])
+                entry.encoded_parts['morph_part'][0].append(nf.create_orth_node(SafeString(old_morph_part[1].text)))
                 old_morph_part.pop(0)
 
             else:

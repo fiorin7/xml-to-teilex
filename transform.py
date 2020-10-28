@@ -48,16 +48,7 @@ class Entry:
         self.contents = rearranger.fix_separated_brackets(self.contents)
         self.contents = rearranger.fix_misplaced_punct(self.contents)
 
-    
-    def merge_entry_parent_and_contents(self, entry_parent_node, contents):
-        '''Insert original contents in the entry node.'''
-        merged_entry = entry_parent_node
-        [entry_parent_node.append(hi) for hi in self.contents]
-        return merged_entry   
-
     def set_morph_part_xml(self):
-        if self.title_lemma == 'adolescens':
-            breakpoint
         morph_part, tag_span_of_morph_info = morph.get_morph_info(self.entry_type, self.contents)
         for _ in range(tag_span_of_morph_info):
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))

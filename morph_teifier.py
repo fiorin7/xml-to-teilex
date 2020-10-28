@@ -1,5 +1,6 @@
 import node_factory as nf
 from utils import SafeString
+from debug import debug
 
 def noun_xml(content0, content1):
     content0_split = content0.split(', ')
@@ -94,11 +95,13 @@ def get_morph_info(entry_type, contents):
         tag_span_of_morph_info = 2
     
     elif entry_type == 'unknown but clear senses start':
-        print(content0)
+        if debug():
+            print(content0)
         pass
     
     elif entry_type == 'UNKNOWN':
-        print(content0)
+        if debug():
+            print(content0)
         pass
 
     return res, tag_span_of_morph_info

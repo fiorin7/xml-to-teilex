@@ -170,8 +170,9 @@ def find_filename(title_lemma):
     return file_name
 
 parser = et.XMLParser(remove_blank_text=True)
+parser_recover = et.XMLParser(remove_blank_text=True, recover=True)
 
-tree = et.parse('example/raw_input.xml', parser)
+tree = et.parse('example/raw_input.xml', parser_recover)
 root = tree.getroot()
 
 if debug():

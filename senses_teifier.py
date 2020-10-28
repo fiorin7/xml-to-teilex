@@ -299,7 +299,8 @@ def encode_senses(entry):
                     content_node = []
 
                     found_latin = False
-
+                    
+                    i = 0
                     for i in range(len(node_content.split(' '))):
                         word = node_content.split(' ')[i]
                         if is_empty_string(word):

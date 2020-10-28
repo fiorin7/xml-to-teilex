@@ -23,7 +23,7 @@ class Entry:
             'morph_part' : self.set_morph_part_xml(),
             'senses' : []
         }
-        self.raw_senses = self.append_senses()
+        self.raw_senses = self.get_validated_senses()
         sns.encode_senses(self)
         
         
@@ -79,7 +79,7 @@ class Entry:
                     self.entry_node.append(part)
     
     
-    def append_senses(self, res = []):
+    def get_validated_senses(self, res = []):
         if self.entry_type != 'UNKNOWN' and self.encoded_parts.get('morph_part') and self.contents:
             res = [x for x in self.contents if x.text]
             self.contents = None

@@ -275,25 +275,26 @@ def encode_senses(entry):
             if sense_number == 'I':
                 sense_number = initial[:-1]
             numbers.append(sense_number)
-            last_sense_container = create_subsense_number_node(title_lemma, numbers, raw_senses[0].text)
+            last_sense_container = create_subsense_number_node(title_lemma, numbers, SafeString(raw_senses[0].text))
             append_sense_container_and_label(entry, last_sense_container)
         
         else:
             content_node = [raw_senses[0]]
+            current_text = SafeString(raw_senses[0].text)
 
-            if raw_senses[0].text.strip() in punctuation or raw_senses[0].text.strip() == '–':
-                content_node = [nf.create_pc_node(raw_senses[0].text)]
+            if current_text.strip() in (punctuation + '–'):
+                content_node = [nf.create_pc_node(current_text)]
 
             elif raw_senses[0].get('rend') == "italic":
-                content_node = nf.create_usg_node(raw_senses[0].text)
+                content_node = nf.create_usg_node(current_text)
             
-            elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(raw_senses[0].text):
-                content_node = nf.create_def_node(raw_senses[0].text)
+            elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(current_text):
+                content_node = nf.create_def_node(current_text)
             
             elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in (nf.get_ns('cit'), nf.get_ns('quote'))]) == 0) and \
-                has_more_cyrillic_than_latin(raw_senses[0].text.strip().split(' ')[0]):
+                has_more_cyrillic_than_latin(current_text.strip().split(' ')[0]):
 
-                    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(raw_senses[0].text)
+                    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(current_text)
                     
                     content_node = []
 
@@ -323,7 +324,7 @@ def encode_senses(entry):
             
             
             else:
-                content_node = create_cit_nodes(raw_senses[0].text)
+                content_node = create_cit_nodes(current_text)
 
             if last_sense_container is not None:
                 [last_sense_container.append(x) for x in content_node]

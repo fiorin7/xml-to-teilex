@@ -85,7 +85,7 @@ class Entry:
             self.contents = None
             return res
         else:
-            return morph.deal_with_unknown_entry(self)
+            return unknown_entry_encoder.deal_with_unknown_entry(self)
 
 
 def remove_ref_parent(body):

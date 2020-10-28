@@ -121,6 +121,7 @@ def merge_elements_with_same_attribs(body):
                 old_node = curr_node
                 continue
             if curr_node.get('rend') == old_node.get('rend'):
+                # TODO: there must be more cases where space isn't needed
                 if curr_node.text[-1] != ' ' and old_node.text[0] not in string.punctuation:
                     curr_node.text += ' '
                 curr_node.text += old_node.text
@@ -140,12 +141,11 @@ def invalid_para(p):
     '''Dismiss the p's which contain the one letter title of a section like A, B etc.'''
     his = [hi for hi in p]
     return len(his) == 1 and len(his[0].text) == 1
-    # needs more checks
+    # TODO: needs more checks
 
 def get_p_contents(p):
     '''Return the children of p of interest (in 'hi' tags).'''
     return [x for x in p if x.tag == nf.get_ns('hi')]
-    # what do with nested hi in ref
 
 def get_new_tree(template):
     '''Return deepcopy of template to insert new entry in.'''

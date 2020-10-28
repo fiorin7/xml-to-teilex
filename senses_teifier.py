@@ -4,7 +4,7 @@ from collections import deque
 import re
 from string import punctuation
 import node_factory as nf
-from utils import has_more_cyrillic_than_latin, is_empty_string
+from utils import has_more_cyrillic_than_latin, is_empty_string, SafeString
 
 def one_is_missing(raw_senses):
     one_spotted = False
@@ -265,7 +265,7 @@ def encode_senses(entry):
 
 
     while raw_senses:
-        initial = raw_senses[0].text.strip()
+        initial = SafeString(raw_senses[0].text).strip()
         initial = fix_cyrillic_letter(initial)
 
         # what do

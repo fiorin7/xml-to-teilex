@@ -160,7 +160,6 @@ def find_filename(title_lemma):
 
 parser = et.XMLParser(remove_blank_text=True)
 
-template = et.parse('template.xml', parser)
 tree = et.parse('example/raw_input.xml', parser)
 root = tree.getroot()
 body = root.find(f'.//{nf.get_ns("body")}')
@@ -174,6 +173,8 @@ for p in body.iter(f'{nf.get_ns("p")}'):
         continue
     
     counter += 1
+
+    template = et.parse('template.xml', parser)
     new_tree = get_new_tree(template)
     new_body = get_new_body(new_tree)
     contents = get_p_contents(p)

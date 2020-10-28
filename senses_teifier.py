@@ -67,7 +67,7 @@ def fix_cyrillic_letter(initial, title_lemma):
                 'е': 'e',
             }
             if initial[0] in replacements:
-                initial = replacements[initial[0]] + ')'
+                initial = replacements[initial[0]] + initial[1:]
     return initial
         
 

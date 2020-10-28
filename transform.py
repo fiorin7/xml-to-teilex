@@ -162,7 +162,7 @@ def find_filename(title_lemma):
     file_name = ''
     
     while True:
-        file_name = entry.title_lemma + " " + str(file_number) if file_number else entry.title_lemma
+        file_name = entry.title_lemma + " " + str(file_number) if file_number else title_lemma
         if path.exists(f'example/example-output/{file_name}.xml'):
             file_number += 1
         else:

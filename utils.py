@@ -36,8 +36,3 @@ class SafeString(str):
     
     def split(self, *args, **kwargs) -> List[str]:
         return SafeList(super().split(*args, **kwargs))
-
-
-# x = SafeString('b, d')
-
-# print(x.split(', ')[3])

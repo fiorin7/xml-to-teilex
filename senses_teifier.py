@@ -186,8 +186,6 @@ def create_cit_nodes(node_content):
             
         if y < (len(split_contents)-1):
             result.append(nf.create_pc_node('; '))
-            # print(x)
-            # print('kek')
     
     for punct_node in separated_end_punctuation:
         result.append(punct_node)
@@ -236,7 +234,6 @@ def append_sense_container_and_label(entry, new_node):
         entry.encoded_parts['senses'].append(new_node)
     # [print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8')) for x in entry.encoded_parts['senses']]
     # [print(x.text) for x in entry.encoded_parts['senses']]
-    # entry.encoded_parts['senses'].append(new_node)
 
 def encode_senses(entry):
     raw_senses = entry.raw_senses
@@ -265,7 +262,6 @@ def encode_senses(entry):
         initial = SafeString(raw_senses[0].text).strip()
         initial = fix_cyrillic_letter(initial)
 
-        # what do
         if is_subsense_number(initial):
 
             if fix_mixed_numbers(entry, initial):

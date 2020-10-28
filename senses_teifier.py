@@ -58,7 +58,7 @@ def find_previous_numbers(numbers):
     return collection
 
 
-def fix_cyrillic_letter(initial, title_lemma):
+def fix_cyrillic_letter(initial):
     if not is_long_roman_numeral(initial):
         if len(initial) > 1 and initial[1] == ')':
             replacements = {
@@ -266,7 +266,7 @@ def encode_senses(entry):
 
     while raw_senses:
         initial = raw_senses[0].text.strip()
-        initial = fix_cyrillic_letter(initial, title_lemma)
+        initial = fix_cyrillic_letter(initial)
 
         # what do
         if is_subsense_number(initial):

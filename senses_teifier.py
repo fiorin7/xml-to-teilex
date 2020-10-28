@@ -29,7 +29,7 @@ def is_numbered_entry(raw_senses):
     return False
 
 def is_long_roman_numeral(initial):
-    return (len(initial) > 2 and initial.startswith(('II.', 'IV.'))) or (len(initial) > 3 and initial.startswith('III.'))
+    return initial.startswith(('II.', 'III.', 'IV.'))
 
 def is_subsense_number(initial):
     if len(initial) < 2:

@@ -9,8 +9,7 @@ import input_nodes_rearranger as rearranger
 import senses_teifier as sns
 import unknown_entry_encoder
 import node_factory as nf
-from utils import has_more_cyrillic_than_latin
-from os import path
+from utils import SafeString, has_more_cyrillic_than_latin
 
 class Entry:
     def __init__(self, contents=[]):
@@ -64,8 +63,8 @@ class Entry:
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
             self.contents.remove(self.contents[0])
         
-        if self.contents[0].text.strip().startswith('(') and self.contents[0].text.strip().endswith(')'):
-            if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not has_more_cyrillic_than_latin(self.contents[0].text) and has_more_cyrillic_than_latin(self.contents[1].text.split()[0])):
+        if len(self.contents) > 1 and self.contents[0].text.strip().startswith('(') and self.contents[0].text.strip().endswith(')'):
+            if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not has_more_cyrillic_than_latin(self.contents[0].text) and has_more_cyrillic_than_latin(SafeString(self.contents[1].text).split()[0])):
                 morph_part.append(nf.create_extra_morph(self.contents[0].text))
                 self.contents.remove(self.contents[0])
 

@@ -155,7 +155,7 @@ def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
 
 def create_cit_nodes(node_content):
     result = []
-    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(node_content)      
+    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(SafeString(node_content))      
     
     split_contents = node_content.split('; ')
     split_contents = [x for x in split_contents if not is_empty_string(x)]

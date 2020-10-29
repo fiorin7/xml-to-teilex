@@ -149,20 +149,20 @@ def get_new_body(new_tree):
     new_body = new_root.find(f'.//{nf.get_ns("body")}')
     return new_body
 
-def find_filename(title_lemma):
+def find_filename(title_lemma, output_folder):
     file_number = 0
     file_name = ''
     
     while True:
         file_name = title_lemma + " " + str(file_number) if file_number else title_lemma
-        if path.exists(f'output_files/{file_name}.xml'):
+        if path.exists(f'{output_folder}/{file_name}.xml'):
             file_number += 1
         else:
             break
     return file_name
 
 
-def transform_xml(input_file):
+def transform_xml(input_file, output_folder):
     if debug():
         try:
             shutil.rmtree('example/example-output')
@@ -208,8 +208,8 @@ def transform_xml(input_file):
         
         new_body.append(entry.entry_node)
         
-        file_name = find_filename(entry.title_lemma)
-        new_tree.write(open(f'output_files/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+        file_name = find_filename(entry.title_lemma, output_folder)
+        new_tree.write(open(f'{output_folder}/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
 
         if debug():
             new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)

@@ -14,14 +14,6 @@ from os import path, mkdir
 import shutil
 from debug import debug
 
-if debug():
-    try:
-        shutil.rmtree('example/example-output')
-    except:
-        print('No such folder.')
-
-    mkdir('example/example-output')
-
 class Entry:
     def __init__(self, contents=[]):
         self.raw_contents = copy(contents)
@@ -169,6 +161,15 @@ def find_filename(title_lemma):
             break
     return file_name
 
+
+def transform_xml(input_file):
+    if debug():
+        try:
+            shutil.rmtree('example/example-output')
+        except:
+            print('No such folder.')
+
+        mkdir('example/example-output')
 parser = et.XMLParser(remove_blank_text=True)
 parser_recover = et.XMLParser(remove_blank_text=True, recover=True)
 

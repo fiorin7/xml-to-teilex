@@ -170,58 +170,59 @@ def transform_xml(input_file):
             print('No such folder.')
 
         mkdir('example/example-output')
-parser = et.XMLParser(remove_blank_text=True)
-parser_recover = et.XMLParser(remove_blank_text=True, recover=True)
 
-tree = et.parse('example/raw_input.xml', parser_recover)
-root = tree.getroot()
+    parser = et.XMLParser(remove_blank_text=True)
+    parser_recover = et.XMLParser(remove_blank_text=True, recover=True)
 
-if debug():
-    tree_test = deepcopy(root)
-
-body = root.find(f'.//{nf.get_ns("body")}')
-general_fix_up_input(body)
-
-
-counter = 0
-counter_unmatched = 0
-for p in body.iter(f'{nf.get_ns("p")}'):
-    if invalid_para(p):
-        continue
-    
-    counter += 1
-
-    template = et.parse('template.xml', parser)
-    new_tree = get_new_tree(template)
-    new_body = get_new_body(new_tree)
-    contents = get_p_contents(p)
-    entry = Entry(contents)
-    entry.insert_encoded_parts_in_entry()
+    tree = et.parse(input_file, parser_recover)
+    root = tree.getroot()
 
     if debug():
-        with open('all_text_new.txt', 'a', encoding='UTF8') as f: 
-            for x in entry.entry_node.iterdescendants():
+        tree_test = deepcopy(root)
+
+    body = root.find(f'.//{nf.get_ns("body")}')
+    general_fix_up_input(body)
+
+
+    counter = 0
+    counter_unmatched = 0
+    for p in body.iter(f'{nf.get_ns("p")}'):
+        if invalid_para(p):
+            continue
+        
+        counter += 1
+
+        template = et.parse('template.xml', parser)
+        new_tree = get_new_tree(template)
+        new_body = get_new_body(new_tree)
+        contents = get_p_contents(p)
+        entry = Entry(contents)
+        entry.insert_encoded_parts_in_entry()
+
+        if debug():
+            with open('all_text_new.txt', 'a', encoding='UTF8') as f: 
+                for x in entry.entry_node.iterdescendants():
+                    if x.text:
+                        f.write(x.text) 
+
+        
+        new_body.append(entry.entry_node)
+        
+        file_name = find_filename(entry.title_lemma)
+        new_tree.write(open(f'output_files/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+
+        if debug():
+            new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+            new_tree.write(open(f'../xml-to-teilex-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+            # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
+            if entry.entry_type == 'UNKNOWN':
+                counter_unmatched += 1
+                # print(f'{entry.contents[0].text}|{entry.contents[1].text}')
+
+    if debug():
+        print(counter_unmatched)
+
+        with open('all_text_old.txt', 'w', encoding='UTF8') as f: 
+            for x in tree_test.iterdescendants():
                 if x.text:
                     f.write(x.text) 
-
-    
-    new_body.append(entry.entry_node)
-    
-    file_name = find_filename(entry.title_lemma)
-    # new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
-
-    if debug():
-        new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
-        new_tree.write(open(f'../xml-to-teilex-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
-        # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
-        if entry.entry_type == 'UNKNOWN':
-            counter_unmatched += 1
-            # print(f'{entry.contents[0].text}|{entry.contents[1].text}')
-
-if debug():
-    print(counter_unmatched)
-
-    with open('all_text_old.txt', 'w', encoding='UTF8') as f: 
-        for x in tree_test.iterdescendants():
-            if x.text:
-                f.write(x.text) 

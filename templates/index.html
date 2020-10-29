@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='site.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="site">
+        <header class="site-header">Hello there</header>
+        <main class="site-main">
+            <form method=post enctype=multipart/form-data>
+            <label for="file">Select files:</label>
+            <input type=file name=file>
+            <input type=submit value=Upload>
+            </form>
+        </main>
+        <footer class="site-footer">Footer bro here</footer>
+    </div>
+</body>
+</html>
+

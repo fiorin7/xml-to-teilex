@@ -28,6 +28,10 @@ def delete_files_from_folder(path):
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+
+        delete_files_from_folder(UPLOAD_FOLDER)
+        delete_files_from_folder(OUTPUT_FILES_FOLDER)
+
         # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')

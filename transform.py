@@ -183,14 +183,12 @@ def transform_xml(input_file, output_folder):
     body = root.find(f'.//{nf.get_ns("body")}')
     general_fix_up_input(body)
 
+    if debug():
+        counter_unmatched = 0
 
-    counter = 0
-    counter_unmatched = 0
     for p in body.iter(f'{nf.get_ns("p")}'):
         if invalid_para(p):
             continue
-        
-        counter += 1
 
         template = et.parse('template.xml', parser)
         new_tree = get_new_tree(template)

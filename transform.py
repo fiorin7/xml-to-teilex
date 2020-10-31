@@ -109,6 +109,8 @@ def merge_elements_with_same_attribs(body):
     for p in body:
         for idx in range(len(p)-1,-1,-1):
             curr_node = p[idx]
+            if not curr_node.text:
+                continue
             if idx == len(p)-1:
                 old_node = curr_node
                 continue
@@ -137,7 +139,7 @@ def invalid_para(p):
 
 def get_p_contents(p):
     '''Return the children of p of interest (in 'hi' tags).'''
-    return [x for x in p if x.tag == nf.get_ns('hi')]
+    return [x for x in p if x.tag == nf.get_ns('hi') and x.text]
 
 def get_new_tree(template):
     '''Return deepcopy of template to insert new entry in.'''

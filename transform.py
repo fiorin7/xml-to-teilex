@@ -147,7 +147,7 @@ def general_fix_up_input(body):
 def invalid_para(p):
     '''Dismiss the p's which contain the one letter title of a section like A, B etc.'''
     his = [hi for hi in p]
-    return len(his) == 1 and len(his[0].text) == 1
+    return (len(his) == 1 and len(his[0].text) == 1) or len(his) == 0
     # TODO: needs more checks
 
 def get_p_contents(p):

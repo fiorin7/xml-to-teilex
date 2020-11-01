@@ -14,6 +14,7 @@ ALLOWED_EXTENSIONS = {'xml'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['OUTPUT_ZIP_FOLDER'] = OUTPUT_ZIP_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 10 * 1024 * 1024
 app.secret_key = 'debug_key' if not environ.get('SECRET_KEY') else environ['SECRET_KEY']
 
 

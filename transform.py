@@ -106,12 +106,14 @@ def merge_elements_with_same_attribs(body):
     if the have matching attributes and values.
     xml:space attribute isn't taken into account during the comparison and is retained after the merging
     '''
+    first_assignment = False
     for p in body:
         for idx in range(len(p)-1,-1,-1):
             curr_node = p[idx]
             if not curr_node.text:
                 continue
-            if idx == len(p)-1:
+            if not first_assignment:
+                first_assignment = True
                 old_node = curr_node
                 continue
             if curr_node.get('rend') == old_node.get('rend'):

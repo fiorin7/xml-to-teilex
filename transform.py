@@ -219,10 +219,13 @@ def transform_xml(input_file, output_folder):
             entry.insert_encoded_parts_in_entry()
 
         if debug():
-            with open('all_text_new.txt', 'a', encoding='UTF8') as f: 
-                for x in entry.entry_node.iterdescendants():
-                    if x.text:
+            with open('all_text_new.txt', 'a', encoding='UTF8') as f:
+                if not too_short:
+                    for x in entry.entry_node.iterdescendants():
+                        if x.text:
+                            f.write(x.text) 
                         f.write(x.text) 
+                            f.write(x.text) 
 
         if not too_short:
             new_body.append(entry.entry_node)
@@ -240,7 +243,7 @@ def transform_xml(input_file, output_folder):
             # new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
             new_tree.write(open(f'../xml-to-teilex-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
             # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
-            if entry.entry_type == 'UNKNOWN':
+            if too_short or entry.entry_type == 'UNKNOWN':
                 counter_unmatched += 1
                 # print(f'{entry.contents[0].text}|{entry.contents[1].text}')
 

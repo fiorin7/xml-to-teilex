@@ -47,10 +47,19 @@ def upload_file():
         if not allowed_file(file.filename):
             flash(f'Only {", ".join(ALLOWED_EXTENSIONS)} files allowed')
             return redirect(request.url)
+
+        if file:
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
-            transform_xml(f'{UPLOAD_FOLDER}/{filename}', OUTPUT_FILES_FOLDER)
+
+            try:
+                transform_xml(f'{UPLOAD_FOLDER}/{filename}', OUTPUT_FILES_FOLDER)
+            except Exception as e:
+                delete_files_from_folder(UPLOAD_FOLDER)
+                delete_files_from_folder(OUTPUT_FILES_FOLDER)
+                flash('Failed to convert file.')
+                return redirect(request.url)
 
             with ZipFile(f'{OUTPUT_ZIP_FOLDER}/transformed_files.zip', 'w') as myzip:
                 for root, dirs, files in os.walk(OUTPUT_FILES_FOLDER):

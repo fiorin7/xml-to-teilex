@@ -100,6 +100,14 @@ def remove_style_attrib(body):
             if 'style' in el.attrib.keys():
                 el.attrib.pop('style')
 
+def remove_empty_and_non_hi_nodes(body):
+    for p in body:
+        for idx in range(len(p)-1,-1,-1):
+            node = p[idx]
+            if not node.text or node.tag != nf.get_ns('hi'):
+                p.remove(node)
+
+
 def merge_elements_with_same_attribs(body):
     '''
     Merge two xml nodes (the tags with their attributes and content)
@@ -130,6 +138,7 @@ def merge_elements_with_same_attribs(body):
 def general_fix_up_input(body):
     '''Call all functions which do the initial manipulation of the input xml'''
     remove_ref_parent(body)
+    remove_empty_and_non_hi_nodes(body)
     remove_style_attrib(body)
     merge_elements_with_same_attribs(body)
 

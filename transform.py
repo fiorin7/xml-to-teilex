@@ -223,7 +223,7 @@ def transform_xml(input_file, output_folder):
         new_tree.write(open(f'{output_folder}/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
 
         if debug():
-            new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
+            # new_tree.write(open(f'example/example-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
             new_tree.write(open(f'../xml-to-teilex-output/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
             # print(et.tostring(body, encoding='utf8', pretty_print=True).decode('utf8'))
             if entry.entry_type == 'UNKNOWN':

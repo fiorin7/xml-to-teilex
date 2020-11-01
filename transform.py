@@ -209,8 +209,14 @@ def transform_xml(input_file, output_folder):
         new_tree = get_new_tree(template)
         new_body = get_new_body(new_tree)
         contents = get_p_contents(p)
-        entry = Entry(contents)
-        entry.insert_encoded_parts_in_entry()
+
+        too_short = False
+        if len(contents) <= 1:
+            too_short = True
+        
+        if not too_short:
+            entry = Entry(contents)
+            entry.insert_encoded_parts_in_entry()
 
         if debug():
             with open('all_text_new.txt', 'a', encoding='UTF8') as f: 
@@ -218,10 +224,16 @@ def transform_xml(input_file, output_folder):
                     if x.text:
                         f.write(x.text) 
 
+        if not too_short:
+            new_body.append(entry.entry_node)
+        else:
+            [new_body.append(x) for x in contents]
         
-        new_body.append(entry.entry_node)
-        
-        file_name = find_filename(entry.title_lemma, output_folder)
+        if not too_short:
+            file_name = find_filename(entry.title_lemma, output_folder)
+        else:
+            file_name = 'UNKNOWN'
+
         new_tree.write(open(f'{output_folder}/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
 
         if debug():

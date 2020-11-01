@@ -5,6 +5,7 @@ from flask import Flask, flash, request, redirect, url_for, render_template, sen
 from werkzeug.utils import secure_filename
 from transform import transform_xml
 from zipfile import ZipFile
+from debug import debug
 
 UPLOAD_FOLDER = 'uploads'
 OUTPUT_FILES_FOLDER = 'output_files'
@@ -58,6 +59,8 @@ def upload_file():
             try:
                 transform_xml(f'{UPLOAD_FOLDER}/{filename}', OUTPUT_FILES_FOLDER)
             except Exception as e:
+                if debug():
+                    print(str(e))
                 delete_files_from_folder(UPLOAD_FOLDER)
                 delete_files_from_folder(OUTPUT_FILES_FOLDER)
                 flash('Failed to convert file.')

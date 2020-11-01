@@ -114,8 +114,10 @@ def merge_elements_with_same_attribs(body):
     if the have matching attributes and values.
     xml:space attribute isn't taken into account during the comparison and is retained after the merging
     '''
-    first_assignment = False
     for p in body:
+        first_assignment = False
+        curr_node = None
+        old_node = None
         for idx in range(len(p)-1,-1,-1):
             curr_node = p[idx]
             if not curr_node.text:

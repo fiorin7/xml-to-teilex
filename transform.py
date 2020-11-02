@@ -85,7 +85,7 @@ class Entry:
 def remove_ref_parent(body):
     '''Remove ref parent tag (which contains hyperlink).'''
     for p in body:
-        for idx in range(len(p)):
+        for idx in range(len(p)-1, -1, -1):
             x = p[idx]
             if x.tag == nf.get_ns('ref'):
                 children = x.getchildren()

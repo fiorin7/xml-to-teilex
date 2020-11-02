@@ -235,7 +235,7 @@ def transform_xml(input_file, output_folder):
         if not too_short:
             file_name = find_filename(entry.title_lemma, output_folder)
         else:
-            file_name = 'UNKNOWN'
+            file_name = find_filename('UNKNOWN', output_folder)
 
         new_tree.write(open(f'{output_folder}/{file_name}.xml', 'wb'), encoding='utf8', xml_declaration=True, pretty_print=True)
 

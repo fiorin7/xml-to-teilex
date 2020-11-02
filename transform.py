@@ -224,8 +224,6 @@ def transform_xml(input_file, output_folder):
                     for x in entry.entry_node.iterdescendants():
                         if x.text:
                             f.write(x.text) 
-                        f.write(x.text) 
-                            f.write(x.text) 
 
         if not too_short:
             new_body.append(entry.entry_node)

@@ -28,6 +28,27 @@
                     </ul>
                 {% endif %}
             {% endwith %}
+            
+            <div class="instructions">
+                <h3>Instructions:</h3>
+                <ul class="instructions-list">
+                    <li>
+                        <p><span class="number">1.</span> Go to <a href="https://oxgarage.tei-c.org/">oxgarage.tei-c.org</a>.</p>
+                    </li>
+                    <li>
+                        <p><span class="number">2.</span> Select "Convert from: Documents".</p>
+                        <img src="{{ url_for('static', filename='instructions1-min.png') }}" alt="">
+                    </li>
+                    <li><p><span class="number">3.</span> Select .docx <span class="warning">(make sure you don't have a .doc file)</span> as your input format and "XML Document" as the output.</p>
+                        <img src="{{ url_for('static', filename='instructions2-min.png') }}" alt="">
+                    </li>
+                    <li><p><span class="number">4.</span> Scroll to the top, upload your file and convert it.</p>
+                        <img src="{{ url_for('static', filename='instructions3-min.png') }}" alt="">
+                    </li>
+                    <li><p><span class="number">5.</span> Upload the result here.</p></li>
+                </ul>
+            </div>
+            
         </main>
         <footer class="site-footer">Footer bro here</footer>
     </div>

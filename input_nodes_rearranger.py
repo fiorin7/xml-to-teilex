@@ -1,25 +1,7 @@
 from lxml import etree as et
 from copy import copy
 from utils import is_empty_string, SafeString
-from node_factory import get_ns
-
-
-def create_bold_hi_node(text):
-    hi_node = et.Element(get_ns("hi"))
-    hi_node.set('rend', 'bold')
-    hi_node.text = text
-    return hi_node
-
-def create_normal_hi_node(text):
-    hi_node = et.Element(get_ns("hi"))
-    hi_node.text = text
-    return hi_node
-
-def create_italic_hi_node(text):
-    hi_node = et.Element(get_ns("hi"))
-    hi_node.set('rend', 'italic')
-    hi_node.text = text
-    return hi_node
+from node_factory import get_ns, create_bold_hi_node, create_normal_hi_node, create_italic_hi_node
 
 
 def fix_morph_numbers(contents):

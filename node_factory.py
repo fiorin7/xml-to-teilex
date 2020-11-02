@@ -15,6 +15,23 @@ def create_entry_parent_node(lemma):
     entry_node.set('{http://www.w3.org/XML/1998/namespace}lang', "la")
     return entry_node
 
+# ############  INPUT STYLE NODES ################
+def create_bold_hi_node(text):
+    hi_node = et.Element(get_ns("hi"))
+    hi_node.set('rend', 'bold')
+    hi_node.text = text
+    return hi_node
+
+def create_normal_hi_node(text):
+    hi_node = et.Element(get_ns("hi"))
+    hi_node.text = text
+    return hi_node
+
+def create_italic_hi_node(text):
+    hi_node = et.Element(get_ns("hi"))
+    hi_node.set('rend', 'italic')
+    hi_node.text = text
+    return hi_node
 
 # ############### MOSTLY MORPH ##################
 def create_extra_morph(extra_morph):

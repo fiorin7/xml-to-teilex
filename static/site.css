@@ -28,7 +28,10 @@ li {
 
 a {
     color: black;
-    text-decoration: none;
+}
+
+a:hover {
+    color: rgb(82, 69, 69);
 }
 
   
@@ -40,9 +43,158 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    /* padding: 0.5em 2em; */
 }
 
 .site-main {
+    padding: 0.5em 2em;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
+.site-header {
+    padding: 0.5em 2em;
+}
+.site-header img {
+    width: auto;
+    max-height: 5em;
+}
+
+form.file-input {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+
+}
+
+.file-input input[name="file"] {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    margin: 1em;
+}
+
+.file-input input[name="file"] + label {
+    background-color: rgb(209, 73, 73);
+    padding: 0.5em 1em;
+    border-radius: 0.2em;
+    color: white;
+    cursor: pointer;
+    margin: 0.5em 1em;
+    text-align: center;
+}
+
+.file-input input[name="file"]:focus + label,
+.file-input input[name="file"] + label:hover {
+    background-color: rgb(232, 79, 79);
+}
+
+
+.file-input input[type="submit"] {
+    background-color: white;
+    border: 0.07em solid rgb(209, 73, 73);
+    border-radius: 0.2em;
+    padding: 0.5em 1em;
+    color: rgb(209, 73, 73);
+    cursor: pointer;
+    margin: 0.5em 1em;
+
+}
+
+.file-input input[type="submit"]:hover {
+    background-color: rgb(255, 247, 247);
+
+}
+/* 
+.flashes {
+    display: flex;
+} */
+.flashes li {
+    background-color: rgb(208, 223, 245);
+    padding: 0.5em 1em;
+    font-size: 1.1em;
+    color: rgb(86, 89, 94);
+    margin-top: 1em;
+}
+
+
+.instructions {
+    padding: 1em;
+    max-width: 40em;
+    margin: 2em auto;
+    box-shadow: 0 0 0.35em 0 rgba(209, 73, 73, 0.3);
+    border-radius: 0.3em;
+}
+.instructions-list {
+    /* flex:
+    flex-direction: column; */
+    padding: 1em;
+}
+
+.instructions-list img {
+    width: auto;
+    max-height: 20em;
+    /* border: 0.07em solid rgba(209, 73, 73, 0.7);
+    border-radius: 0.3em; */
+}
+
+.instructions-list img:last-child {
+    max-width: 35em;
+    height: auto;
+}
+
+
+h3 {
+    color: rgb(209, 73, 73);
+    padding: 0 1em;
+    font-size: 1.5em;
+}
+
+.instructions-list li {
+    margin-top: 1em;
+}
+
+.instructions-list .number {
+    background-color: rgb(209, 73, 73);
+    padding: 0 0.3em;
+    color: white;
+}
+
+.instructions-list li:first-child {
+    margin-top: 0.5em;
+}
+
+.instructions-list p {
+    /* border-bottom: 0.05em solid rgb(209, 73, 73); */
+    margin-bottom: 0.2em;
+    padding: 0.2em 0.5em;
+}
+
+.warning {
+    color: rgb(209, 73, 73);
+}
+
+
+.site-footer {
+    border-top: 0.01em solid rgb(214, 192, 192);
+    /* background-color: rgb(209, 73, 73); */
+    margin: 1em;
+    padding: 1em 0 0.5em 0;
+
+}
+
+.site-footer a {
+    color: rgb(86, 89, 94);
+    text-decoration: none;
+    padding-left: 0.5em;
+}
+
+.site-footer a:hover {
+    text-decoration: underline;
+}

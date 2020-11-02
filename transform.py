@@ -89,6 +89,9 @@ def remove_ref_parent(body):
             x = p[idx]
             if x.tag == nf.get_ns('ref'):
                 children = x.getchildren()
+                if x.text:
+                    text_node = nf.create_normal_hi_node(x.text)
+                    children.insert(0, text_node)
                 p.remove(x)
                 for i in range(len(children)):
                     p.insert(i+idx, children[i])

@@ -152,7 +152,6 @@ def merge_elements_with_same_attribs(body):
                 curr_node.text += old_node.text
                 if old_node.get('{http://www.w3.org/XML/1998/namespace}space') == 'preserve':
                     curr_node.attrib['{http://www.w3.org/XML/1998/namespace}space'] = 'preserve'
-                p[idx] = curr_node
                 p.remove(old_node)
             old_node = curr_node
 

@@ -96,6 +96,22 @@ def remove_ref_parent(body):
                 for i in range(len(children)):
                     p.insert(i+idx, children[i])
 
+def make_text_and_tails_into_nodes(body):
+    for p in body:
+        if p.text:
+            stripped_text = p.text.replace('\n', '').strip()
+            text_node = nf.create_normal_hi_node(stripped_text)
+            p.insert(0, text_node)
+            p.text = None
+        for idx in range(len(p)-1, -1, -1):
+            x = p[idx]
+            if x.tail and x.tail.strip() and x.tail.strip() != '\n':
+                stripped_text = x.tail.replace('\n', '').strip()
+                tail_node = nf.create_normal_hi_node(stripped_text)
+                p.insert(idx+1, tail_node)
+                x.tail = None
+
+
 def remove_style_attrib(body):
     '''Remove the style attribute with it's values (font size and font family).'''
     for p in body:
@@ -143,6 +159,7 @@ def merge_elements_with_same_attribs(body):
 def general_fix_up_input(body):
     '''Call all functions which do the initial manipulation of the input xml'''
     remove_ref_parent(body)
+    make_text_and_tails_into_nodes(body)
     remove_empty_and_non_hi_nodes(body)
     remove_style_attrib(body)
     merge_elements_with_same_attribs(body)

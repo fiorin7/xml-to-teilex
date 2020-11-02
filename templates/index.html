@@ -13,9 +13,9 @@
             <img src="{{ url_for('static', filename='su-logo.png') }}" alt="">
         </header>
         <main class="site-main">
-            <form method=post enctype=multipart/form-data>
-            <label for="file">Select files:</label>
-            <input type=file name=file>
+            <form class=file-input method=post enctype=multipart/form-data>
+            <input type=file name=file id=file>
+            <label for=file>Choose a file</label>
             <input type=submit value=Upload>
             </form>
 

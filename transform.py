@@ -58,7 +58,7 @@ class Entry:
             self.contents.remove(self.contents[0])
         
         if len(self.contents) > 1 and self.contents[0].text.strip().startswith('(') and self.contents[0].text.strip().endswith(')'):
-            if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not has_more_cyrillic_than_latin(self.contents[0].text) and has_more_cyrillic_than_latin(SafeString(self.contents[1].text).split()[0])):
+            if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not has_more_cyrillic_than_latin(self.contents[0].text) and has_more_cyrillic_than_latin(SafeString(self.contents[1].text.strip()).split(' ')[0])):
                 morph_part.append(nf.create_extra_morph(self.contents[0].text))
                 self.contents.remove(self.contents[0])
 

@@ -302,7 +302,7 @@ def encode_senses(entry):
                         word = node_content.split(' ')[i]
                         if is_empty_string(word):
                             continue
-                        if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(node_content.split(' ')[i+1])):
+                        if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(SafeString(node_content).split(' ')[i+1])):
                             pass
                         else:
                             found_latin = True

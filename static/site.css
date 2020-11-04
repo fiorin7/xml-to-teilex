@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+@import url('https://use.fontawesome.com/releases/v5.8.2/css/all.css');
 
 
 * {
@@ -176,8 +177,16 @@ h3 {
     padding: 0.2em 0.5em;
 }
 
-.warning {
-    color: rgb(209, 73, 73);
+.instructions-list p.warning {
+    background-color: rgb(208, 223, 245);
+    padding: 0.5em 0.7em;
+    color: rgb(86, 89, 94);
+    border-radius: 0.1em;
+    margin: 0.5em;
+}
+
+.instructions-list p.warning i {
+    margin-right: 0.5em;
 }
 
 

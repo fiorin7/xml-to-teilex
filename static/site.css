@@ -96,6 +96,11 @@ form.file-input {
     background-color: rgb(232, 79, 79);
 }
 
+.file-input input[name="file"]:focus + label {
+    outline: 0.1em dotted #000;
+	outline: -webkit-focus-ring-color auto 0.1em;
+}
+
 
 .file-input input[type="submit"] {
     background-color: white;

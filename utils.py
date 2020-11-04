@@ -39,3 +39,6 @@ class SafeString(str):
     
     def split(self, *args, **kwargs) -> List[str]:
         return SafeList(super().split(*args, **kwargs))
+
+    def rsplit(self, *args, **kwargs) -> List[str]:
+        return SafeList(super().rsplit(*args, **kwargs))

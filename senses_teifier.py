@@ -193,11 +193,12 @@ def create_cit_nodes(node_content):
     return result
 
 def deal_with_completely_unknown_entry(entry):
-    first_node = entry.contents[0]
+    if len(entry.contents) and len(entry.contents[0]) > 0:
+        first_node = entry.contents[0]
 
-    if len(re.split(', | ', first_node.text)) == 1:
-        entry.encoded_parts['senses'].append(nf.create_form_lemma_node(first_node.text))
-        entry.contents.pop(0)
+        if len(re.split(', | ', first_node.text)) == 1:
+            entry.encoded_parts['senses'].append(nf.create_form_lemma_node(first_node.text))
+            entry.contents.pop(0)
 
     [entry.encoded_parts['senses'].append(x) for x in entry.contents]
 

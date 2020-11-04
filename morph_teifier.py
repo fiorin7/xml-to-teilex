@@ -55,32 +55,60 @@ def adj_multiple_forms_xml(content0):
 def nom_and_gen_xml(content0, content1, content2, content3, content4):
     result = []
     tag_span = 0
+    sense_numbers_in_end = []
+
+    def remove_sense_numbers(text):
+        sense_numbers_in_end = []
+        if text.strip().endswith('1.'):
+            sense_numbers_in_end = create_nodes_for_sense_numbers('1.')
+            text = text[:text.index('1.')]
+        elif text.strip().endswith('1. a)'):
+            sense_numbers_in_end = create_nodes_for_sense_numbers('1. a)')
+            text = text[:text.index('1.')]
+
+        return text, sense_numbers_in_end
+
+    def create_nodes_for_sense_numbers(sense_number):
+        res = []
+        if sense_number == '1.':
+            res.append(nf.create_bold_hi_node('1.'))
+        elif sense_number == '1. a)':
+            res.append(nf.create_bold_hi_node('1.'))
+            res.append(nf.create_bold_hi_node(' a)'))
+        
+        return res
+
+
 
     if content0.rstrip()[-1] == ',':
         form_lemma = nf.create_form_lemma_node(content0.rstrip()[:-1])
-        usg_gen = nf.create_usg_node(content1)
+        usg_gen = nf.create_usg_node('gen.')
         if content2.strip() == '-':
-            form_inflected = nf.create_form_inflected_node('-' + content3)
+            content3, sense_numbers_in_end = remove_sense_numbers(content3)
+            form_inflected = nf.create_form_inflected_node(' -' + content3)
             tag_span = 4
         else:
-            form_inflected = nf.create_form_inflected_node(content2)
+            content2, sense_numbers_in_end = remove_sense_numbers(content2)
+            form_inflected = nf.create_form_inflected_node(' ' + content2.lstrip())
             tag_span = 3
 
     else:
         form_lemma = nf.create_form_lemma_node(content0)
-        usg_gen = nf.create_usg_node(content2)
+        usg_gen = nf.create_usg_node('gen.')
         if content3.strip() == '-':
-            form_inflected = nf.create_form_inflected_node('-' + content4)
+            content4, sense_numbers_in_end = remove_sense_numbers(content4)
+            form_inflected = nf.create_form_inflected_node(' -' + content4)
             tag_span = 5
         else:
-            form_inflected = nf.create_form_inflected_node(content3)
+            content3, sense_numbers_in_end = remove_sense_numbers(content3)
+            form_inflected = nf.create_form_inflected_node(' ' + content3.lstrip())
             tag_span = 4
     
     pc = nf.create_pc_node(', ')
 
     result.extend([form_lemma, pc, *usg_gen, form_inflected])
 
-    return result, tag_span
+    return result, tag_span, sense_numbers_in_end
 
 
 def adv_conjunct_xml(content0, content1):
@@ -112,6 +140,7 @@ def get_morph_info(entry_type, contents):
 
     res = None
     tag_span_of_morph_info = 0
+    sense_numbers_in_end = []
 
     if entry_type == 'noun':
         res = noun_xml(content0, content1)
@@ -136,6 +165,7 @@ def get_morph_info(entry_type, contents):
         returned = nom_and_gen_xml(content0, content1, content2, content3, content4)
         res = returned[0]
         tag_span_of_morph_info = returned[1]
+        sense_numbers_in_end = returned[2]
     
     elif entry_type in ('adv', 'conjunct'):
         res = adv_conjunct_xml(content0, content1)
@@ -155,4 +185,4 @@ def get_morph_info(entry_type, contents):
             print(content0)
         pass
 
-    return res, tag_span_of_morph_info
+    return res, tag_span_of_morph_info, sense_numbers_in_end

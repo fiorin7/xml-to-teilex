@@ -55,10 +55,13 @@ class Entry:
         self.contents = rearranger.fix_misplaced_punct(self.contents)
 
     def set_morph_part_xml(self):
-        morph_part, tag_span_of_morph_info = morph.get_morph_info(self.entry_type, self.contents)
+        morph_part, tag_span_of_morph_info, sense_numbers_in_end = morph.get_morph_info(self.entry_type, self.contents)
         for _ in range(tag_span_of_morph_info):
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
             self.contents.remove(self.contents[0])
+        
+        for i in range(len(sense_numbers_in_end)-1, -1, -1):
+            self.contents.insert(0, sense_numbers_in_end[i])
         
         if len(self.contents) > 1 and self.contents[0].text.strip().startswith('(') and self.contents[0].text.strip().endswith(')'):
             if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not has_more_cyrillic_than_latin(self.contents[0].text) and has_more_cyrillic_than_latin(SafeString(self.contents[1].text.strip()).split(' ')[0])):

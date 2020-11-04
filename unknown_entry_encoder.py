@@ -105,6 +105,7 @@ def unknown_initial_xml(content0):
             if len(content0_split) > 1:
                 pc = nf.create_pc_node(', ')
                 res.append(pc)
+            # TODO: Extra comma / missing comma
         elif i == len(content0_split)-1:
             form_inflected = nf.create_form_inflected_node(content0_split[i])
             res.append(form_inflected)

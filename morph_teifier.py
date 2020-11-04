@@ -3,7 +3,7 @@ from utils import SafeString
 from debug import debug
 
 def noun_xml(content0, content1):
-    content0_split = content0.split(', ')
+    content0_split = content0.rsplit(', ', 1)
     form_lemma = nf.create_form_lemma_node(content0_split[0])
     pc = nf.create_pc_node(', ')
     form_inflected = nf.create_form_inflected_node(content0_split[1])

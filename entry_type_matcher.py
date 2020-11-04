@@ -54,8 +54,8 @@ def is_conjunct(content0s, content1s):
     return content1s in ('coniunct.', 'coniunct') and len(re.split(', | ', content0s)) == 1
 
 def is_praep(content1s):
-    if len(content1s.split()) == 3:
-        return content1s.split()[0] == 'praep.' and content1s.split()[1] == 'с' and len(content1s.split()[2]) == 4
+    if len(content1s.split(' ')) == 3:
+        return content1s.split(' ')[0] == 'praep.' and content1s.split(' ')[1] == 'с' and len(content1s.split(' ')[2]) == 4
 
 def is_multiple_form_verb(content0s, content1s):
     return any([is_verb_based_on_conj_number(content1s),

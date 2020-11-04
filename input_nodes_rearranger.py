@@ -8,6 +8,10 @@ def fix_morph_numbers(contents):
 
     def number_one_is_in_c0(content0):
         return len(content0.strip()) > 2 and content0.strip().endswith('1.')
+    
+    def number_one_and_a_are_in_c0(content0):
+        return content0.strip().endswith('1. a)')
+
 
     def gram_number_is_in_c1(content0, content1):
         first_word_stripped = content0.split(', ')[0].strip()
@@ -33,6 +37,21 @@ def fix_morph_numbers(contents):
         [result.append(x) for x in contents[1:]]
 
         return result
+    
+    elif number_one_and_a_are_in_c0(content0):
+        number_node_text = '1. '
+        a_node_text = 'a)'
+        if content0_node.text.endswith(' '):
+            a_node_text += ' '
+        content0_2_node = create_bold_hi_node(number_node_text)
+        content0_3_node = create_bold_hi_node(a_node_text)
+        content0_node.text = content0_node.text.rstrip()[:-5]
+
+        result.extend([content0_node, content0_2_node, content0_3_node])
+        [result.append(x) for x in contents[1:]]
+
+        return result
+
     
     elif gram_number_is_in_c1(content0, content1):
         result.append(content0_node)

@@ -2,6 +2,9 @@ import re
 from typing import List
 
 def has_more_cyrillic_than_latin(string):
+    if string == None:
+        return
+
     pattern = '[а-яА-Я]'
     cyrillic = re.findall(pattern, string)
     latin = [x for x in string if (x.isalpha() and x not in cyrillic)]

@@ -198,3 +198,35 @@ h3 {
 .site-footer a:hover {
     text-decoration: underline;
 }
+
+
+@media only screen and (max-width: 800px) {
+    .instructions {
+      font-size: 0.8em;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .site-main {
+        padding: 0.5em;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    .instructions {
+        padding-left: 0;
+        padding-right: 0;
+
+    }
+
+    .site-header img {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media only screen and (min-width: 1600px) {
+    html {
+      font-size: 22px;
+    }
+}

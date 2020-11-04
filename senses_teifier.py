@@ -193,7 +193,7 @@ def create_cit_nodes(node_content):
     return result
 
 def deal_with_completely_unknown_entry(entry):
-    if len(entry.contents) and len(entry.contents[0]) > 0:
+    if len(entry.contents) and entry.contents[0].text:
         first_node = entry.contents[0]
 
         if len(re.split(', | ', first_node.text)) == 1:

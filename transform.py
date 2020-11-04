@@ -38,7 +38,10 @@ class Entry:
         his = [x for x in self.contents if x.tag == nf.get_ns('hi')]
         first_line = re.split(', | ', his[0].text)
         lemma = unidecode(first_line[0])
-        lemma_stripped = lemma.replace('-', '').replace('(', '').replace(')', '')
+
+        keepcharacters = ('.','_')
+        lemma_stripped = "".join(c for c in lemma if c.isalnum() or c in keepcharacters)
+
         return lemma_stripped
     
     def get_entry_type(self):

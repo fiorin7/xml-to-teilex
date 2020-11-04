@@ -168,7 +168,7 @@ def create_cit_nodes(node_content):
             if is_empty_string(word) and i != len(x.split(' '))-1:
                 continue
 
-            if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(x.split(' ')[i+1])):
+            if has_more_cyrillic_than_latin(word) and not (len(word) == 1 and not has_more_cyrillic_than_latin(SafeString(x).split(' ')[i+1])):
                 if i > 0:
                     if not (x.split(' ')[0] == '' and i == 1):
                         cit_node = nf.assemble_cit_nodes('example', ' '.join((x.split(' ')[:i])) + ' ')

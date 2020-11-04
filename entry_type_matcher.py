@@ -14,6 +14,11 @@ def is_adj_like_acer_aequalis(content0s):
     return len(split_c0s) in (2, 3) and split_c0s[-2].strip().endswith('is') and\
         split_c0s[-1].strip().endswith(('e', 'е'))
 
+def has_nom_and_gen(content0s, content1s, content2s):
+    comma_in_title = content0s.endswith(',') and len(content0s.split(', ')) == 1 and content1s in ('gen', 'gen.')
+    separate_comma = len(content0s.split(', ')) == 1 and content1s == ',' and content2s in ('gen', 'gen.')
+    return comma_in_title or separate_comma
+
 def is_adv(content0s, content1s):
     return content1s == 'adv.' and len(re.split(', | ', content0s)) == 1
 
@@ -65,6 +70,13 @@ def is_multiple_form_verb(content0s, content1s):
 def match_entry_type(contents):
     content0 = SafeString(contents[0].text)
     content1 = SafeString(contents[1].text)
+
+    if len(contents) > 2:
+        content2 = SafeString(contents[2].text)
+        content2s = content2.strip()
+    else:
+        content2s = None
+
     content0s = content0.strip()
     content1s = content1.strip()
 
@@ -76,6 +88,8 @@ def match_entry_type(contents):
         entry_type = 'adj_like_acer_aequalis'
     elif is_adj_1_2_decl_three_forms_written_out(content0s):
         entry_type = 'adj_1_2_decl_three_forms_written_out'
+    elif has_nom_and_gen(content0s, content1s, content2s):
+        entry_type = 'nom_and_gen'
     elif is_adv(content0s, content1s):
         entry_type = 'adv'
     elif is_one_form_verb(content0s, content1s):

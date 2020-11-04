@@ -52,6 +52,37 @@ def adj_multiple_forms_xml(content0):
     
     return result
 
+def nom_and_gen_xml(content0, content1, content2, content3, content4):
+    result = []
+    tag_span = 0
+
+    if content0.rstrip()[-1] == ',':
+        form_lemma = nf.create_form_lemma_node(content0.rstrip()[:-1])
+        usg_gen = nf.create_usg_node(content1)
+        if content2.strip() == '-':
+            form_inflected = nf.create_form_inflected_node('-' + content3)
+            tag_span = 4
+        else:
+            form_inflected = nf.create_form_inflected_node(content2)
+            tag_span = 3
+
+    else:
+        form_lemma = nf.create_form_lemma_node(content0)
+        usg_gen = nf.create_usg_node(content2)
+        if content3.strip() == '-':
+            form_inflected = nf.create_form_inflected_node('-' + content4)
+            tag_span = 5
+        else:
+            form_inflected = nf.create_form_inflected_node(content3)
+            tag_span = 4
+    
+    pc = nf.create_pc_node(', ')
+
+    result.extend([form_lemma, pc, *usg_gen, form_inflected])
+
+    return result, tag_span
+
+
 def adv_conjunct_xml(content0, content1):
     form_lemma = nf.create_form_lemma_node(content0)
     gram_grp = nf.create_gram_grp(content1, "????")
@@ -63,6 +94,21 @@ def adv_conjunct_xml(content0, content1):
 def get_morph_info(entry_type, contents):
     content0 = SafeString(contents[0].text)
     content1 = SafeString(contents[1].text)
+
+    if len(contents) > 2:
+        content2 = SafeString(contents[2].text)
+    else:
+        content2 = None
+    
+    if len(contents) > 3:
+        content3 = SafeString(contents[3].text)
+    else:
+        content3 = None
+    
+    if len(contents) > 4:
+        content4 = SafeString(contents[4].text)
+    else:
+        content4 = None
 
     res = None
     tag_span_of_morph_info = 0
@@ -85,6 +131,11 @@ def get_morph_info(entry_type, contents):
     elif entry_type in ('adj_like_acer_aequalis', 'adj_1_2_decl_three_forms_written_out'):
         res = adj_multiple_forms_xml(content0)
         tag_span_of_morph_info = 1
+    
+    elif entry_type == 'nom_and_gen':
+        returned = nom_and_gen_xml(content0, content1, content2, content3, content4)
+        res = returned[0]
+        tag_span_of_morph_info = returned[1]
     
     elif entry_type in ('adv', 'conjunct'):
         res = adv_conjunct_xml(content0, content1)

@@ -3,13 +3,22 @@ from utils import SafeString
 from debug import debug
 
 def noun_xml(content0, content1):
+    result = []
+
     content0_split = content0.rsplit(', ', 1)
     form_lemma = nf.create_form_lemma_node(content0_split[0])
-    pc = nf.create_pc_node(', ')
-    form_inflected = nf.create_form_inflected_node(content0_split[1])
-    gram_grp = nf.create_gram_grp(content1)
+    result.append(form_lemma)
 
-    return [form_lemma, pc, form_inflected, gram_grp]
+    if content0_split[1]:
+        pc = nf.create_pc_node(', ')
+        form_inflected = nf.create_form_inflected_node(content0_split[1])
+        result.append(pc)
+        result.append(form_inflected)
+
+    gram_grp = nf.create_gram_grp(content1)
+    result.append(gram_grp)
+
+    return result
 
 def verb_xml(entry_type, content0, content1):
     result = []

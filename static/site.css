@@ -145,7 +145,7 @@ form.file-input {
 }
 
 .instructions-list img:last-child {
-    max-width: 35em;
+    max-width: 100%;
     height: auto;
 }
 

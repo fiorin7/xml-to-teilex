@@ -128,7 +128,7 @@ def fix_separated_brackets(contents):
             else:
                 current_content = contents[i].text[:idx_in_text+1]
                 opening_brackets_content += current_content
-                contents[i].text = contents[i].text.replace(current_content, '')
+                contents[i].text = contents[i].text.replace(current_content, '', 1)
                 extra_text_to_append = True
                 
             if italic:

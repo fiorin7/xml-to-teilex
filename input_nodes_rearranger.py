@@ -83,7 +83,7 @@ def fix_separated_brackets(contents):
         return ')' in contents[i].text and opening_brackets_idx is not None
     
     def closing_bracket_in_end_of_node():
-        return contents[i].text.endswith((') ', ')'))
+        return contents[i].text.endswith((') ', ')')) and idx_in_text in (len(contents[i].text)-1, len(contents[i].text)-2)
     
     def theres_an_opening_bracket_but_no_closing_bracket_yet():
         return opening_brackets_idx is not None

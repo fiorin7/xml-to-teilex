@@ -1,0 +1,8 @@
+{
+    "files.exclude": {
+        "**/.git": false
+    },
+    "python.terminal.executeInFileDir": true,
+    "python.pythonPath": "C:\\Users\\Диана\\.virtualenvs\\xml-to-teilex-CXhOF18F\\Scripts\\python.exe",
+    "workbench.colorTheme": "Default Dark+"
+}

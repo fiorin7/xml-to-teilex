@@ -184,6 +184,7 @@ h3 {
     border-top: 0.01em solid rgb(214, 192, 192);
     margin: 1em;
     padding: 1em 0 0.5em 0;
+    font-size: 0.9em;
 }
 
 .site-footer a {
@@ -210,6 +211,11 @@ h3 {
 @media only screen and (max-width: 500px) {
     .site-main {
         padding: 0.5em;
+    }
+
+    .site-footer > * {
+        display: block;
+        width: 100%;
     }
 }
 

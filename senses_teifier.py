@@ -90,11 +90,8 @@ def fix_mixed_numbers(entry, initial):
             initial_node.text += initial[:2]
 
             non_initial_node = copy(raw_senses[0])
+            non_initial_node.text = non_initial_node.text.lstrip()[2:]
 
-            non_initial_node.text = non_initial_node.text.replace(initial.strip()[:2], '')
-            if space_in_front:
-                non_initial_node.text = non_initial_node.text[1:]
-            
             entry.raw_senses.pop(0)
             entry.raw_senses.insert(0, non_initial_node)
             entry.raw_senses.insert(0, initial_node)

@@ -121,12 +121,14 @@ def make_text_and_tails_into_nodes(body):
                 x.tail = None
 
 
-def remove_style_attrib(body):
+def remove_style_and_dir_attrib(body):
     '''Remove the style attribute with it's values (font size and font family).'''
     for p in body:
         for el in p:
             if 'style' in el.attrib.keys():
                 el.attrib.pop('style')
+            if 'dir' in el.attrib.keys():
+                el.attrib.pop('dir')
 
 def clear_empty_single_space_and_non_hi_nodes(body):
     for p in body:
@@ -172,7 +174,7 @@ def general_fix_up_input(body):
     remove_ref_parent(body)
     make_text_and_tails_into_nodes(body)
     clear_empty_single_space_and_non_hi_nodes(body)
-    remove_style_attrib(body)
+    remove_style_and_dir_attrib(body)
     merge_elements_with_same_attribs(body)
 
 def invalid_para(p):

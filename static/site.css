@@ -196,6 +196,10 @@ h3 {
     text-decoration: underline;
 }
 
+.site-footer span {
+    margin-left: 0.5em;
+}
+
 
 @media only screen and (max-width: 800px) {
     .instructions {

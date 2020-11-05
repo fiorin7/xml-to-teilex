@@ -57,12 +57,11 @@ def upload_file():
 
 
             try:
+                app.logger.info("Transforming the file")
                 transform_xml(f'{UPLOAD_FOLDER}/{filename}', OUTPUT_FILES_FOLDER)
+                app.logger.info("Transforming the file ... done")
             except Exception as e:
-                if debug():
-                    print(str(e))
-                delete_files_from_folder(UPLOAD_FOLDER)
-                delete_files_from_folder(OUTPUT_FILES_FOLDER)
+                app.logger.error("Transforming the file failed: ", str(e))
                 flash('Failed to convert file.')
                 return redirect(request.url)
 
@@ -87,3 +86,8 @@ def upload_file():
 def output_file(filename):
     return send_from_directory(app.config['OUTPUT_ZIP_FOLDER'],
                                filename)
+
+if __name__ == '__main__':
+    if debug():
+        app.logger.info("Running in debug mode")
+    app.run(host='0.0.0.0')

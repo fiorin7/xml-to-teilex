@@ -46,7 +46,7 @@ def upload_file():
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)
-        
+
         if not allowed_file(file.filename):
             flash(f'Only {", ".join(ALLOWED_EXTENSIONS)} files allowed')
             return redirect(request.url)
@@ -70,9 +70,9 @@ def upload_file():
                 for root, dirs, files in os.walk(OUTPUT_FILES_FOLDER):
                     for f in files:
                         myzip.write(os.path.join(root, f))
-            
+
             filename_output = secure_filename('transformed_files.zip')
-            
+
             delete_files_from_folder(UPLOAD_FOLDER)
             delete_files_from_folder(OUTPUT_FILES_FOLDER)
 

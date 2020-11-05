@@ -28,8 +28,8 @@ class Entry:
         }
         self.raw_senses = self.get_validated_senses()
         sns.encode_senses(self)
-        
-        
+
+
     def get_title_lemma(self):
         '''
         Return the "dictionary form" of the lemma e.g. ago, homo, ego.
@@ -43,10 +43,10 @@ class Entry:
         lemma_stripped = "".join(c for c in lemma if c.isalnum() or c in keepcharacters)
 
         return lemma_stripped
-    
+
     def get_entry_type(self):
         return match_entry_type(self.contents)
-    
+
     def fix_input_node_contents(self):
         fixed_contents = rearranger.fix_morph_numbers(self.contents)
         if fixed_contents:
@@ -59,10 +59,10 @@ class Entry:
         for _ in range(tag_span_of_morph_info):
             # print(et.tostring(self.contents[0], encoding='utf8', pretty_print=True).decode('utf8'))
             self.contents.remove(self.contents[0])
-        
+
         for i in range(len(sense_numbers_in_end)-1, -1, -1):
             self.contents.insert(0, sense_numbers_in_end[i])
-        
+
         if len(self.contents) > 1 and self.contents[0].text.strip().startswith('(') and self.contents[0].text.strip().endswith(')'):
             if self.contents[1].text.strip().startswith(('1.', 'I.')) or (not has_more_cyrillic_than_latin(self.contents[0].text) and has_more_cyrillic_than_latin(SafeString(self.contents[1].text.strip()).split(' ')[0])):
                 morph_part.append(nf.create_extra_morph(self.contents[0].text))
@@ -77,8 +77,8 @@ class Entry:
                     [self.entry_node.append(x) for x in part]
                 else:
                     self.entry_node.append(part)
-    
-    
+
+
     def get_validated_senses(self, res = []):
         if self.entry_type != 'UNKNOWN' and self.encoded_parts.get('morph_part') and self.contents:
             res = [x for x in self.contents if x.text]
@@ -200,7 +200,7 @@ def get_new_body(new_tree):
 def find_filename(title_lemma, output_folder):
     file_number = 0
     file_name = ''
-    
+
     while True:
         file_name = title_lemma + " " + str(file_number) if file_number else title_lemma
         if path.exists(f'{output_folder}/{file_name}.xml'):
@@ -246,7 +246,7 @@ def transform_xml(input_file, output_folder):
         too_short = False
         if len(contents) <= 1:
             too_short = True
-        
+
         if not too_short:
             entry = Entry(contents)
             entry.insert_encoded_parts_in_entry()
@@ -262,7 +262,7 @@ def transform_xml(input_file, output_folder):
             new_body.append(entry.entry_node)
         else:
             [new_body.append(x) for x in contents]
-        
+
         if not too_short:
             file_name = find_filename(entry.title_lemma, output_folder)
         else:
@@ -281,7 +281,7 @@ def transform_xml(input_file, output_folder):
     if debug():
         print(counter_unmatched)
 
-        with open('all_text_old.txt', 'w', encoding='UTF8') as f: 
+        with open('all_text_old.txt', 'w', encoding='UTF8') as f:
             for x in tree_test.iterdescendants():
                 if x.text:
-                    f.write(x.text) 
+                    f.write(x.text)

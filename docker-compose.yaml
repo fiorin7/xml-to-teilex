@@ -1,0 +1,13 @@
+version: '3.6'
+
+services:
+  app:
+    image: gcr.io/xml-to-teilex/xml-to-teilex
+    build:
+      context: .
+    ports:
+      - "5000:5000"
+    environment:
+      - TRANSFORM_DEBUG
+      - FLASK_ENV
+      - FLASK_DEBUG

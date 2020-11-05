@@ -68,6 +68,10 @@ def is_multiple_form_verb(content0s, content1s):
     
 
 def match_entry_type(contents):
+    too_short = len(contents) < 2
+    if too_short:
+        return 'UNKNOWN'
+
     content0 = SafeString(contents[0].text)
     content1 = SafeString(contents[1].text)
 

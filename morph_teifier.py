@@ -129,6 +129,15 @@ def adv_conjunct_xml(content0, content1):
 
 
 def get_morph_info(entry_type, contents):
+    res = None
+    tag_span_of_morph_info = 0
+    sense_numbers_in_end = []
+
+
+    too_short = len(contents) < 2
+    if too_short:
+        return res, tag_span_of_morph_info, sense_numbers_in_end
+
     content0 = SafeString(contents[0].text)
     content1 = SafeString(contents[1].text)
 
@@ -147,9 +156,6 @@ def get_morph_info(entry_type, contents):
     else:
         content4 = None
 
-    res = None
-    tag_span_of_morph_info = 0
-    sense_numbers_in_end = []
 
     if entry_type == 'noun':
         res = noun_xml(content0, content1)

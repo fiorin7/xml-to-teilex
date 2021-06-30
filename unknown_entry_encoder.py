@@ -65,10 +65,10 @@ def unknown_entry_partially_encode(entry):
 
         if counter == 0:
             content_node = unknown_initial_xml(content_node[0].text)
-        
+
         elif node_content.strip().startswith('(') and node_content.strip().endswith(')'):
             content_node = [nf.create_extra_morph(node_content)]
-            
+
         elif node_content.strip() in (punctuation + '–'):
                 content_node = [nf.create_pc_node(node_content)]
 
@@ -85,10 +85,10 @@ def unknown_entry_partially_encode(entry):
 
             else:
                 content_node = nf.create_usg_node(node_content)
-        
+
         elif node_content.strip() in ('1', '2', '3', '4') and (len(old_morph_part) == 1 or old_morph_part[1].text.strip() != '.'):
             content_node = [nf.create_gram_grp(node_content, 'iType')]
-        
+
         [entry.encoded_parts['morph_part'].append(x) for x in content_node]
         old_morph_part.pop(0)
         counter += 1

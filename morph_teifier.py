@@ -32,13 +32,13 @@ def verb_xml(entry_type, content0, content1):
             form_inflected = nf.create_form_inflected_node(word)
             result.append(pc)
             result.append(form_inflected)
-    
+
     if entry_type != 'special_verb':
         gram_grp = nf.create_gram_grp(content1, "iType")
         result.append(gram_grp)
 
     return result
-    
+
 
 def adj_1_2_decl_xml(content0, content1):
     form_lemma = nf.create_form_lemma_node(content0)
@@ -58,7 +58,7 @@ def adj_multiple_forms_xml(content0):
         pc = nf.create_pc_node(', ')
         result.append(pc)
         result.append(form_inflected)
-    
+
     return result
 
 def nom_and_gen_xml(content0, content1, content2, content3, content4):
@@ -84,7 +84,7 @@ def nom_and_gen_xml(content0, content1, content2, content3, content4):
         elif sense_number == '1. a)':
             res.append(nf.create_bold_hi_node('1.'))
             res.append(nf.create_bold_hi_node(' a)'))
-        
+
         return res
 
 
@@ -112,7 +112,7 @@ def nom_and_gen_xml(content0, content1, content2, content3, content4):
             content3, sense_numbers_in_end = remove_sense_numbers(content3)
             form_inflected = nf.create_form_inflected_node(' ' + content3.lstrip())
             tag_span = 4
-    
+
     pc = nf.create_pc_node(', ')
 
     result.extend([form_lemma, pc, *usg_gen, form_inflected])
@@ -145,12 +145,12 @@ def get_morph_info(entry_type, contents):
         content2 = SafeString(contents[2].text)
     else:
         content2 = None
-    
+
     if len(contents) > 3:
         content3 = SafeString(contents[3].text)
     else:
         content3 = None
-    
+
     if len(contents) > 4:
         content4 = SafeString(contents[4].text)
     else:
@@ -175,26 +175,26 @@ def get_morph_info(entry_type, contents):
     elif entry_type in ('adj_like_acer_aequalis', 'adj_1_2_decl_three_forms_written_out'):
         res = adj_multiple_forms_xml(content0)
         tag_span_of_morph_info = 1
-    
+
     elif entry_type == 'nom_and_gen':
         returned = nom_and_gen_xml(content0, content1, content2, content3, content4)
         res = returned[0]
         tag_span_of_morph_info = returned[1]
         sense_numbers_in_end = returned[2]
-    
+
     elif entry_type in ('adv', 'conjunct'):
         res = adv_conjunct_xml(content0, content1)
         tag_span_of_morph_info = 2
-    
+
     elif entry_type == 'praep':
         res = nf.create_praep_xml(content0, content1)
         tag_span_of_morph_info = 2
-    
+
     elif entry_type == 'unknown but clear senses start':
         if debug():
             print(content0)
         pass
-    
+
     elif entry_type == 'UNKNOWN':
         if debug():
             print(content0)

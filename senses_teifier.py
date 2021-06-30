@@ -19,7 +19,7 @@ def one_is_missing(raw_senses):
         if '2.' in para.text:
             two_spotted = True
             break
-    
+
     return not one_spotted and two_spotted
 
 def is_numbered_entry(raw_senses):
@@ -54,7 +54,7 @@ def find_previous_numbers(numbers):
                 continue
         elif collection[0].isupper():
             break
-    
+
     return collection
 
 
@@ -69,7 +69,7 @@ def fix_cyrillic_letter(initial):
             if initial[0] in replacements:
                 initial = replacements[initial[0]] + initial[1:]
     return initial
-        
+
 
 def fix_mixed_numbers(entry, initial):
     raw_senses = entry.raw_senses
@@ -82,7 +82,7 @@ def fix_mixed_numbers(entry, initial):
 
             if raw_senses[0].text.startswith(' '):
                 space_in_front = True
-            
+
             initial_node = copy(raw_senses[0])
             initial_node.text = ''
             if space_in_front:
@@ -126,7 +126,7 @@ def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
             dash_node = nf.create_pc_node('—')
             node_content = node_content[:-1]
         result.appendleft(dash_node)
-    
+
     if node_content.strip().endswith('.'):
         if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
@@ -135,7 +135,7 @@ def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
             dot_node = nf.create_pc_node('.')
             node_content = node_content[:-1]
         result.appendleft(dot_node)
-    
+
     if node_content.strip().endswith(';'):
         if node_content.endswith(' '):
             node_content = node_content.rstrip()[:-1]
@@ -144,16 +144,16 @@ def separate_dash_dot_semi_colon_in_end_of_node_content(node_content):
             s_colon_node = nf.create_pc_node(';')
             node_content = node_content[:-1]
         result.appendleft(s_colon_node)
-    
+
     result.appendleft(node_content)
-    
+
     return result
 
 
 def create_cit_nodes(node_content):
     result = []
-    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(SafeString(node_content))      
-    
+    node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(SafeString(node_content))
+
     split_contents = node_content.split('; ')
     split_contents = [x for x in split_contents if not is_empty_string(x)]
 
@@ -180,13 +180,13 @@ def create_cit_nodes(node_content):
                 cit_node = nf.assemble_cit_nodes('example', ' '.join((x.split(' '))))
                 result.append(cit_node)
                 break
-            
+
         if y < (len(split_contents)-1):
             result.append(nf.create_pc_node('; '))
-    
+
     for punct_node in separated_end_punctuation:
         result.append(punct_node)
-    
+
     return result
 
 def deal_with_completely_unknown_entry(entry):
@@ -204,7 +204,7 @@ def create_subsense_number_node(title_lemma, numbers, initial):
     label = nf.create_label(initial)
     sense_container.append(label)
     return sense_container
-            
+
 def append_sense_container_and_label(entry, new_node):
     assigned = False
     for i in range(len(entry.encoded_parts['senses'])-1, -1, -1):
@@ -241,17 +241,17 @@ def encode_senses(entry):
 
     if raw_senses:
         fix_dot_in_next_node(raw_senses)
-        
+
 
         if one_is_missing(raw_senses):
             add_missing_one(entry, title_lemma)
             numbers.append('1')
-    
+
         if not is_numbered_entry(raw_senses):
             entry.encoded_parts['senses'].append(nf.create_sense_container_non_numbered(title_lemma))
             last_sense_container = entry.encoded_parts['senses'][0]
             numbers.append('1')
-    
+
     else:
         deal_with_completely_unknown_entry(entry)
 
@@ -271,7 +271,7 @@ def encode_senses(entry):
             numbers.append(sense_number)
             last_sense_container = create_subsense_number_node(title_lemma, numbers, SafeString(raw_senses[0].text))
             append_sense_container_and_label(entry, last_sense_container)
-        
+
         else:
             content_node = [raw_senses[0]]
             current_text = SafeString(raw_senses[0].text)
@@ -281,19 +281,19 @@ def encode_senses(entry):
 
             elif raw_senses[0].get('rend') == "italic":
                 content_node = nf.create_usg_node(current_text)
-            
+
             elif raw_senses[0].get('rend') == "bold" and has_more_cyrillic_than_latin(current_text):
                 content_node = nf.create_def_node(current_text)
-            
+
             elif (not last_sense_container or len([x for x in last_sense_container.getchildren() if x.tag in (nf.get_ns('cit'), nf.get_ns('quote'))]) == 0) and \
                 has_more_cyrillic_than_latin(current_text.strip().split(' ')[0]):
 
                     node_content, *separated_end_punctuation = separate_dash_dot_semi_colon_in_end_of_node_content(current_text)
-                    
+
                     content_node = []
 
                     found_latin = False
-                    
+
                     i = 0
                     for i in range(len(node_content.split(' '))):
                         word = node_content.split(' ')[i]
@@ -316,8 +316,8 @@ def encode_senses(entry):
                     for punct_node in separated_end_punctuation:
                         content_node.append(punct_node)
 
-            
-            
+
+
             else:
                 content_node = create_cit_nodes(current_text)
 
@@ -328,11 +328,8 @@ def encode_senses(entry):
 
         raw_senses.pop(0)
 
-    
+
     # print(range(len(entry.encoded_parts['senses'])-1, -1, -1))
     # [print(et.tostring(x, encoding='utf8', pretty_print=True).decode('utf8')) for x in entry.encoded_parts['senses']]
     # [print(x.attrib) for x in entry.encoded_parts['senses']]
 
-
-
-        

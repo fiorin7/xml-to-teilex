@@ -42,7 +42,7 @@ def create_extra_morph(extra_morph):
 def create_form_lemma_node(text):
     form_lemma = et.Element(get_ns("form"))
     form_lemma.set('type', 'lemma')
-    
+
 
     form_lemma.append(create_orth_node(text))
     return form_lemma
@@ -117,7 +117,7 @@ def create_usg_node(node_content):
     if pc_text:
         pc_node = create_pc_node(pc_text)
         res.append(pc_node)
-        
+
     return res
 
 def create_def_node(node_content):

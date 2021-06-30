@@ -8,7 +8,7 @@ def fix_morph_numbers(contents):
 
     def number_one_is_in_c0(content0):
         return len(content0.strip()) > 2 and content0.strip().endswith('1.')
-    
+
     def number_one_and_a_are_in_c0(content0):
         return content0.strip().endswith('1. a)')
 
@@ -37,7 +37,7 @@ def fix_morph_numbers(contents):
         [result.append(x) for x in contents[1:]]
 
         return result
-    
+
     elif number_one_and_a_are_in_c0(content0):
         number_node_text = '1. '
         a_node_text = 'a)'
@@ -52,7 +52,7 @@ def fix_morph_numbers(contents):
 
         return result
 
-    
+
     elif gram_number_is_in_c1(content0, content1):
         result.append(content0_node)
         number = ''
@@ -64,7 +64,7 @@ def fix_morph_numbers(contents):
         result.append(content0_2_node)
         result.append(content1_node)
         [result.append(x) for x in contents[2:]]
-        
+
         return result
 
 
@@ -72,22 +72,22 @@ def fix_separated_brackets(contents):
 
     def two_opening_brackets_in_a_row():
         return '(' in contents[i].text and opening_brackets_idx
-    
+
     def found_opening_bracket_no_closing_bracket_in_node():
         return '(' in contents[i].text and not ')' in contents[i].text
-    
+
     def opening_bracket_in_beginning_of_node():
         return (idx_in_text == 1 and contents[i].text[0] == ' ') or idx_in_text == 0
-    
+
     def found_closing_bracket_matching_opening_bracket_in_node():
         return ')' in contents[i].text and opening_brackets_idx is not None
-    
+
     def closing_bracket_in_end_of_node():
         return contents[i].text.endswith((') ', ')')) and idx_in_text in (len(contents[i].text)-1, len(contents[i].text)-2)
-    
+
     def theres_an_opening_bracket_but_no_closing_bracket_yet():
         return opening_brackets_idx is not None
-    
+
 
     new_contents = []
     old_contents = copy(contents)
@@ -117,7 +117,7 @@ def fix_separated_brackets(contents):
                 if contents[i].get('rend') == 'italic':
                     italic = True
                 new_contents.append(contents[i])
-        
+
         elif found_closing_bracket_matching_opening_bracket_in_node():
             idx_in_text = contents[i].text.index(')')
             current_content = ''
@@ -130,7 +130,7 @@ def fix_separated_brackets(contents):
                 opening_brackets_content += current_content
                 contents[i].text = contents[i].text.replace(current_content, '', 1)
                 extra_text_to_append = True
-                
+
             if italic:
                 new_contents.append(create_italic_hi_node(opening_brackets_content))
             else:
@@ -142,21 +142,21 @@ def fix_separated_brackets(contents):
             opening_brackets_idx = None
             opening_brackets_content = ''
             italic = False
-        
+
         elif theres_an_opening_bracket_but_no_closing_bracket_yet():
             opening_brackets_content += contents[i].text
             if contents[i].get('rend') == 'italic':
                 italic = True
-        
+
         else:
             new_contents.append(contents[i])
 
         contents.pop(0)
-        
+
 
     if error:
         new_contents = old_contents
-    
+
     return new_contents
 
 

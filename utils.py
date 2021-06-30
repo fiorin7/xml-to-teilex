@@ -27,16 +27,16 @@ class SafeString(str):
             return super().__getitem__(i)
         except IndexError:
             return None
-    
+
     def strip(self):
         return SafeString(super().strip())
-    
+
     def rstrip(self):
         return SafeString(super().rstrip())
-    
+
     def lstrip(self):
         return SafeString(super().lstrip())
-    
+
     def split(self, *args, **kwargs) -> List[str]:
         return SafeList(super().split(*args, **kwargs))
 
